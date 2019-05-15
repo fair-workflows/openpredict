@@ -1,0 +1,18 @@
+<http://www.w3.org/ns/mls#Accuracy1557951303020> <http://www.w3.org/ns/mls#hasValue> "0.85" <http://bio2rdf.org/openpredict_resource:bio2rdf.dataset.openpredict.R1> .
+<http://www.w3.org/ns/mls#Accuracy1557951303020> <http://www.w3.org/2000/01/rdf-schema#label> "Accuracy" <http://bio2rdf.org/openpredict_resource:bio2rdf.dataset.openpredict.R1> .
+<http://www.w3.org/ns/mls#DrugwiseCrossValidation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/mls#EvaluationProcedure> <http://bio2rdf.org/openpredict_resource:bio2rdf.dataset.openpredict.R1> .
+<http://www.w3.org/ns/mls#Accuracy1557951303020> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/mls#EvaluationMeasure> <http://bio2rdf.org/openpredict_resource:bio2rdf.dataset.openpredict.R1> .
+<http://www.w3.org/ns/mls#DrugwiseCrossValidation> <http://purl.org/dc/terms/description> "Split drugs in 10-fold, remove drugs of each fold in the gold standard and consequently remove all the known indication sassociated with them" <http://bio2rdf.org/openpredict_resource:bio2rdf.dataset.openpredict.R1> .
+<http://www.w3.org/ns/mls#EvaluationSpecification1557951303020> <http://www.w3.org/ns/mls#hasPart> <http://www.w3.org/ns/mls#DrugwiseCrossValidation> <http://bio2rdf.org/openpredict_resource:bio2rdf.dataset.openpredict.R1> .
+<http://www.w3.org/ns/mls#TenFoldCrossValidation> <http://www.w3.org/2000/01/rdf-schema#label> "10-fold CV" <http://bio2rdf.org/openpredict_resource:bio2rdf.dataset.openpredict.R1> .
+<http://www.w3.org/ns/mls#TenFoldCrossValidation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/mls#EvaluationProcedure> <http://bio2rdf.org/openpredict_resource:bio2rdf.dataset.openpredict.R1> .
+<http://www.w3.org/ns/mls#ModelEvaluation1557951303020> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/mls#ModelEvaluation> <http://bio2rdf.org/openpredict_resource:bio2rdf.dataset.openpredict.R1> .
+<http://www.w3.org/ns/mls#Run1557951303020> <http://www.w3.org/ns/mls#achieves> <https://w3id.org/reproduceme#Pipeline_OpenPREDICT> <http://bio2rdf.org/openpredict_resource:bio2rdf.dataset.openpredict.R1> .
+<http://www.w3.org/ns/mls#Run1557951303020> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/mls#Run> <http://bio2rdf.org/openpredict_resource:bio2rdf.dataset.openpredict.R1> .
+<http://www.w3.org/ns/mls#EvaluationSpecification1557951303020> <http://www.w3.org/ns/mls#defines> <https://w3id.org/reproduceme#Pipeline_OpenPREDICT> <http://bio2rdf.org/openpredict_resource:bio2rdf.dataset.openpredict.R1> .
+<http://www.w3.org/ns/mls#DrugwiseCrossValidation> <http://www.w3.org/2000/01/rdf-schema#label> "Drugwise CrossValidation" <http://bio2rdf.org/openpredict_resource:bio2rdf.dataset.openpredict.R1> .
+<http://www.w3.org/ns/mls#EvaluationSpecification1557951303020> <http://www.w3.org/ns/mls#hasPart> <http://www.w3.org/ns/mls#TenFoldCrossValidation> <http://bio2rdf.org/openpredict_resource:bio2rdf.dataset.openpredict.R1> .
+<http://www.w3.org/ns/mls#Run1557951303020> <http://www.w3.org/ns/mls#hasOutput> <http://www.w3.org/ns/mls#ModelEvaluation1557951303020> <http://bio2rdf.org/openpredict_resource:bio2rdf.dataset.openpredict.R1> .
+<http://www.w3.org/ns/mls#ModelEvaluation1557951303020> <http://www.w3.org/ns/mls#specifiedBy> <http://www.w3.org/ns/mls#Accuracy1557951303020> <http://bio2rdf.org/openpredict_resource:bio2rdf.dataset.openpredict.R1> .
+<http://www.w3.org/ns/mls#EvaluationSpecification1557951303020> <http://www.w3.org/ns/mls#hasPart> <http://www.w3.org/ns/mls#Accuracy1557951303020> <http://bio2rdf.org/openpredict_resource:bio2rdf.dataset.openpredict.R1> .
+
