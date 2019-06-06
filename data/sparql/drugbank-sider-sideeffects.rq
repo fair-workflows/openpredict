@@ -1,0 +1,29 @@
+#+ summary: We should add a summary.
+#+ endpoint: "http://example.com/sparql"
+
+PREFIX dv: <http://bio2rdf.org/drugbank_vocabulary:>
+PREFIX ov: <http://bio2rdf.org/openpredict_vocabulary:>
+PREFIX sider: <http://bio2rdf.org/sider_vocabulary:>
+
+SELECT distinct ?drugid ?umlsid
+{
+?dia sider:drug ?stitch_flat .
+?dia sider:effect ?se .
+{
+?stitch_flat sider:x-pubchem.compound ?pc .
+}
+UNION{
+?stitch_flat sider:stitch-stereo ?stitch_stereo .
+?stitch_stereo sider:x-pubchem.compound ?pc .
+}
+{
+?d ov:x-pubchemcompound ?pc  .
+}
+UNION 
+{
+?d dv:x-pubchemcompound ?pc  .       
+}
+?d ov:indication ?disease .     
+BIND(STRAFTER( str(?d), "http://bio2rdf.org/drugbank:") AS ?drugid) 
+BIND(STRAFTER( str(?se), "http://bio2rdf.org/umls:") AS ?umlsid)
+}

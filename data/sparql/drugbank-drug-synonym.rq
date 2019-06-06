@@ -1,0 +1,14 @@
+PREFIX dv: <http://bio2rdf.org/drugbank_vocabulary:>
+PREFIX dc: <http://purl.org/dc/terms/>
+select ?drugid ?name where { 
+	?d ?p dv:Drug .
+    {
+    ?d dv:synonym ?s .
+    ?s dc:title ?name .
+	}
+    UNION
+    {
+    ?d dc:title ?name
+	}
+    BIND ( STRAFTER(str(?d),"http://bio2rdf.org/drugbank:") AS ?drugid)
+} 

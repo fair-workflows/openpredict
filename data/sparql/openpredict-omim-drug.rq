@@ -1,0 +1,11 @@
+#+ summary: We should add a summary.
+#+ endpoint: "http://example.com/sparql"
+
+ PREFIX ov: <http://bio2rdf.org/openpredict_vocabulary:>
+ SELECT distinct ?drugid ?omimid
+ {
+  ?drug ov:indication ?disease .
+  BIND( STRAFTER(str(?disease),"http://bio2rdf.org/omim:") AS ?omimid)
+  BIND( STRAFTER(str(?drug),"http://bio2rdf.org/drugbank:") AS ?drugid)
+
+}

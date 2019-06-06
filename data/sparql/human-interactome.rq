@@ -1,0 +1,13 @@
+#+ summary: We should add a summary.
+#+ endpoint: "http://example.com/sparql"
+
+PREFIX iv: <http://bio2rdf.org/irefindex_vocabulary:>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT distinct ?geneid1 ?geneid2
+WHERE {
+   ?s rdf:type <http://edamontology.org/topic_0128> .
+   ?s iv:interactor_a ?gene1 .
+   ?s iv:interactor_b ?gene2  .
+    BIND(STRAFTER( str(?gene1), "http://bio2rdf.org/ncbigene:") AS ?geneid1) 
+    BIND(STRAFTER( str(?gene2), "http://bio2rdf.org/ncbigene:") AS ?geneid2) 
+}

@@ -1,0 +1,32 @@
+#+ summary: We should add a summary.
+#+ endpoint: "http://example.com/sparql"
+
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dv: <http://bio2rdf.org/drugbank_vocabulary:>
+PREFIX hv: <http://bio2rdf.org/hgnc_vocabulary:>
+PREFIX goa: <http://bio2rdf.org/goa_vocabulary:>
+PREFIX kv: <http://bio2rdf.org/kegg_vocabulary:>
+
+SELECT distinct ?drugid ?g
+{
+?drug <http://bio2rdf.org/openpredict_vocabulary:indication> ?disease .
+{
+?drug a dv:Drug .
+?drug dv:target ?t .
+?t dv:x-hgnc ?x .
+}
+UNION {
+?d a kv:Drug .
+?d kv:target ?l .
+?l kv:link ?t .
+BIND (URI( REPLACE(str(?t),"HSA","hsa")) AS ?target) .
+?target a kv:Gene .
+?target kv:x-hgnc ?x .
+?d kv:x-drugbank ?drug .
+}
+?x hv:x-uniprot ?uniprot .
+?uniprot ?p ?go .
+FILTER (?p = goa:process || ?p = goa:component || ?p = goa:function)
+BIND(STRAFTER(str(?go),  "http://bio2rdf.org/") AS $g)
+BIND ( STRAFTER(str(?drug),"http://bio2rdf.org/drugbank:") AS ?drugid)
+}

@@ -1,0 +1,17 @@
+#+ summary: We should add a summary.
+#+ endpoint: "http://example.com/sparql"
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dv: <http://bio2rdf.org/drugbank_vocabulary:>
+PREFIX sv: <http://bio2rdf.org/sider_vocabulary:>
+
+SELECT distinct ?drugid ?smiles
+{
+ ?d <http://bio2rdf.org/openpredict_vocabulary:indication> ?disease .
+ ?d a dv:Drug .
+ ?d dv:calculated-properties ?cp .
+ ?cp a dv:SMILES .
+ ?cp dv:value ?smiles .
+ BIND( STRAFTER(str(?d), "http://bio2rdf.org/drugbank:") AS ?drugid)
+}

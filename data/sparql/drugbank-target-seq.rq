@@ -1,0 +1,18 @@
+#+ summary: We should add a summary.
+#+ endpoint: "http://example.com/sparql"
+
+PREFIX dv: <http://bio2rdf.org/drugbank_vocabulary:>
+PREFIX hv: <http://bio2rdf.org/hgnc_vocabulary:>
+PREFIX sider: <http://bio2rdf.org/sider_vocabulary:>
+
+SELECT distinct ?geneid ?seq
+{
+  ?drug <http://bio2rdf.org/openpredict_vocabulary:indication> ?disease .
+  ?d a dv:Drug .
+  ?d dv:target ?t .
+  #?t a dv:Target .
+  ?t dv:x-hgnc ?hgnc .
+  ?hgnc hv:x-ncbigene ?ncbi .
+  ?t dv:amino-acid-sequence ?seq .
+BIND ( STRAFTER(str(?ncbi),"http://bio2rdf.org/ncbigene:") AS ?geneid)
+}
