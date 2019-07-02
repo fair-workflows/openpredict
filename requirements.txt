@@ -1,0 +1,9 @@
+# install following packages oddt and openbabel using conda
+#!conda install -c oddt oddt
+#!conda install -c openbabel openbabel
+
+networkx==1.11
+numpy==1.15.4
+pandas==0.24.2
+sklearn==0.20.3
+rdflib==4.2.2
