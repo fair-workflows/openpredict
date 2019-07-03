@@ -11,6 +11,7 @@ RDF generator for the PREDICT drug indication gold standard (https://www.ncbi.nl
 import pandas as pd
 from csv import reader
 import utils
+from utils import Dataset, DataResource
 from rdflib import Graph, URIRef, Literal, RDF, ConjunctiveGraph
 from rdflib import Namespace
 import datetime
@@ -66,57 +67,79 @@ gold_std_mapped_df.rename(columns={'OMIM ID':'http://bio2rdf.org/openpredict_voc
 gold_std_mapped_df= gold_std_mapped_df.set_index('drugid', drop=True)
 
 column_types ={'http://bio2rdf.org/openpredict_vocabulary:indication':'URI'}
-g = ConjunctiveGraph(identifier = URIRef('http://bio2rdf.org/openpredict_resource:bio2rdf.dataset.openpredict.R1'))     
+graphURI ='http://fairworkflows.org/openpredict_resource:fairworkflows.dataset.openpredict.predict.R1'
+g = ConjunctiveGraph(identifier = URIRef(graphURI))  
 g=  utils.to_rdf(g, gold_std_mapped_df, column_types, 'http://bio2rdf.org/drugbank:Drug' )
 
 
-def addProvanace(g):
-    now = datetime.datetime.now()
-    graphURI = URIRef('http://bio2rdf.org/openpredict_resource:bio2rdf.dataset.openpredict.R1')
-    datasetURI= URIRef('https://github.com/fair-workflows/openpredict/known_associations/predict-gold-standard-omim.nq')
-    g.add((graphURI, RDF.type, DC.Dataset))
-    g.add((graphURI, URIRef('http://www.w3.org/ns/dcat#distribution'), datasetURI))
-   
+
+def addMetaData(g, graphURI):
+    #generate dataset
+    data_source = Dataset(qname=graphURI, graph = g)
+    data_source.setURI(graphURI)
+    data_source.setTitle('Supplementary data used in the PREDICT')
+    data_source.setDescription('Drug indications gold standard and mappings used in the study of "PREDICT: a method for inferring novel drug indications with application to personalized medicine" ')
+    data_source.setPublisher('https://www.embopress.org/journal/17444292')
+    data_source.setPublisherName('Molecular Systems Biology')
+    data_source.addRight('use-share-modify')
+    data_source.addTheme('http://www.wikidata.org/entity/Q56863002')
+    data_source.setLicense('https://www.embopress.org/page/journal/17444292/about')
+    data_source.setHomepage('https://dx.doi.org/10.1038%2Fmsb.2011.26')
+    data_source.setVersion('1.0')
+
+
+    #generate dataset distribution
+    data_dist1 = DataResource(qname=graphURI, graph = data_source.toRDF())
+    data_dist1.setURI('https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3159979/bin/msb201126-s4.xls')
+    data_dist1.setTitle('Mapping between OMIM diseases and UMLS concepts used in the PREDICT study (msb201126-s4.xls)')
+    data_dist1.setDescription('This file contains the mappings between OMIM diseases and UMLS concepts used in the PREDICT study')
+    data_dist1.setLicense('https://creativecommons.org/publicdomain/zero/1.0/')
+    data_dist1.setVersion('1.0')
+    data_dist1.setFormat('application/vnd.ms-excel')
+    data_dist1.setMediaType('application/vnd.ms-excel')
+    data_dist1.setPublisher('https://www.embopress.org/journal/17444292')
+    data_dist1.addRight('use-share-modify')
+    data_dist1.setRetrievedDate(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    data_dist1.setDataset(data_source.getURI())
     
-    g.add((datasetURI, DC['title'], Literal('RDF version of PREDICT drug indication gold standard')))
-    g.add((datasetURI, DC['format'], Literal('application/n-quads')))
-    g.add((datasetURI, DC['created'], Literal(now.strftime("%Y-%m-%d %H:%M:%S"))))
-    g.add((datasetURI, DC['creator'], Literal('https://github.com/fair-workflows/openpredict/MappingPREDICTGoldstandard.ipynb')))
-    g.add((datasetURI, DC['source'], URIRef('https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3159979/bin/msb201126-s1.xls')))
-    g.add((datasetURI, DC['source'], URIRef('https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3159979/bin/msb201126-s4.xls')))
-
-    g.add((datasetURI, DC['homepage'], URIRef('https://github.com/fair-workflows/openpredict/')))
-    g.add((datasetURI, DC['license'], URIRef('http://creativecommons.org/licenses/by/3.0/')))
-    g.add((datasetURI, DC['rights'], Literal('use-share-modify')))
-    g.add((datasetURI, DC['rights'], Literal('by-attribution')))
-    g.add((datasetURI, DC['rights'], Literal('restricted-by-source-license')))
-        
-    sourcedatasetURI = URIRef('https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3159979/bin/msb201126-s1.xls')
-    g.add((sourcedatasetURI, DC['title'], Literal('Drug indications gold standard used in the PREDICT study (msb201126-s1.xls)')))
-    g.add((sourcedatasetURI, RDF['type'], URIRef('http://www.w3.org/ns/dcat#Distribution')))
-    g.add((sourcedatasetURI, DC['homepage'], URIRef('https://dx.doi.org/10.1038%2Fmsb.2011.26')))
-    g.add((sourcedatasetURI, URIRef('http://purl.org/pav/retrievedOn'), Literal(now.strftime("%Y-%m-%d %H:%M:%S"))))
-    g.add((sourcedatasetURI, DC['format'], Literal('application/xls')))
-    g.add((sourcedatasetURI, DC['rights'], URIRef('https://creativecommons.org/licenses/by-nc-sa/3.0/us/')))
-    g.add((sourcedatasetURI, DC['publisher'], Literal('Molecular Systems Biology')))
-    g.add((sourcedatasetURI, DC['rights'], Literal('use')))
-    g.add((sourcedatasetURI, DC['rights'], Literal('no-commercial')))
-          
-
-    sourcedatasetURI = URIRef('https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3159979/bin/msb201126-s4.xls')
-    g.add((sourcedatasetURI, DC['title'], Literal('Mapping between OMIM diseases and UMLS concepts used in the PREDICT study (msb201126-s4.xls)')))
-    g.add((sourcedatasetURI, RDF['type'], URIRef('http://www.w3.org/ns/dcat#Distribution')))
-    g.add((sourcedatasetURI, DC['homepage'], URIRef('https://dx.doi.org/10.1038%2Fmsb.2011.26')))
-    g.add((sourcedatasetURI, URIRef('http://purl.org/pav/retrievedOn'), Literal(now.strftime("%Y-%m-%d %H:%M:%S"))))
-    g.add((sourcedatasetURI, DC['format'], Literal('application/xls')))
-    g.add((sourcedatasetURI, DC['rights'], URIRef('https://creativecommons.org/licenses/by-nc-sa/3.0/us/')))
-    g.add((sourcedatasetURI, DC['publisher'], Literal('Molecular Systems Biology')))
-    g.add((sourcedatasetURI, DC['rights'], Literal('use')))
-    g.add((sourcedatasetURI, DC['rights'], Literal('no-commercial')))
     
-    return g
+    #generate dataset distribution
+    data_dist2 = DataResource(qname=graphURI, graph = data_dist1.toRDF())
+    data_dist2.setURI('https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3159979/bin/msb201126-s1.xls')
+    data_dist2.setTitle('Drug indications gold standard used in the PREDICT study (msb201126-s1.xls)')
+    data_dist2.setDescription('This file contains the gold standard drug indications used in the PREDICT study')
+    data_dist2.setLicense('https://creativecommons.org/publicdomain/zero/1.0/')
+    data_dist2.setVersion('1.0')
+    data_dist2.setFormat('application/vnd.ms-excel')
+    data_dist2.setMediaType('application/vnd.ms-excel')
+    data_dist2.setPublisher('https://www.embopress.org/journal/17444292')
+    data_dist2.addRight('use-share-modify')
+    data_dist2.setRetrievedDate(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    data_dist2.setDataset(data_source.getURI())
+     
 
-g= addProvanace(g)
+    #generate RDF data distrubtion
+    rdf_dist = DataResource(qname=graphURI, graph = data_dist2.toRDF() )
+    rdf_dist.setURI('https://github.com/fair-workflows/openpredict/blob/master/data/rdf/predict-gold-standard-omim.nq.gz')
+    rdf_dist.setTitle('RDF version of PREDICT drug indication gold standard')
+    rdf_dist.setDescription('This file is the RDF version of PREDICT drug indication gold standard')
+    rdf_dist.setLicense('http://creativecommons.org/licenses/by/3.0/')
+    rdf_dist.setVersion('1.0')
+    rdf_dist.setFormat('application/n-quads')
+    rdf_dist.setMediaType('application/n-quads')
+    rdf_dist.addRight('use-share-modify')
+    rdf_dist.addRight('by-attribution')
+    rdf_dist.addRight('restricted-by-source-license')
+    rdf_dist.setCreateDate(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    rdf_dist.setCreator('https://github.com/fair-workflows/openpredict/src/MappingPREDICTGoldstandard.py')
+    rdf_dist.setDownloadURL('https://github.com/fair-workflows/openpredict/known_associations/predict-gold-standard-omim.nq.gz')
+    rdf_dist.setDataset(data_dist2.getURI())
+    rdf_dist.addSource('https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3159979/bin/msb201126-s1.xls')
+    rdf_dist.addSource('https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3159979/bin/msb201126-s4.xls')
+      
+    return rdf_dist.toRDF()
+
+g= addMetaData(g, graphURI)
 
 outfile ='../data/rdf/predict-gold-standard-omim.nq'
 g.serialize(outfile, format='nquads')

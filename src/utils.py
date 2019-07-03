@@ -6,25 +6,43 @@ Utility functions and classes
 @author Remzi Celebi
 """
 
-
+import datetime
 import pandas as pd
 from rdflib import Graph, URIRef, Literal, RDF, ConjunctiveGraph, Namespace
 DC = Namespace("http://purl.org/dc/terms/")
 DCAT = Namespace("http://www.w3.org/ns/dcat#")
 RDFS = Namespace("http://www.w3.org/2000/01/rdf-schema#")
 PAV = Namespace("http://purl.org/pav/")
-FOAF = Namespace("http://xmlns.com/foaf/0.1/name")
+FOAF = Namespace("http://xmlns.com/foaf/0.1/")
 
 
 class DataResource:
-    def __init__(self, qname):
-        self.setQName(qname)
-        self.graph =  ConjunctiveGraph(identifier = self.getQName()) 
+    def __init__(self, qname, graph= None):
+        if graph != None:
+            self.setRDFGraph(graph)
+        else:
+            self.setQName(qname)
+            self.graph =  ConjunctiveGraph(identifier = self.getQName())
+        
+        self.description = None
+        self.rights = None
+        self.themes = None
+        self.sources = None
+        self.uri = None
+        self.title = None
+        self.qname = None
+        self.create_date = None
+        self.issued_date = None
+        self.creator = None
+        self.homepage = None
+        self.download_url = None
+        self.retrieved_date = None
+        self.publisher = None
         
     def setRDFGraph(self, graph): self.graph = graph
     def getRDFGraph(self): return self.graph
         
-    def setURI(self, uri): self.uri = uri
+    def setURI(self, uri): self.uri = URIRef(uri)
     def getURI(self): return self.uri
         
     def setQName(self, qname): self.qname = qname
@@ -44,6 +62,10 @@ class DataResource:
         
     def setSources(self, sources): self.sources = sources
     def getSources(self): return self.sources
+    
+    def addSource(self, source):
+        if self.sources == None: self.sources =[]
+        self.sources.append(source)
     
     def setCreator(self, creator): self.creator = creator
     def getCreator(self): return self.creator
@@ -119,9 +141,13 @@ class DataResource:
         if self.getIssuedDate() != None:
              graph.add((dataset_uri, DC['issued'], Literal( self.getIssuedDate() )))
                 
-        for source in self.getSources() :
-            if source != None :
-                graph.add((datasetURI, DC['source'], URIRef( source )))
+        if self.getSources() != None:
+            for source in self.getSources() :
+                if source != None :
+                    graph.add((dataset_uri, DC['source'], URIRef( source )))
+                    
+        if self.getDataset() != None:
+            graph.add(( URIRef( self.getDataset() ), DCAT['distribution'], dataset_uri ))
             
         if self.getCreator() != None:
             graph.add((dataset_uri, DC['creator'], URIRef( self.getCreator() )))
@@ -150,31 +176,44 @@ class DataResource:
         if self.getLicense() != None:
             graph.add((dataset_uri, DC['license'], URIRef( self.getLicense() )))
             
-        for right in self.getRights() :
-            if right != None :
-                graph.add((dataset_uri, DC['rights'], Literal( right )))
+        if self.getRights() != None:
+            for right in self.getRights() :
+                if right != None :
+                    graph.add((dataset_uri, DC['rights'], Literal( right )))
         
         return graph
         
 
 class Dataset:
-    def __init__(self, qname):
-        self.setQName(qname)
-        self.graph =  ConjunctiveGraph(identifier = self.getQName()) 
+    
+    def __init__(self, qname, graph= None):
+        
+        self.rights = []
+        self.themes = []
+        self.description = None
+        
+        if graph != None:
+            self.setRDFGraph(graph)
+        else:
+            self.setQName(qname)
+            self.setRDFGraph( ConjunctiveGraph(identifier = self.getQName()) )
+            
+    def setQName(self, qname): self.qname = qname
+    def getQName(self): return self.qname
         
     def setRDFGraph(self, graph): self.graph = graph
     def getRDFGraph(self): return self.graph
         
-    def setURI(self, uri): self.uri = uri
+    def setURI(self, uri): self.uri = URIRef(uri)
     def getURI(self): return self.uri
     
     def setVersion(self, version): self.version = version
     def getVersion(self): return self.version
     
     def setThemes(self, themes): self.themes = themes
-    def getTheme(self): return self.themes
+    def getThemes(self): return self.themes
     
-     def addTheme(self, theme):
+    def addTheme(self, theme):
         if self.themes == None: self.themes =[]
         self.themes.append(theme)
         
@@ -184,6 +223,9 @@ class Dataset:
     def addRight(self, right):
         if self.rights == None: self.rights =[]
         self.rights.append(right)
+   
+    def setLicense(self, license): self.license = license
+    def getLicense(self): return self.license
         
     def setCatalog(self, catalog): self.catalog = catalog
     def getCatalog(self): return self.catalog
@@ -228,7 +270,7 @@ class Dataset:
             graph.add((dataset_uri, DC['publisher'], publisher_uri))
             if self.getPublisherName() != None:
                 graph.add((publisher_uri, RDF.type, FOAF['Organization'] ))
-                graph.add((publisher_uri, FOAF['name'], URIRef( self.getPublisherName() )))
+                graph.add((publisher_uri, FOAF['name'], Literal( self.getPublisherName() )))
             
         if self.getHomepage() != None:
             graph.add((dataset_uri, FOAF['page'], URIRef( self.getHomepage() )))
@@ -273,8 +315,9 @@ def to_rdf(g, df, column_types, row_uri):
 
 def test():   
     #generate dataset
-    data_source = utils.Dataset()
-    data_source.setURI('https://w3id.org/fairworkflows/human_interactome')
+    graphURI ='http://fairworkflows.org/openpredict_resource:fairworkflows.dataset.openpredict.interactome.R1'
+    data_source = Dataset(qname=graphURI)
+    data_source.setURI(graphURI)
     data_source.setTitle('The Human Interactome Dataset')
     data_source.setDescription('Human Interactome data used in "Uncovering Disease-Disease Relationships Through The Human Interactome" study')
     data_source.setPublisher('https://science.sciencemag.org/')
@@ -287,8 +330,9 @@ def test():
     data_source.setHomepage('https://dx.doi.org/10.1126%2Fscience.1257601')
     data_source.setVersion('1.0')
 
+
     #generate dataset distribution
-    data_dist = utils.DataResource()
+    data_dist = DataResource(qname=graphURI, graph = data_source.toRDF())
     data_dist.setURI('https://media.nature.com/full/nature-assets/srep/2016/161017/srep35241/extref/srep35241-s3.txt')
     data_dist.setTitle('The Human Interactome Dataset (srep35241-s3.txt)')
     data_dist.setDescription('This file contains the Human Interactome used in "Uncovering Disease-Disease Relationships Through The Human Interactome" study')
@@ -299,13 +343,13 @@ def test():
     data_dist.setPublisher('https://science.sciencemag.org/')
     data_dist.addRight('no-commercial')
     data_dist.addRight('use')
-    data_dist.setRetrievedDate(now.strftime("%Y-%m-%d %H:%M:%S"))
+    data_dist.setRetrievedDate(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
     data_dist.setDataset(data_source.getURI())
 
     #generate RDF data distrubtion
-    rdf_dist = utils.DataResource()
+    rdf_dist = DataResource(qname=graphURI, graph = data_dist.toRDF() )
     rdf_dist.setURI('https://github.com/fair-workflows/openpredict/blob/master/data/rdf/human_interactome.nq.gz')
-    rdf_dist.setTitle('DF Version of the Human Interactome')
+    rdf_dist.setTitle('RDF Version of the Human Interactome')
     rdf_dist.setDescription('This file contains the Human Interactome used in "Uncovering Disease-Disease Relationships Through The Human Interactome" study')
     rdf_dist.setLicense('https://www.sciencemag.org/about/terms-service')
     rdf_dist.setVersion('1.0')
@@ -314,7 +358,16 @@ def test():
     rdf_dist.addRight('use-share-modify')
     rdf_dist.addRight('by-attribution')
     rdf_dist.addRight('restricted-by-source-license')
-    rdf_dist.setCreateDate(now.strftime("%Y-%m-%d %H:%M:%S"))
+    rdf_dist.setCreateDate(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
     rdf_dist.setCreator('https://github.com/fair-workflows/openpredict/src/HumanInteractome.py')
     rdf_dist.setDownloadURL('https://github.com/fair-workflows/openpredict/blob/master/data/rdf/human_interactome.nq.gz')
     rdf_dist.setDataset(data_dist.getURI())
+    
+    g = rdf_dist.toRDF()
+    
+    outfile ='../data/rdf/human_interactome.nq'
+    g.serialize(outfile, format='nquads')
+    print('RDF is generated at '+outfile)
+
+    
+#test()

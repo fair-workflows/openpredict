@@ -11,6 +11,7 @@ RDF generator for the OMIM HPO Annotations (http://compbio.charite.de/jenkins/jo
 import pandas as pd
 from csv import reader
 import utils
+from utils import Dataset, DataResource
 from rdflib import Graph, URIRef, Literal, RDF, ConjunctiveGraph
 from rdflib import Namespace
 import datetime
@@ -41,40 +42,54 @@ g = ConjunctiveGraph(identifier = graphURI)
 
 g=  utils.to_rdf(g, hpoannot_df, column_types, 'http://bio2rdf.org/omim_vocabulary:Phenotype' )
 
-def addProvanace(g, graphURI):
-    now = datetime.datetime.now()
-    
-    datasetURI= URIRef('https://github.com/fair-workflows/openpredict/data/rdf/hpo_annotations.nq')
-    g.add((graphURI, RDF.type, DC.Dataset))
-    g.add((graphURI, URIRef('http://www.w3.org/ns/dcat#distribution'), datasetURI))
-    sourcedatasetURI =  URIRef('https://media.nature.com/full/nature-assets/srep/2016/161017/srep35241/extref/srep35241-s3.txt')
-    
-    g.add((datasetURI, DC['title'], Literal('RDF Version of OMIM HPO Annotations')))
-    g.add((datasetURI, DC['format'], Literal('application/n-quads')))
-    g.add((datasetURI, DC['created'], Literal(now.strftime("%Y-%m-%d %H:%M:%S"))))
-    g.add((datasetURI, DC['creator'], Literal('https://github.com/fair-workflows/openpredict/OMIMHpoAnnotations.ipynb')))
+def addMetaData(g, graphURI):
+    #generate dataset
+    data_source = Dataset(qname=graphURI, graph = g)
+    data_source.setURI(graphURI)
+    data_source.setTitle('Phenotype annotatations by the HPO-team')
+    data_source.setDescription('This dataset contains manual and semi-automated annotations created by the HPO-team. These are annotations of OMIM-, Orphanet-, and DECIPHER-entries')
+    data_source.setPublisher('https://monarchinitiative.org/')
+    data_source.setPublisherName('Monarch Initiative')
+    data_source.addRight('use')
+    data_source.addTheme('http://www.wikidata.org/entity/Q17027854')
+    data_source.addTheme('http://www.wikidata.org/entity/Q45314346')
+    data_source.setLicense('https://hpo.jax.org/app/license')
+    data_source.setHomepage('https://hpo.jax.org/app/download/annotation')
+    data_source.setVersion('1.0')
 
-    g.add((datasetURI, DC['homepage'], URIRef('https://github.com/fair-workflows/openpredict/')))
-    g.add((datasetURI, DC['license'], URIRef('http://creativecommons.org/licenses/by/3.0/')))
-    g.add((datasetURI, DC['rights'], Literal('use-share-modify')))
-    g.add((datasetURI, DC['rights'], Literal('by-attribution')))
-    g.add((datasetURI, DC['rights'], Literal('restricted-by-source-license')))
 
-    g.add((datasetURI, DC['source'], sourcedatasetURI))
-        
-    g.add((sourcedatasetURI, DC['title'], Literal('Phenote-annotated by HPO-team (http://phenotype_annotation_hpoteam.tab)')))
-    g.add((sourcedatasetURI, RDF['type'], URIRef('http://www.w3.org/ns/dcat#Distribution')))
-    g.add((sourcedatasetURI, DC['homepage'], URIRef('https://hpo.jax.org/app/download/annotation')))
-    g.add((sourcedatasetURI, URIRef('http://purl.org/pav/retrievedOn'), Literal(now.strftime("%Y-%m-%d %H:%M:%S"))))
-    g.add((sourcedatasetURI, DC['format'], Literal('text/tsv')))
-    g.add((sourcedatasetURI, DC['rights'], URIRef('https://hpo.jax.org/app/license')))
-    g.add((sourcedatasetURI, DC['publisher'], Literal('https://hpo.jax.org/app/download/annotation')))
-    g.add((sourcedatasetURI, DC['rights'], Literal('use')))
-    g.add((sourcedatasetURI, DC['rights'], Literal('citation-required')))
-    
-    return g
+    #generate dataset distribution
+    data_dist = DataResource(qname=graphURI, graph = data_source.toRDF())
+    data_dist.setURI('http://compbio.charite.de/jenkins/job/hpo.annotations/lastStableBuild/artifact/misc/phenotype_annotation.tab')
+    data_dist.setTitle('Phenotypes annotated by the HPO-team (phenotype_annotation_hpoteam.tab)')
+    data_dist.setLicense('https://hpo.jax.org/app/license')
+    data_dist.setVersion('1.0')
+    data_dist.setFormat('text/tab-separated-value')
+    data_dist.setMediaType('text/tab-separated-value')
+    data_dist.setPublisher('https://monarchinitiative.org/')
+    data_dist.addRight('use')
+    data_dist.setRetrievedDate(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    data_dist.setDataset(data_source.getURI())
 
-g=addProvanace(g, graphURI)
+    #generate RDF data distrubtion
+    rdf_dist = DataResource(qname=graphURI, graph = data_dist.toRDF() )
+    rdf_dist.setURI('https://github.com/fair-workflows/openpredict/blob/master/data/rdf/hpo_annotations.nq.gz')
+    rdf_dist.setTitle('RDF Version of the OMIM HPO Annotations')
+    rdf_dist.setLicense('http://creativecommons.org/licenses/by/3.0/')
+    rdf_dist.setVersion('1.0')
+    rdf_dist.setFormat('application/n-quads')
+    rdf_dist.setMediaType('application/n-quads')
+    rdf_dist.addRight('use-share-modify')
+    rdf_dist.addRight('by-attribution')
+    rdf_dist.addRight('restricted-by-source-license')
+    rdf_dist.setCreateDate(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    rdf_dist.setCreator('https://github.com/fair-workflows/openpredict/src/OMIMHpoAnnotations.py')
+    rdf_dist.setDownloadURL('https://github.com/fair-workflows/openpredict/blob/master/data/rdf/hpo_annotations.nq.gz')
+    rdf_dist.setDataset(data_dist.getURI())
+      
+    return rdf_dist.toRDF()
+
+g = addMetaData(g, graphURI)
 outfile ='../data/rdf/hpo_annotations.nq'
 g.serialize(outfile, format='nquads')
 print('RDF is generated at '+outfile)

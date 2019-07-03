@@ -10,6 +10,7 @@ RDF generator for the PREDICT drug indication gold standard (http://www.paccanar
 import pandas as pd
 from csv import reader
 import utils
+from utils import Dataset, DataResource
 from rdflib import Graph, URIRef, Literal, RDF, ConjunctiveGraph
 from rdflib import Namespace
 import datetime
@@ -42,42 +43,57 @@ column_types ={'http://semanticscience.org/resource/SIO_000255':'URI'}
 graphURI = URIRef('http://fairworkflows.org/openpredict_resource:fairworkflows.dataset.openpredict.meshannot.R1')
     
 g = ConjunctiveGraph(identifier = graphURI )     
-g=  utils.to_rdf(g, mim2mesh_df, column_types, 'http://bio2rdf.org/omim_vocabulary:Phenotype' )
+g =  utils.to_rdf(g, mim2mesh_df, column_types, 'http://bio2rdf.org/omim_vocabulary:Phenotype' )
 
-def addProvanace(g, graphURI):
-    now = datetime.datetime.now()
-    datasetURI= URIRef('https://github.com/fair-workflows/openpredict/data/rdf/omim_mesh_annotations.nq')
-    g.add((graphURI, RDF.type, DC.Dataset))
-    g.add((graphURI, URIRef('http://www.w3.org/ns/dcat#distribution'), datasetURI))
-    sourcedatasetURI =  URIRef('http://www.paccanarolab.org/static_content/disease_similarity/mim2mesh.tsv')
-    
-    g.add((datasetURI, DC['title'], Literal('Mesh Annotations for OMIM ids')))
-    g.add((datasetURI, DC['format'], Literal('application/n-quads')))
-    g.add((datasetURI, DC['created'], Literal(now.strftime("%Y-%m-%d %H:%M:%S"))))
-    g.add((datasetURI, DC['creator'], Literal('https://github.com/fair-workflows/openpredict/RDFConversionOfMeshAnnotation.ipynb')))
+def addMetaData(g, graphURI):
+    #generate dataset
+    data_source = Dataset(qname=graphURI, graph = g)
+    data_source.setURI(graphURI)
+    data_source.setTitle('Mesh Annotations for OMIM diseases')
+    data_source.setDescription('This dataset contains the MeSH terms associated with the publications referenced in OMIM. This dataset is used in  " https://doi.org/10.1038/srep17658"')
+    data_source.setPublisher('http://www.paccanarolab.org')
+    data_source.setPublisherName('the Paccanaro Lab')
+    data_source.addRight('use-share-modify')
+    data_source.addTheme('http://www.wikidata.org/entity/Q199897')
+    data_source.addTheme('http://www.wikidata.org/entity/Q857525')
+    data_source.setLicense('http://creativecommons.org/licenses/by/4.0/')
+    data_source.setHomepage('http://www.paccanarolab.org/disease_similarity/')
+    data_source.setVersion('1.0')
 
-    g.add((datasetURI, DC['homepage'], URIRef('https://github.com/fair-workflows/openpredict/')))
-    g.add((datasetURI, DC['license'], URIRef('http://creativecommons.org/licenses/by/3.0/')))
-    g.add((datasetURI, DC['rights'], Literal('use-share-modify')))
-    g.add((datasetURI, DC['rights'], Literal('by-attribution')))
-    g.add((datasetURI, DC['rights'], Literal('restricted-by-source-license')))
 
-    g.add((datasetURI, DC['source'], sourcedatasetURI))
-        
-    g.add((sourcedatasetURI, DC['title'], Literal('OMIM Mesh Annotations (mim2mesh.tsv)')))
-    g.add((sourcedatasetURI, RDF['type'], URIRef('http://www.w3.org/ns/dcat#Distribution')))
-    g.add((sourcedatasetURI, DC['homepage'], URIRef('http://www.paccanarolab.org/disease_similarity/')))
-    g.add((sourcedatasetURI, DC['homepage'], URIRef('https://doi.org/10.1038/srep17658')))
-    g.add((sourcedatasetURI, URIRef('http://purl.org/pav/retrievedOn'), Literal(now.strftime("%Y-%m-%d %H:%M:%S"))))
-    g.add((sourcedatasetURI, DC['format'], Literal('text/tsv')))
-    g.add((sourcedatasetURI, DC['rights'], URIRef('http://creativecommons.org/licenses/by/4.0/')))
-    g.add((sourcedatasetURI, DC['publisher'], Literal('http://www.paccanarolab.org/')))
-    g.add((sourcedatasetURI, DC['rights'], Literal('use')))
-    g.add((sourcedatasetURI, DC['rights'], Literal('no-commercial')))
-    
-    return g
+    #generate dataset distribution
+    data_dist = DataResource(qname=graphURI, graph = data_source.toRDF())
+    data_dist.setURI('http://www.paccanarolab.org/static_content/disease_similarity/mim2mesh.tsv')
+    data_dist.setTitle('Mesh Annotations by the Paccanaro Lab(mim2mesh.tsv)')
+    data_dist.setLicense('http://creativecommons.org/licenses/by/4.0/')
+    data_dist.setVersion('1.0')
+    data_dist.setFormat('text/tab-separated-value')
+    data_dist.setMediaType('text/tab-separated-value')
+    data_dist.setPublisher('http://www.paccanarolab.org')
+    data_dist.addRight('use-share-modify')
+    data_dist.setRetrievedDate(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    data_dist.setDataset(data_source.getURI())
 
-g= addProvanace(g, graphURI)
+    #generate RDF data distrubtion
+    rdf_dist = DataResource(qname=graphURI, graph = data_dist.toRDF() )
+    rdf_dist.setURI('https://github.com/fair-workflows/openpredict/blob/master/data/rdf/omim_mesh_annotations.nq.gz')
+    rdf_dist.setTitle('RDF Version of the MESH Annotations for OMIM diseases')
+    rdf_dist.setLicense('http://creativecommons.org/licenses/by/3.0/')
+    rdf_dist.setVersion('1.0')
+    rdf_dist.setFormat('application/n-quads')
+    rdf_dist.setMediaType('application/n-quads')
+    rdf_dist.addRight('use-share-modify')
+    rdf_dist.addRight('by-attribution')
+    rdf_dist.addRight('restricted-by-source-license')
+    rdf_dist.setCreateDate(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    rdf_dist.setCreator('https://github.com/fair-workflows/openpredict/src/RDFConversionOfMeshAnnotation.py')
+    rdf_dist.setDownloadURL('https://github.com/fair-workflows/openpredict/blob/master/data/rdf/omim_mesh_annotations.nq.gz')
+    rdf_dist.setDataset(data_dist.getURI())
+      
+    return rdf_dist.toRDF()
+
+
+g= addMetaData(g, graphURI)
 
 outfile ='../data/rdf/omim_mesh_annotations.nq'
 g.serialize(outfile, format='nquads')

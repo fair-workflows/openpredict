@@ -10,6 +10,7 @@ RDF generator for the mappings from Pubchem ids to Drugbank ids (https://raw.git
 import pandas as pd
 from csv import reader
 import utils
+from utils import Dataset, DataResource
 from rdflib import Graph, URIRef, Literal, RDF, ConjunctiveGraph
 from rdflib import Namespace
 import datetime
@@ -37,41 +38,55 @@ g = ConjunctiveGraph(identifier = graphURI)
 g = utils.to_rdf(g, drugbank_map_df, column_types, 'http://bio2rdf.org/drugbank:Drug' )
 
 
-def addProvanace(g, graphURI):
-    now = datetime.datetime.now()
-    
-    datasetURI= URIRef('https://github.com/fair-workflows/openpredict/data/rdf/pubchem_mapping.nq')
-    g.add((graphURI, RDF.type, DC.Dataset))
-    g.add((graphURI, URIRef('http://www.w3.org/ns/dcat#distribution'), datasetURI))
-    sourcedatasetURI =  URIRef('https://raw.githubusercontent.com/dhimmel/drugbank/3e87872db5fca5ac427ce27464ab945c0ceb4ec6/data/mapping/pubchem.tsv')
-    
-    g.add((datasetURI, DC['title'], Literal('Pubchem mapping for Drugbank ids')))
-    g.add((datasetURI, DC['format'], Literal('application/n-quads')))
-    g.add((datasetURI, DC['created'], Literal(now.strftime("%Y-%m-%d %H:%M:%S"))))
-    g.add((datasetURI, DC['creator'], Literal('https://github.com/fair-workflows/openpredict/RDFConversionOfPubchemMapping.ipynb')))
-
-    g.add((datasetURI, DC['homepage'], URIRef('https://github.com/fair-workflows/openpredict/')))
-    g.add((datasetURI, DC['license'], URIRef('http://creativecommons.org/licenses/by/3.0/')))
-    g.add((datasetURI, DC['rights'], Literal('use-share-modify')))
-    g.add((datasetURI, DC['rights'], Literal('by-attribution')))
-    g.add((datasetURI, DC['rights'], Literal('restricted-by-source-license')))
-
-    g.add((datasetURI, DC['source'], sourcedatasetURI))
-        
-    g.add((sourcedatasetURI, DC['title'], Literal('Mapping From Drugbank to Pubchem  (pubchem.tsv)')))
-    g.add((sourcedatasetURI, RDF['type'], URIRef('http://www.w3.org/ns/dcat#Distribution')))
-    g.add((sourcedatasetURI, DC['homepage'], URIRef('https://github.com/dhimmel/drugbank')))
-    g.add((sourcedatasetURI, URIRef('http://purl.org/pav/retrievedOn'), Literal(now.strftime("%Y-%m-%d %H:%M:%S"))))
-    g.add((sourcedatasetURI, DC['format'], Literal('text/tsv')))
-    g.add((sourcedatasetURI, DC['rights'], URIRef('https://creativecommons.org/licenses/by-nc/4.0/')))
-    g.add((sourcedatasetURI, DC['publisher'], Literal('https://github.com/dhimmel/drugbank')))
-    g.add((sourcedatasetURI, DC['rights'], Literal('use')))
-    g.add((sourcedatasetURI, DC['rights'], Literal('no-commercial')))
-    
-    return g
+def addMetaData(g, graphURI):
+    #generate dataset
+    data_source = Dataset(qname=graphURI, graph = g)
+    data_source.setURI(graphURI)
+    data_source.setTitle('Pubchem mappings for Drugbank drugs')
+    data_source.setDescription('DrugBank to PubChem mapping using InChI strings created by Daniel Himmelstein.')
+    data_source.setPublisher('https://github.com/dhimmel')
+    data_source.setPublisherName('Daniel Himmelstein')
+    data_source.addRight('use-share-modify')
+    data_source.addTheme('http://www.wikidata.org/entity/Q278487')
+    data_source.addTheme('http://www.wikidata.org/entity/Q1122544')
+    data_source.setLicense('http://creativecommons.org/licenses/by/4.0/')
+    data_source.setHomepage('https://github.com/dhimmel/drugbank/blob/gh-pages/pubchem-map.ipynb')
+    data_source.setVersion('1.0')
 
 
-g=addProvanace(g, graphURI)
+    #generate dataset distribution
+    data_dist = DataResource(qname=graphURI, graph = data_source.toRDF())
+    data_dist.setURI('https://raw.githubusercontent.com/dhimmel/drugbank/3e87872db5fca5ac427ce27464ab945c0ceb4ec6/data/mapping/pubchem.tsv')
+    data_dist.setTitle('Pubchem mappings for Drugbank drugs (pubchem.tsv)')
+    data_dist.setLicense('http://creativecommons.org/licenses/by/4.0/')
+    data_dist.setVersion('1.0')
+    data_dist.setFormat('text/tab-separated-value')
+    data_dist.setMediaType('text/tab-separated-value')
+    data_dist.setPublisher('https://github.com/dhimmel')
+    data_dist.addRight('use-share-modify')
+    data_dist.setRetrievedDate(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    data_dist.setDataset(data_source.getURI())
+
+    #generate RDF data distrubtion
+    rdf_dist = DataResource(qname=graphURI, graph = data_dist.toRDF() )
+    rdf_dist.setURI('https://github.com/fair-workflows/openpredict/blob/master/data/rdf/pubchem_mapping.nq.gz')
+    rdf_dist.setTitle('RDF Version of the Pubchem mappings for Drugbank drugs')
+    rdf_dist.setLicense('http://creativecommons.org/licenses/by/3.0/')
+    rdf_dist.setVersion('1.0')
+    rdf_dist.setFormat('application/n-quads')
+    rdf_dist.setMediaType('application/n-quads')
+    rdf_dist.addRight('use-share-modify')
+    rdf_dist.addRight('by-attribution')
+    rdf_dist.addRight('restricted-by-source-license')
+    rdf_dist.setCreateDate(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    rdf_dist.setCreator('https://github.com/fair-workflows/openpredict/src/RDFConversionOfPubchemMapping.py')
+    rdf_dist.setDownloadURL('https://github.com/fair-workflows/openpredict/blob/master/data/rdf/pubchem_mapping.nq.gz')
+    rdf_dist.setDataset(data_dist.getURI())
+      
+    return rdf_dist.toRDF()
+
+
+g = addMetaData(g, graphURI)
 
 outfile ='../data/rdf/pubchem_mapping.nq'
 g.serialize(outfile, format='nquads')

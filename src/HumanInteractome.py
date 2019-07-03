@@ -9,6 +9,7 @@ RDF generator for the Human Interactome (https://media.nature.com/full/nature-as
 
 import pandas as pd
 import utils
+from utils import Dataset, DataResource
 
 from rdflib import Namespace
 from rdflib import Graph, URIRef, Literal, RDF, ConjunctiveGraph
@@ -45,42 +46,56 @@ graphURI = URIRef('http://fairworkflows.org/openpredict_resource:fairworkflows.d
 g =  ConjunctiveGraph(identifier = graphURI)     
 g=  utils.to_rdf(g, interactome_df, column_types, 'http://edamontology.org/topic_0128' )
 
+def addMetaData(g, graphURI):
+    #generate dataset
+    data_source = Dataset(qname=graphURI, graph = g)
+    data_source.setURI(graphURI)
+    data_source.setTitle('The Human Interactome Dataset')
+    data_source.setDescription('Human Interactome data used in "Uncovering Disease-Disease Relationships Through The Human Interactome" study')
+    data_source.setPublisher('https://science.sciencemag.org/')
+    data_source.setPublisherName('American Association for the Advancement of Science')
+    data_source.addRight('no-commercial')
+    data_source.addRight('use')
+    data_source.addTheme('http://www.wikidata.org/entity/Q896177')
+    data_source.addTheme('http://www.wikidata.org/entity/Q25113323')
+    data_source.setLicense('https://www.sciencemag.org/about/terms-service')
+    data_source.setHomepage('https://dx.doi.org/10.1126%2Fscience.1257601')
+    data_source.setVersion('1.0')
 
 
-def addProvanace(g, graphURI):
-    now = datetime.datetime.now()
-    
-    datasetURI= URIRef('https://github.com/fair-workflows/openpredict/data/rdf/human_interactome.nq')
-    g.add((graphURI, RDF.type, DC.Dataset))
-    g.add((graphURI, URIRef('http://www.w3.org/ns/dcat#distribution'), datasetURI))
-    sourcedatasetURI =  URIRef('https://media.nature.com/full/nature-assets/srep/2016/161017/srep35241/extref/srep35241-s3.txt')
-    
-    g.add((datasetURI, DC['title'], Literal('RDF Version of the Human Interactome')))
-    g.add((datasetURI, DC['format'], Literal('application/n-quads')))
-    g.add((datasetURI, DC['created'], Literal(now.strftime("%Y-%m-%d %H:%M:%S"))))
-    g.add((datasetURI, DC['creator'], Literal('https://github.com/fair-workflows/openpredict/HumanInteractome.ipynb')))
+    #generate dataset distribution
+    data_dist = DataResource(qname=graphURI, graph = data_source.toRDF())
+    data_dist.setURI('https://media.nature.com/full/nature-assets/srep/2016/161017/srep35241/extref/srep35241-s3.txt')
+    data_dist.setTitle('The Human Interactome Dataset (srep35241-s3.txt)')
+    data_dist.setLicense('https://www.sciencemag.org/about/terms-service')
+    data_dist.setVersion('1.0')
+    data_dist.setFormat('text/tab-separated-value')
+    data_dist.setMediaType('text/tab-separated-value')
+    data_dist.setPublisher('https://science.sciencemag.org/')
+    data_dist.addRight('no-commercial')
+    data_dist.addRight('use')
+    data_dist.setRetrievedDate(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    data_dist.setDataset(data_source.getURI())
 
-    g.add((datasetURI, DC['homepage'], URIRef('https://github.com/fair-workflows/openpredict/')))
-    g.add((datasetURI, DC['license'], URIRef('http://creativecommons.org/licenses/by/3.0/')))
-    g.add((datasetURI, DC['rights'], Literal('use-share-modify')))
-    g.add((datasetURI, DC['rights'], Literal('by-attribution')))
-    g.add((datasetURI, DC['rights'], Literal('restricted-by-source-license')))
+    #generate RDF data distrubtion
+    rdf_dist = DataResource(qname=graphURI, graph = data_dist.toRDF() )
+    rdf_dist.setURI('https://github.com/fair-workflows/openpredict/blob/master/data/rdf/human_interactome.nq.gz')
+    rdf_dist.setTitle('RDF Version of the Human Interactome')
+    rdf_dist.setLicense('http://creativecommons.org/licenses/by/3.0/')
+    rdf_dist.setVersion('1.0')
+    rdf_dist.setFormat('application/n-quads')
+    rdf_dist.setMediaType('application/n-quads')
+    rdf_dist.addRight('use-share-modify')
+    rdf_dist.addRight('by-attribution')
+    rdf_dist.addRight('restricted-by-source-license')
+    rdf_dist.setCreateDate(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    rdf_dist.setCreator('https://github.com/fair-workflows/openpredict/src/HumanInteractome.py')
+    rdf_dist.setDownloadURL('https://github.com/fair-workflows/openpredict/blob/master/data/rdf/human_interactome.nq.gz')
+    rdf_dist.setDataset(data_dist.getURI())
+      
+    return rdf_dist.toRDF()
 
-    g.add((datasetURI, DC['source'], sourcedatasetURI))
-        
-    g.add((sourcedatasetURI, DC['title'], Literal('The Human Interactome used in Uncovering Disease-Disease Relationships Through The Human Interactome  (srep35241-s3.txt)')))
-    g.add((sourcedatasetURI, RDF['type'], URIRef('http://www.w3.org/ns/dcat#Distribution')))
-    g.add((sourcedatasetURI, DC['homepage'], URIRef('https://dx.doi.org/10.1126%2Fscience.1257601')))
-    g.add((sourcedatasetURI, URIRef('http://purl.org/pav/retrievedOn'), Literal(now.strftime("%Y-%m-%d %H:%M:%S"))))
-    g.add((sourcedatasetURI, DC['format'], Literal('text')))
-    g.add((sourcedatasetURI, DC['rights'], URIRef('https://creativecommons.org/publicdomain/mark/1.0/')))
-    g.add((sourcedatasetURI, DC['publisher'], Literal('https://science.sciencemag.org/')))
-    g.add((sourcedatasetURI, DC['rights'], Literal('use')))
-    g.add((sourcedatasetURI, DC['rights'], Literal('allow-commercial-purposes')))
-    
-    return g
-
-#g=addProvanace(g, graphURI)
+g = addMetaData(g, graphURI)
 
 
 outfile ='../data/rdf/human_interactome.nq'
