@@ -5,6 +5,7 @@
 @prefix dc: <http://purl.org/dc/terms/> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix dul: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+@prefix edam: <http://edamontology.org/> .
 @prefix fabio: <http://purl.org/spar/fabio/> .
 @prefix opredict: <http://purl.org/plex/Instances/OpenPREDICT#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -26,6 +27,36 @@ bpmn:ManualTask
 bpmn:ScriptTask
   rdf:type owl:Class ;
   rdfs:isDefinedBy "http://dkm.fbk.eu/index.php/BPMN2_Ontology#scriptTask" ;
+  rdfs:subClassOf owl:Thing ;
+.
+edam:format_1915
+  rdf:type owl:Class ;
+  rdfs:label "Data format" ;
+  rdfs:seeAlso "http://edamontology.org/format_1915" ;
+  rdfs:subClassOf owl:Thing ;
+.
+edam:format_2330
+  rdf:type owl:Class ;
+  rdfs:label "Plain text format" ;
+  rdfs:seeAlso "http://edamontology.org/format_2330" ;
+  rdfs:subClassOf edam:format_1915 ;
+.
+edam:format_2376
+  rdf:type owl:Class ;
+  rdfs:label "Resource Description Framework (RDF)" ;
+  rdfs:seeAlso "http://edamontology.org/format_2376" ;
+  rdfs:subClassOf edam:format_1915 ;
+.
+edam:format_3256
+  rdf:type owl:Class ;
+  rdfs:label "N-Triples" ;
+  rdfs:seeAlso "http://edamontology.org/format_3256" ;
+  rdfs:subClassOf edam:format_2376 ;
+.
+edam:operation_2409
+  rdf:type owl:Class ;
+  rdfs:label "Data handling" ;
+  rdfs:seeAlso "http://edamontology.org/operation_2409" ;
   rdfs:subClassOf owl:Thing ;
 .
 dc:LinguisticSystem
@@ -163,7 +194,7 @@ opredict:Association_JoaoAsExecutor
   prov:hadPlan opredict:Plan_Execute_query_DRUG_SIDE_EFFECTS_from_SIDER ;
   prov:hadPlan opredict:Plan_Execute_query_DRUG_SMILES_from_DRUGBANK ;
   prov:hadPlan opredict:Plan_Execute_query_DRUG_TARGETS_-from_DRUGBANK_and_KEGG ;
-  prov:hadPlan opredict:Plan_Feature_generation_Pipeline_OpenPREDICT_ipynb ;
+  prov:hadPlan opredict:Plan_Feature_generation_01_Pipeline_OpenPREDICT_ipynb ;
   prov:hadPlan <http://purl.org/plex/Instances/OpenPREDICT#Plan_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb> ;
   prov:hadPlan opredict:Plan_Prepare_Input_Data_Files ;
   prov:hadPlan opredict:Plan_Prepare_triplestore_for_input_data ;
@@ -198,12 +229,12 @@ opredict:Association_RemziAsDeveloper
   prov:hadPlan opredict:Plan_Execute_query_DRUG_SIDE_EFFECTS_from_SIDER ;
   prov:hadPlan opredict:Plan_Execute_query_DRUG_SMILES_from_DRUGBANK ;
   prov:hadPlan opredict:Plan_Execute_query_DRUG_TARGETS_-from_DRUGBANK_and_KEGG ;
-  prov:hadPlan opredict:Plan_Feature_generation_Pipeline_OpenPREDICT_ipynb ;
+  prov:hadPlan opredict:Plan_Feature_generation_01_Pipeline_OpenPREDICT_ipynb ;
+  prov:hadPlan opredict:Plan_Feature_generation_01_Pipeline_Source_Cell00 ;
+  prov:hadPlan opredict:Plan_Feature_generation_01_Pipeline_Source_Cell01 ;
   prov:hadPlan opredict:Plan_Format_results_for_presentation ;
   prov:hadPlan opredict:Plan_Main_Protocol_v01 ;
   prov:hadPlan <http://purl.org/plex/Instances/OpenPREDICT#Plan_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb> ;
-  prov:hadPlan opredict:Plan_Pipeline_Source_Cell00 ;
-  prov:hadPlan opredict:Plan_Pipeline_Source_Cell01 ;
   prov:hadPlan opredict:Plan_Prepare_Input_Data_Files ;
   prov:hadPlan opredict:Plan_Prepare_triplestore_for_input_data ;
   prov:hadPlan opredict:Plan_Save_Drugbank_dataset ;
@@ -238,12 +269,12 @@ opredict:Association_RemziAsExecutor
   prov:hadPlan opredict:Plan_Execute_query_DRUG_SIDE_EFFECTS_from_SIDER ;
   prov:hadPlan opredict:Plan_Execute_query_DRUG_SMILES_from_DRUGBANK ;
   prov:hadPlan opredict:Plan_Execute_query_DRUG_TARGETS_-from_DRUGBANK_and_KEGG ;
-  prov:hadPlan opredict:Plan_Feature_generation_Pipeline_OpenPREDICT_ipynb ;
+  prov:hadPlan opredict:Plan_Feature_generation_01_Pipeline_OpenPREDICT_ipynb ;
+  prov:hadPlan opredict:Plan_Feature_generation_01_Pipeline_Source_Cell00 ;
+  prov:hadPlan opredict:Plan_Feature_generation_01_Pipeline_Source_Cell01 ;
   prov:hadPlan opredict:Plan_Format_results_for_presentation ;
   prov:hadPlan opredict:Plan_Main_Protocol_v01 ;
   prov:hadPlan <http://purl.org/plex/Instances/OpenPREDICT#Plan_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb> ;
-  prov:hadPlan opredict:Plan_Pipeline_Source_Cell00 ;
-  prov:hadPlan opredict:Plan_Pipeline_Source_Cell01 ;
   prov:hadPlan opredict:Plan_Prepare_Input_Data_Files ;
   prov:hadPlan opredict:Plan_Prepare_triplestore_for_input_data ;
   prov:hadPlan opredict:Plan_Save_Drugbank_dataset ;
@@ -257,6 +288,18 @@ opredict:Association_RemziAsExecutor
   prov:hadPlan opredict:Plan_Save_phenotype_annotations ;
   prov:hadPlan opredict:Plan_Upload_files_to_a_triplestore ;
   prov:hadRole opredict:Role_Executor ;
+.
+opredict:DataFormat_Textfile_tab
+  rdf:type edam:format_1915 ;
+  rdfs:label ".tab with tabular separator" ;
+.
+opredict:DataFormat_Textfile_txt
+  rdf:type edam:format_2330 ;
+  rdfs:label ".txt with comma separator" ;
+.
+opredict:DataFormat_nq_compressed_gz
+  rdf:type edam:format_3256 ;
+  rdfs:label ".nq compressed as .gz" ;
 .
 opredict:Dataset_OpenPREDICT_Input
   rdf:type dcat:Dataset ;
@@ -276,11 +319,13 @@ opredict:Distribution_Phenotype_annotations_file_local
   rdf:type dcat:Distribution ;
   rdfs:label "phenotype_annotation_hpoteam.tab (Build #1263)" ;
   dcat:downloadURL "http://compbio.charite.de/jenkins/job/hpo.annotations/lastSuccessfulBuild/artifact/misc/phenotype_annotation_hpoteam.tab" ;
+  dcat:mediaType opredict:DataFormat_Textfile_tab ;
 .
 <http://purl.org/plex/Instances/OpenPREDICT#Distribution_release-4-drugbank-drugbank.nq.gz>
   rdf:type dcat:Distribution ;
   rdfs:label "release/4/drugbank/drugbank.nq.gz" ;
   dcat:downloadURL "http://download.bio2rdf.org/files/release/4/drugbank/drugbank.nq.gz" ;
+  dcat:mediaType opredict:DataFormat_nq_compressed_gz ;
 .
 <http://purl.org/plex/Instances/OpenPREDICT#Distribution_release-4-drugbank-drugbank.nq.gz_local>
   rdf:type dcat:Distribution ;
@@ -290,6 +335,7 @@ opredict:Distribution_Phenotype_annotations_file_local
   rdf:type dcat:Distribution ;
   rdfs:label "release/4/kegg/kegg-drug.nq.gz" ;
   dcat:downloadURL "http://download.bio2rdf.org/files/release/4/kegg/kegg-drug.nq.gz" ;
+  dcat:mediaType opredict:DataFormat_nq_compressed_gz ;
 .
 <http://purl.org/plex/Instances/OpenPREDICT#Distribution_release-4-kegg-kegg-drug.nq.gz_local>
   rdf:type dcat:Distribution ;
@@ -300,6 +346,7 @@ opredict:Distribution_Phenotype_annotations_file_local
   rdf:type dcat:Distribution ;
   rdfs:label "release/4/sider/sider-se.nq.gz" ;
   dcat:downloadURL "http://download.bio2rdf.org/files/release/4/sider/sider-se.nq.gz" ;
+  dcat:mediaType opredict:DataFormat_nq_compressed_gz ;
 .
 <http://purl.org/plex/Instances/OpenPREDICT#Distribution_release-4-sider-sider-se.nq.gz_local>
   rdf:type dcat:Distribution ;
@@ -309,6 +356,7 @@ opredict:Distribution_Phenotype_annotations_file_local
   rdf:type dcat:Distribution ;
   rdfs:label "srep/2016/161017/srep35241/extref/srep35241-s3.txt" ;
   dcat:downloadURL "https://media.nature.com/full/nature-assets/srep/2016/161017/srep35241/extref/srep35241-s3.txt" ;
+  dcat:mediaType opredict:DataFormat_Textfile_txt ;
 .
 <http://purl.org/plex/Instances/OpenPREDICT#Distribution_srep35241-s3.txt_local>
   rdf:type dcat:Distribution ;
@@ -333,35 +381,11 @@ opredict:Link_results_to_variable_Input_file_drugbank-sider-se_tab
   prov:entity opredict:Variable_Input_file_drugbank-sider-se_tab ;
   prov:entity opredict:Variable_Query_results_DRUG_SIDE_EFFECTS_from_SIDER ;
 .
-opredict:Link_variable_to_download-_phenotype_annotations
+opredict:Link_variable_to_local_Drugbank_dataset
   rdf:type prov:Usage ;
-  rdfs:label "Link variable to download- phenotype annotations" ;
-  prov:entity <http://purl.org/plex/Instances/OpenPREDICT#Distribution_phenotype_annotation_hpoteam.tab_Build_1263> ;
-  prov:entity opredict:Variable_Phenotype_annotations_file_online ;
-.
-opredict:Link_variable_to_download_Drugbank_dataset
-  rdf:type prov:Usage ;
-  rdfs:label "Link variable to download Drugbank dataset" ;
-  prov:entity <http://purl.org/plex/Instances/OpenPREDICT#Distribution_release-4-drugbank-drugbank.nq.gz> ;
-  prov:entity opredict:Variable_Drugbank_dataset_online ;
-.
-opredict:Link_variable_to_download_Human_interactome_barabasi
-  rdf:type prov:Usage ;
-  rdfs:label "Link variable to download Human interactome barabasi" ;
-  prov:entity <http://purl.org/plex/Instances/OpenPREDICT#Distribution_srep-2016-161017-srep35241-extref-srep35241-s3.txt> ;
-  prov:entity opredict:Variable_Human_interactome_barabasi_online ;
-.
-opredict:Link_variable_to_download_Kegg_dataset
-  rdf:type prov:Usage ;
-  rdfs:label "Link variable to download Kegg dataset" ;
-  prov:entity <http://purl.org/plex/Instances/OpenPREDICT#Distribution_release-4-kegg-kegg-drug.nq.gz> ;
-  prov:entity opredict:Variable_Kegg_dataset_online ;
-.
-opredict:Link_variable_to_download_SIDER_dataset
-  rdf:type prov:Usage ;
-  rdfs:label "Link variable to download SIDER dataset" ;
-  prov:entity <http://purl.org/plex/Instances/OpenPREDICT#Distribution_release-4-sider-sider-se.nq.gz> ;
-  prov:entity opredict:Variable_SIDER_dataset_online ;
+  rdfs:label "Link variable to local Drugbank dataset" ;
+  prov:entity <http://purl.org/plex/Instances/OpenPREDICT#Distribution_release-4-drugbank-drugbank.nq.gz_local> ;
+  prov:entity opredict:Variable_Drugbank_dataset_local ;
 .
 opredict:Link_variable_to_local_Human_interactome_barabasi
   rdf:type prov:Usage ;
@@ -410,25 +434,28 @@ opredict:Plan_Add_files_to_triplestore_and_execute_queries
   rdfs:label "Add files to triplestore and execute queries" ;
 .
 opredict:Plan_Download_Drugbank_dataset
+  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Plan ;
   dc:description "Download Drugbank dataset" ;
   dc:language :LinguisticSystem_xsd_language_English ;
   rdfs:label "Download Drugbank dataset" ;
-  prov:qualifiedUsage opredict:Link_variable_to_download_Drugbank_dataset ;
+  prov:qualifiedUsage opredict:Usage_Fetch_download_Drugbank_dataset_to_variable ;
 .
 opredict:Plan_Download_Kegg_dataset
+  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Plan ;
   dc:description "Download Kegg dataset" ;
   dc:language :LinguisticSystem_xsd_language_English ;
   rdfs:label "Download Kegg dataset" ;
-  prov:qualifiedUsage opredict:Link_variable_to_download_Kegg_dataset ;
+  prov:qualifiedUsage opredict:Usage_Fetch_download_Kegg_dataset_to_variable ;
 .
 opredict:Plan_Download_SIDER_dataset
+  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Plan ;
   dc:description "Download SIDER dataset" ;
   dc:language :LinguisticSystem_xsd_language_English ;
   rdfs:label "Download SIDER dataset" ;
-  prov:qualifiedUsage opredict:Link_variable_to_download_SIDER_dataset ;
+  prov:qualifiedUsage opredict:Usage_Fetch_download_SIDER_dataset_to_variable ;
 .
 opredict:Plan_Download_and_save_Drugbank_dataset
   rdf:type p-plan:Plan ;
@@ -469,18 +496,20 @@ http://compbio.charite.de/jenkins/job/hpo.annotations/lastStableBuild/artifact/m
   rdfs:label "Download and save phenotype annotations " ;
 .
 opredict:Plan_Download_human_interactome_barabasi
+  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Plan ;
   dc:description "Download human interactome barabasi" ;
   dc:language :LinguisticSystem_xsd_language_English ;
   rdfs:label "Download human interactome barabasi" ;
-  prov:qualifiedUsage opredict:Link_variable_to_download_Human_interactome_barabasi ;
+  prov:qualifiedUsage opredict:Usage_Fetch_download_Human_interactome_barabasi_to_variable ;
 .
 opredict:Plan_Download_phenotype_annotations
+  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Plan ;
   dc:description "Download phenotype annotations" ;
   dc:language :LinguisticSystem_xsd_language_English ;
   rdfs:label "Download phenotype annotations" ;
-  prov:qualifiedUsage opredict:Link_variable_to_download-_phenotype_annotations ;
+  prov:qualifiedUsage opredict:Usage_Fetch_download-_phenotype_annotations_to_variable ;
   prov:used <http://purl.org/plex/Instances/OpenPREDICT#Distribution_phenotype_annotation_hpoteam.tab_Build_1263> ;
 .
 opredict:Plan_Execute_FAIRifier_process_to_human_interactome_barabasi
@@ -522,12 +551,140 @@ opredict:Plan_Execute_query_DRUG_TARGETS_-from_DRUGBANK_and_KEGG
   rdfs:label "Execute query DRUG TARGETS -from DRUGBANK and KEGG" ;
   prov:qualifiedUsage opredict:QueryExecution_DRUG_TARGETS_from_DRUGBANK_and_KEGG ;
 .
-opredict:Plan_Feature_generation_Pipeline_OpenPREDICT_ipynb
+opredict:Plan_Feature_generation_01_Pipeline_OpenPREDICT_Spec
+  rdf:type p-plan:Plan ;
+  pwo:hasFirstStep opredict:Step_Feature_generation_01_Pipeline_Source_Cell01_Spec ;
+  rdfs:label "Specification of feature generation" ;
+.
+opredict:Plan_Feature_generation_01_Pipeline_OpenPREDICT_ipynb
   rdf:type p-plan:Plan ;
   dc:description "Feature generation: Pipeline OpenPREDICT.ipynb" ;
   dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
-  pwo:hasFirstStep opredict:Step_Pipeline_Source_Cell00 ;
+  pwo:hasFirstStep opredict:Step_Feature_generation_01_Pipeline_Source_Cell00 ;
   rdfs:label "Feature generation: Pipeline OpenPREDICT.ipynb" ;
+.
+opredict:Plan_Feature_generation_01_Pipeline_Source_Cell00
+  rdf:type p-plan:Plan ;
+  rdf:type reprod:Cell ;
+  dc:description """import itertools
+import math
+import numpy as np
+import pandas as pd""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+  rdfs:label "Jupyter Notebook Cell00" ;
+  prov:qualifiedUsage opredict:Link_Pipeline_Source_Cell0_Variable ;
+.
+opredict:Plan_Feature_generation_01_Pipeline_Source_Cell01
+  rdf:type p-plan:Plan ;
+  rdf:type reprod:Cell ;
+  dc:description """drug_target = pd.read_csv('data/input/drugbank-drug-target.csv')
+target_seq = pd.read_csv('data/input/drugbank-target-seq.csv')
+drug_goa = pd.read_csv('data/input/drugbank-drug-goa.csv')
+drug_smiles = pd.read_csv('data/input/drugbank-drug-smiles.csv')
+drug_se = pd.read_csv('data/input/drugbank-sider-se.csv')
+drug_smiles.head()""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell01_Spec ;
+  rdfs:label "Jupyter Notebook Cell01" ;
+.
+opredict:Plan_Feature_generation_01_Pipeline_Source_Cell01_Spec
+  rdf:type p-plan:Plan ;
+  dc:description "Load input datasets" ;
+  dc:language :LinguisticSystem_xsd_language_English ;
+.
+opredict:Plan_Feature_generation_01_Pipeline_Source_Cell02
+  rdf:type p-plan:Plan ;
+  dc:description """print (\"%d drugs have all Target feature \"%len(  drug_target.drugid.unique()))
+print (\"%d drugs have Target GOA feature \"%len( drug_goa.drugid.unique()))
+print (\"%d drugs have Fingerprint feature \"%len(  drug_smiles.drugid.unique()))
+print (\"%d drugs have Sideeffect feature \"%len( drug_se.drugid.unique()))""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell01_Spec ;
+.
+opredict:Plan_Feature_generation_01_Pipeline_Source_Cell03
+  rdf:type p-plan:Plan ;
+  dc:description """drug_target_seq = drug_target.merge(target_seq, on= ['geneid'])
+print (\"%d drugs have Target SEQ feature \"%len( drug_target_seq.drugid.unique()))""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell01_Spec ;
+.
+opredict:Plan_Feature_generation_01_Pipeline_Source_Cell04
+  rdf:type p-plan:Plan ;
+  dc:description """a=drug_goa['drugid'].unique()
+b=drug_target['drugid'].unique()
+c=drug_smiles['drugid'].unique()
+d=drug_se['drugid'].unique()
+commonDrugs= set(a).intersection(b).intersection(c).intersection(d)
+print (len(a),len(b),len(c),len(d))
+print (len(commonDrugs))""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell01_Spec ;
+.
+opredict:Plan_Feature_generation_01_Pipeline_Source_Cell05
+  rdf:type p-plan:Plan ;
+  dc:description """drug_se.head()
+
+
+# ## Drug side effect similarity¶
+# ## calculating Jaccard coefficient based on drug sideefects""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell01_Spec ;
+.
+opredict:Plan_Feature_generation_01_Pipeline_Source_Cell06
+  rdf:type p-plan:Plan ;
+  dc:description """drugSEDict = {k: g[\"umlsid\"].tolist() for k,g in drug_se.groupby(\"drugid\")}
+scores = []
+
+for comb in itertools.combinations(commonDrugs,2):
+    drug1 =comb[0]
+    drug2 =comb[1]
+
+    sideeffects1 = drugSEDict[drug1]
+    sideeffects2 = drugSEDict[drug2]
+    c = set(sideeffects1).intersection(sideeffects2)
+    u = set(sideeffects1).union(sideeffects2)
+    score = len(c)/float(len(u))
+    scores.append([drug1, drug2, score])""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell06_Spec ;
+.
+opredict:Plan_Feature_generation_01_Pipeline_Source_Cell06_Spec
+  rdf:type p-plan:Plan ;
+  dc:description "Calculate scores between pairs of drugs and compute similarity feature" ;
+  dc:language :LinguisticSystem_xsd_language_English ;
+.
+opredict:Plan_Feature_generation_01_Pipeline_Source_Cell07
+  rdf:type p-plan:Plan ;
+  dc:description "drug_se_df = pd.DataFrame(scores, columns =['Drug1','Drug2','SE-SIM'])" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell06_Spec ;
+.
+opredict:Plan_Feature_generation_01_Pipeline_Source_Cell08
+  rdf:type p-plan:Plan ;
+  dc:description "drug_se_df.head()" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell06_Spec ;
+.
+opredict:Plan_Feature_generation_01_Pipeline_Source_Cell09
+  rdf:type p-plan:Plan ;
+  dc:description """drug_se_df.to_csv('data/features/drugs-se-sim.csv', index=False)
+
+
+# ## PPI based drug-drug similarity
+# ###  calculate distance between drugs on protein-protein interaction network""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell06_Spec ;
+.
+opredict:Plan_Feature_generation_01_Pipeline_Source_Cell10
+  rdf:type p-plan:Plan ;
+  dc:description "#!pip install -q networkx==1.11" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell10_Spec ;
+.
+opredict:Plan_Feature_generation_01_Pipeline_Source_Cell10_Spec
+  rdf:type p-plan:Plan ;
+  dc:description "Install NetworkX version 1.11" ;
+  dc:language :LinguisticSystem_xsd_language_English ;
 .
 opredict:Plan_Format_results_for_presentation
   rdf:type p-plan:Plan ;
@@ -551,39 +708,6 @@ opredict:Plan_Main_Protocol_v01
   dc:description "Model preparation, train and evaluation Workflow: OpenPREDCIT - ML.ipynb" ;
   dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
   rdfs:label "Model preparation, train and evaluation Workflow: OpenPREDCIT - ML.ipynb" ;
-.
-opredict:Plan_Pipeline_Source_Cell00
-  rdf:type p-plan:Plan ;
-  rdf:type reprod:Cell ;
-  dc:description """# import modules; set up logging
-# Install the PyDrive wrapper & import libraries.
-# This only needs to be done once per notebook.
-!pip install -U -q PyDrive
-from pydrive.auth import GoogleAuth
-from pydrive.drive import GoogleDrive
-from google.colab import auth
-from oauth2client.client import GoogleCredentials
-from io import StringIO
-
-# Authenticate and create the PyDrive client.
-# This only needs to be done once per notebook.
-auth.authenticate_user()
-gauth = GoogleAuth()
-gauth.credentials = GoogleCredentials.get_application_default()
-drive = GoogleDrive(gauth)""" ;
-  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
-  rdfs:label "Jupyter Notebook Cell00" ;
-  prov:qualifiedUsage opredict:Link_Pipeline_Source_Cell0_Variable ;
-.
-opredict:Plan_Pipeline_Source_Cell01
-  rdf:type p-plan:Plan ;
-  rdf:type reprod:Cell ;
-  dc:description """import itertools
-import math
-import numpy as np
-import pandas as pd""" ;
-  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
-  rdfs:label "Jupyter Notebook Cell01" ;
 .
 opredict:Plan_Prepare_Input_Data_Files
   rdf:type p-plan:Plan ;
@@ -611,7 +735,7 @@ opredict:Plan_Save_Drugbank_dataset
   dc:description "Save Drugbank dataset" ;
   dc:language :LinguisticSystem_xsd_language_English ;
   rdfs:label "Save Drugbank dataset" ;
-  prov:qualifiedUsage opredict:Usage_Link_variable_to_local_Drugbank_dataset ;
+  prov:qualifiedUsage opredict:Link_variable_to_local_Drugbank_dataset ;
 .
 opredict:Plan_Save_Kegg_dataset
   rdf:type p-plan:Plan ;
@@ -887,7 +1011,7 @@ opredict:Step_Execute_query_DRUG_SIDE_EFFECTS_from_SIDER
 .
 opredict:Step_Execute_query_DRUG_SMILES_from_DRUGBANK
   rdf:type bpmn:ManualTask ;
-  rdf:type <http://edamontology.org/operation_0224> ;
+  rdf:type edam:operation_0224 ;
   rdf:type p-plan:Step ;
   p-plan:hasOutputVar opredict:Variable_Query_results_DRUG_SMILES_from_DRUGBANK ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
@@ -896,18 +1020,102 @@ opredict:Step_Execute_query_DRUG_SMILES_from_DRUGBANK
 .
 opredict:Step_Execute_query_DRUG_TARGETS_from_DRUGBANK_and_KEGG
   rdf:type bpmn:ManualTask ;
-  rdf:type <http://edamontology.org/operation_0224> ;
+  rdf:type edam:operation_0224 ;
   rdf:type p-plan:Step ;
   p-plan:hasOutputVar opredict:Variable_Query_results_DRUG_TARGETS_from_DRUGBANK_and_KEGG ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
   dul:isDescribedBy opredict:Plan_Execute_query_DRUG_TARGETS_-from_DRUGBANK_and_KEGG ;
   dul:precedes opredict:Step_Save_as_drugbank-drug-target_tab ;
 .
+opredict:Step_Feature_generation_01_Pipeline_Source_Cell00
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell00 ;
+  dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell01 ;
+.
+opredict:Step_Feature_generation_01_Pipeline_Source_Cell01
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell01 ;
+  dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell02 ;
+.
+opredict:Step_Feature_generation_01_Pipeline_Source_Cell01_Spec
+  rdf:type bpmn:ManualTask ;
+  rdf:type p-plan:Step ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell01_Spec ;
+  dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell06_Spec ;
+.
+opredict:Step_Feature_generation_01_Pipeline_Source_Cell02
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell02 ;
+  dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell03 ;
+.
+opredict:Step_Feature_generation_01_Pipeline_Source_Cell03
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell03 ;
+  dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell04 ;
+.
+opredict:Step_Feature_generation_01_Pipeline_Source_Cell04
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell04 ;
+  dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell05 ;
+.
+opredict:Step_Feature_generation_01_Pipeline_Source_Cell05
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell05 ;
+  dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell06 ;
+.
+opredict:Step_Feature_generation_01_Pipeline_Source_Cell06
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell06 ;
+  dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell07 ;
+.
+opredict:Step_Feature_generation_01_Pipeline_Source_Cell06_Spec
+  rdf:type bpmn:ManualTask ;
+  rdf:type p-plan:Step ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell06_Spec ;
+  dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell10_Spec ;
+.
+opredict:Step_Feature_generation_01_Pipeline_Source_Cell07
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell07 ;
+  dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell08 ;
+.
+opredict:Step_Feature_generation_01_Pipeline_Source_Cell08
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell08 ;
+  dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell09 ;
+.
+opredict:Step_Feature_generation_01_Pipeline_Source_Cell09
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell09 ;
+  dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell10 ;
+.
+opredict:Step_Feature_generation_01_Pipeline_Source_Cell10
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell10 ;
+.
+opredict:Step_Feature_generation_01_Pipeline_Source_Cell10_Spec
+  rdf:type bpmn:ManualTask ;
+  rdf:type p-plan:Step ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell10_Spec ;
+.
 opredict:Step_Feature_generation_Pipeline_OpenPREDICT_ipynb
   rdf:type bpmn:ScriptTask ;
   rdf:type p-plan:Step ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
-  dul:isDescribedBy opredict:Plan_Feature_generation_Pipeline_OpenPREDICT_ipynb ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_OpenPREDICT_ipynb ;
   dul:precedes opredict:Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb ;
   rdfs:label "Feature generation: Pipeline OpenPREDICT.ipynb" ;
 .
@@ -924,19 +1132,6 @@ opredict:Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_i
   dul:isDescribedBy <http://purl.org/plex/Instances/OpenPREDICT#Plan_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb> ;
   dul:precedes opredict:Step_Format_results_for_presentation ;
   rdfs:label "Model preparation, train and evaluation Workflow: OpenPREDCIT - ML.ipynb" ;
-.
-opredict:Step_Pipeline_Source_Cell00
-  rdf:type bpmn:ScriptTask ;
-  rdf:type p-plan:Step ;
-  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
-  dul:isDescribedBy opredict:Plan_Pipeline_Source_Cell00 ;
-  dul:precedes opredict:Step_Pipeline_Source_Cell01 ;
-.
-opredict:Step_Pipeline_Source_Cell01
-  rdf:type bpmn:ScriptTask ;
-  rdf:type p-plan:Step ;
-  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
-  dul:isDescribedBy opredict:Plan_Pipeline_Source_Cell01 ;
 .
 opredict:Step_Prepare_Input_Data_Files
   rdf:type bpmn:ManualTask ;
@@ -1047,11 +1242,35 @@ opredict:Triplestore_endpoint_input_data
   schema:URL "http://graphdb.dumontierlab.com/repositories/bio2rdf_remzi" ;
   schema:URL "http://yasgui.org/#" ;
 .
-opredict:Usage_Link_variable_to_local_Drugbank_dataset
+opredict:Usage_Fetch_download-_phenotype_annotations_to_variable
   rdf:type prov:Usage ;
-  rdfs:label "Link variable to local Drugbank dataset" ;
-  prov:entity <http://purl.org/plex/Instances/OpenPREDICT#Distribution_release-4-drugbank-drugbank.nq.gz_local> ;
-  prov:entity opredict:Variable_Drugbank_dataset_local ;
+  rdfs:label "Link variable to download- phenotype annotations" ;
+  prov:entity <http://purl.org/plex/Instances/OpenPREDICT#Distribution_phenotype_annotation_hpoteam.tab_Build_1263> ;
+  prov:entity opredict:Variable_Phenotype_annotations_file_online ;
+.
+opredict:Usage_Fetch_download_Drugbank_dataset_to_variable
+  rdf:type prov:Usage ;
+  rdfs:label "Link variable to download Drugbank dataset" ;
+  prov:entity <http://purl.org/plex/Instances/OpenPREDICT#Distribution_release-4-drugbank-drugbank.nq.gz> ;
+  prov:entity opredict:Variable_Drugbank_dataset_online ;
+.
+opredict:Usage_Fetch_download_Human_interactome_barabasi_to_variable
+  rdf:type prov:Usage ;
+  rdfs:label "Link variable to download Human interactome barabasi" ;
+  prov:entity <http://purl.org/plex/Instances/OpenPREDICT#Distribution_srep-2016-161017-srep35241-extref-srep35241-s3.txt> ;
+  prov:entity opredict:Variable_Human_interactome_barabasi_online ;
+.
+opredict:Usage_Fetch_download_Kegg_dataset_to_variable
+  rdf:type prov:Usage ;
+  rdfs:label "Link variable to download Kegg dataset" ;
+  prov:entity <http://purl.org/plex/Instances/OpenPREDICT#Distribution_release-4-kegg-kegg-drug.nq.gz> ;
+  prov:entity opredict:Variable_Kegg_dataset_online ;
+.
+opredict:Usage_Fetch_download_SIDER_dataset_to_variable
+  rdf:type prov:Usage ;
+  rdfs:label "Link variable to download SIDER dataset" ;
+  prov:entity <http://purl.org/plex/Instances/OpenPREDICT#Distribution_release-4-sider-sider-se.nq.gz> ;
+  prov:entity opredict:Variable_SIDER_dataset_online ;
 .
 opredict:Variable_Drugbank_dataset_local
   rdf:type p-plan:Variable ;
@@ -1158,6 +1377,12 @@ dcat:downloadURL
   rdf:type rdf:Property ;
   rdfs:isDefinedBy "http://www.w3.org/ns/dcat#downloadURL" ;
 .
+dcat:mediaType
+  rdf:type rdf:Property ;
+  rdfs:domain dcat:Distribution ;
+  rdfs:range edam:format_1915 ;
+  rdfs:seeAlso "https://www.w3.org/ns/dcat#mediaType" ;
+.
 prov:Agent
   rdf:type owl:Class ;
   rdfs:seeAlso "https://www.w3.org/TR/prov-o/#Agent" ;
@@ -1167,6 +1392,11 @@ prov:Association
   rdf:type owl:Class ;
   rdfs:seeAlso "https://www.w3.org/TR/prov-o/#Association" ;
   rdfs:subClassOf owl:Thing ;
+.
+prov:Bundle
+  rdf:type owl:Class ;
+  rdfs:seeAlso "http://www.w3.org/ns/prov#Bundle" ;
+  rdfs:subClassOf prov:Entity ;
 .
 prov:Entity
   rdf:type owl:Class ;
