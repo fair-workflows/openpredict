@@ -125,11 +125,15 @@ p-plan:Variable
 .
 p-plan:hasInputVar
   rdf:type rdf:Property ;
+  rdfs:domain p-plan:Step ;
   rdfs:isDefinedBy "http://purl.org/net/p-plan#hasInputVar" ;
+  rdfs:range p-plan:Variable ;
 .
 p-plan:hasOutputVar
   rdf:type rdf:Property ;
+  rdfs:domain p-plan:Step ;
   rdfs:isDefinedBy "http://purl.org/net/p-plan#hasOutputVar" ;
+  rdfs:range p-plan:Variable ;
 .
 p-plan:isStepOfPlan
   rdf:type rdf:Property ;
@@ -315,10 +319,34 @@ opredict:Distribution_Phenotype_annotations_file_local
   rdf:type dcat:Distribution ;
   rdfs:label "Phenotype annotations file local" ;
 .
+<http://purl.org/plex/Instances/OpenPREDICT#Distribution_gold_standard_drug_indications_msb201126-s4.xls>
+  rdf:type dcat:Distribution ;
+  rdfs:label "msb201126-s4.xls" ;
+  dcat:downloadURL "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3159979/bin/msb201126-s4.xls" ;
+  dcat:mediaType opredict:DataFormat_Textfile_tab ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Distribution_mesh_annotation_mim2mesh.tsv>
+  rdf:type dcat:Distribution ;
+  rdfs:label "mim2mesh.tsv" ;
+  dcat:downloadURL "http://www.paccanarolab.org/static_content/disease_similarity/mim2mesh.tsv" ;
+  dcat:mediaType opredict:DataFormat_Textfile_tab ;
+.
 <http://purl.org/plex/Instances/OpenPREDICT#Distribution_phenotype_annotation_hpoteam.tab_Build_1263>
   rdf:type dcat:Distribution ;
   rdfs:label "phenotype_annotation_hpoteam.tab (Build #1263)" ;
-  dcat:downloadURL "http://compbio.charite.de/jenkins/job/hpo.annotations/lastSuccessfulBuild/artifact/misc/phenotype_annotation_hpoteam.tab" ;
+  dcat:downloadURL "http://compbio.charite.de/jenkins/job/hpo.annotations/1263/artifact/misc/phenotype_annotation_hpoteam.tab" ;
+  dcat:mediaType opredict:DataFormat_Textfile_tab ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Distribution_phenotype_annotation_hpoteam.tab_Build_1266>
+  rdf:type dcat:Distribution ;
+  rdfs:label "phenotype_annotation_hpoteam.tab (Build #1263)" ;
+  dcat:downloadURL "http://compbio.charite.de/jenkins/job/hpo.annotations/1266/artifact/misc/phenotype_annotation_hpoteam.tab" ;
+  dcat:mediaType opredict:DataFormat_Textfile_tab ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Distribution_pubchem_to_drugbank_pubchem.tsv>
+  rdf:type dcat:Distribution ;
+  rdfs:label "mim2mesh.tsv" ;
+  dcat:downloadURL "https://raw.githubusercontent.com/dhimmel/drugbank/3e87872db5fca5ac427ce27464ab945c0ceb4ec6/data/mapping/pubchem.tsv" ;
   dcat:mediaType opredict:DataFormat_Textfile_tab ;
 .
 <http://purl.org/plex/Instances/OpenPREDICT#Distribution_release-4-drugbank-drugbank.nq.gz>
@@ -458,6 +486,7 @@ opredict:Plan_Download_SIDER_dataset
   prov:qualifiedUsage opredict:Usage_Fetch_download_SIDER_dataset_to_variable ;
 .
 opredict:Plan_Download_and_save_Drugbank_dataset
+  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Plan ;
   dc:description "Download and save Drugbank dataset" ;
   dc:language :LinguisticSystem_xsd_language_English ;
@@ -465,6 +494,7 @@ opredict:Plan_Download_and_save_Drugbank_dataset
   rdfs:label "Download and save Drugbank dataset" ;
 .
 opredict:Plan_Download_and_save_Kegg_dataset
+  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Plan ;
   dc:description "Download and save Kegg dataset" ;
   dc:language :LinguisticSystem_xsd_language_English ;
@@ -472,20 +502,408 @@ opredict:Plan_Download_and_save_Kegg_dataset
   rdfs:label "Download and save Kegg dataset" ;
 .
 opredict:Plan_Download_and_save_SIDER_dataset
+  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Plan ;
   dc:description "Download and save SIDER dataset" ;
   dc:language :LinguisticSystem_xsd_language_English ;
   pwo:hasFirstStep opredict:Step_Download_SIDER_dataset ;
   rdfs:label "Download and save SIDER dataset" ;
 .
+opredict:Plan_Download_and_save_gold_standard_drug_indications
+  rdf:type edam:operation_2409 ;
+  rdf:type p-plan:Plan ;
+  dc:description """#!/usr/bin/env python
+# coding: utf-8
+
+\"\"\"
+RDF generator for the PREDICT drug indication gold standard (https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3159979/bin/msb201126-s4.xls)
+@version 1.0
+@author Remzi Celebi
+\"\"\"
+
+
+import pandas as pd
+from csv import reader
+import utils
+from utils import Dataset, DataResource
+from rdflib import Graph, URIRef, Literal, RDF, ConjunctiveGraph
+from rdflib import Namespace
+import datetime
+
+
+DC = Namespace(\"http://purl.org/dc/terms/\")
+
+mapping_df = pd.read_excel('https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3159979/bin/msb201126-s4.xls')
+#save the original file
+mapping_df.to_csv('../data/external/msb201126-s4.csv', index=False)
+
+
+mapping_df['OMIM disease name'].replace({'Neuropathy, Hereditary Sensory And Autonomic, Type I, With Cough And':
+                                         'Neuropathy, Hereditary Sensory And Autonomic, Type I, With Cough And Gastroesophageal Reflux'}, inplace=True)
+
+goldstd_df = pd.read_excel('https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3159979/bin/msb201126-s1.xls')
+# save the file
+goldstd_df.to_csv('../data/external/msb201126-s1.csv', sep='\\t', index=False)
+
+goldstd_df['Drug name'].replace({'Divalproex Sodium':'Valproic Acid',
+                                 'Bismuth':'Bismuth subsalicylate',
+                                'Clobetasol':'Clobetasol propionate',
+                               'Guanadrel Sulfate':'Guanadrel',
+                                 'Marinol':'Dronabinol',
+                               'Medroxyprogesterone':'Medroxyprogesterone acetate',
+                                'Megestrol':'Megestrol acetate',
+                                'Propoxyphene':'Dextropropoxyphene',
+                                 'Salicyclic Acid':'Salicylic acid',
+                                'Ipratropium':'Ipratropiumbromid',
+                                'Adenosine Monophosphate':'Adenosine monophosphate',
+                                'Arsenic Trioxide':'Arsenic trioxide',
+                                'Ethacrynic Acid':'Ethacrynic acid',
+                                'Fondaparinux Sodium':'Fondaparinux sodium',
+                                 'Meclofenamic Acid':'Meclofenamic acid',
+                                'Methyl Aminolevulinate':'Methyl aminolevulinate'},inplace=True)
+
+
+
+
+merged_df = goldstd_df.merge(mapping_df, left_on='Disease name', right_on='OMIM disease name')
+
+
+drug_synonym_df = pd.read_csv('../data/input/drugbank-drug-synonym.csv')
+merged_df = merged_df.merge(drug_synonym_df, left_on='Drug name', right_on='name')
+
+print ('# of drug-disease associations',len(merged_df[['drugid','OMIM ID']].drop_duplicates()))
+
+
+gold_std_mapped_df = merged_df[['drugid','OMIM ID']].drop_duplicates()
+gold_std_mapped_df['drugid'] = gold_std_mapped_df['drugid'].map(lambda x: 'http://bio2rdf.org/drugbank:'+str(x))
+gold_std_mapped_df['OMIM ID'] = gold_std_mapped_df['OMIM ID'].map(lambda x: 'http://bio2rdf.org/omim:'+str(x))
+gold_std_mapped_df.rename(columns={'OMIM ID':'http://bio2rdf.org/openpredict_vocabulary:indication'},inplace=True)
+gold_std_mapped_df= gold_std_mapped_df.set_index('drugid', drop=True)
+
+column_types ={'http://bio2rdf.org/openpredict_vocabulary:indication':'URI'}
+graphURI ='http://fairworkflows.org/openpredict_resource:fairworkflows.dataset.openpredict.predict.R1'
+g = ConjunctiveGraph(identifier = URIRef(graphURI))  
+g=  utils.to_rdf(g, gold_std_mapped_df, column_types, 'http://bio2rdf.org/drugbank:Drug' )
+
+
+
+def addMetaData(g, graphURI):
+    #generate dataset
+    data_source = Dataset(qname=graphURI, graph = g)
+    data_source.setURI(graphURI)
+    data_source.setTitle('Supplementary data used in the PREDICT')
+    data_source.setDescription('Drug indications gold standard and mappings used in the study of \"PREDICT: a method for inferring novel drug indications with application to personalized medicine\" ')
+    data_source.setPublisher('https://www.embopress.org/journal/17444292')
+    data_source.setPublisherName('Molecular Systems Biology')
+    data_source.addRight('use-share-modify')
+    data_source.addTheme('http://www.wikidata.org/entity/Q56863002')
+    data_source.setLicense('https://www.embopress.org/page/journal/17444292/about')
+    data_source.setHomepage('https://dx.doi.org/10.1038%2Fmsb.2011.26')
+    data_source.setVersion('1.0')
+
+
+    #generate dataset distribution
+    data_dist1 = DataResource(qname=graphURI, graph = data_source.toRDF())
+    data_dist1.setURI('https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3159979/bin/msb201126-s4.xls')
+    data_dist1.setTitle('Mapping between OMIM diseases and UMLS concepts used in the PREDICT study (msb201126-s4.xls)')
+    data_dist1.setDescription('This file contains the mappings between OMIM diseases and UMLS concepts used in the PREDICT study')
+    data_dist1.setLicense('https://creativecommons.org/publicdomain/zero/1.0/')
+    data_dist1.setVersion('1.0')
+    data_dist1.setFormat('application/vnd.ms-excel')
+    data_dist1.setMediaType('application/vnd.ms-excel')
+    data_dist1.setPublisher('https://www.embopress.org/journal/17444292')
+    data_dist1.addRight('use-share-modify')
+    data_dist1.setRetrievedDate(datetime.datetime.now().strftime(\"%Y-%m-%d %H:%M:%S\"))
+    data_dist1.setDataset(data_source.getURI())
+    
+    
+    #generate dataset distribution
+    data_dist2 = DataResource(qname=graphURI, graph = data_dist1.toRDF())
+    data_dist2.setURI('https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3159979/bin/msb201126-s1.xls')
+    data_dist2.setTitle('Drug indications gold standard used in the PREDICT study (msb201126-s1.xls)')
+    data_dist2.setDescription('This file contains the gold standard drug indications used in the PREDICT study')
+    data_dist2.setLicense('https://creativecommons.org/publicdomain/zero/1.0/')
+    data_dist2.setVersion('1.0')
+    data_dist2.setFormat('application/vnd.ms-excel')
+    data_dist2.setMediaType('application/vnd.ms-excel')
+    data_dist2.setPublisher('https://www.embopress.org/journal/17444292')
+    data_dist2.addRight('use-share-modify')
+    data_dist2.setRetrievedDate(datetime.datetime.now().strftime(\"%Y-%m-%d %H:%M:%S\"))
+    data_dist2.setDataset(data_source.getURI())
+     
+
+    #generate RDF data distrubtion
+    rdf_dist = DataResource(qname=graphURI, graph = data_dist2.toRDF() )
+    rdf_dist.setURI('https://github.com/fair-workflows/openpredict/blob/master/data/rdf/predict-gold-standard-omim.nq.gz')
+    rdf_dist.setTitle('RDF version of PREDICT drug indication gold standard')
+    rdf_dist.setDescription('This file is the RDF version of PREDICT drug indication gold standard')
+    rdf_dist.setLicense('http://creativecommons.org/licenses/by/3.0/')
+    rdf_dist.setVersion('1.0')
+    rdf_dist.setFormat('application/n-quads')
+    rdf_dist.setMediaType('application/n-quads')
+    rdf_dist.addRight('use-share-modify')
+    rdf_dist.addRight('by-attribution')
+    rdf_dist.addRight('restricted-by-source-license')
+    rdf_dist.setCreateDate(datetime.datetime.now().strftime(\"%Y-%m-%d %H:%M:%S\"))
+    rdf_dist.setCreator('https://github.com/fair-workflows/openpredict/src/MappingPREDICTGoldstandard.py')
+    rdf_dist.setDownloadURL('https://github.com/fair-workflows/openpredict/known_associations/predict-gold-standard-omim.nq.gz')
+    rdf_dist.setDataset(data_dist2.getURI())
+    rdf_dist.addSource('https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3159979/bin/msb201126-s1.xls')
+    rdf_dist.addSource('https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3159979/bin/msb201126-s4.xls')
+      
+    return rdf_dist.toRDF()
+
+g= addMetaData(g, graphURI)
+
+outfile ='../data/rdf/predict-gold-standard-omim.nq'
+g.serialize(outfile, format='nquads')
+print('RDF is generated at '+outfile)
+
+
+
+""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+  rdfs:label "Download and save the mappings between OMIM diseases and UMLS concepts used in the PREDICT study (msb201126-s4.xls)" ;
+  dcat:downloadURL "https://github.com/fair-workflows/openpredict/blob/2e1bb7b6ba12e2df3e80d2b0a89a116703ce7180/src/MappingPREDICTGoldstandard.py" ;
+  prov:qualifiedUsage opredict:Usage_Fetch_download_gold_standard_drug_indications ;
+.
 opredict:Plan_Download_and_save_human_interactome_barabasi
+  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Plan ;
   dc:description "Download and save human interactome barabasi" ;
   dc:language :LinguisticSystem_xsd_language_English ;
   pwo:hasFirstStep opredict:Step_Download_human_interactome_barabasi ;
   rdfs:label "Download and save human interactome barabasi" ;
 .
+opredict:Plan_Download_and_save_human_interactome_barabasi_v02
+  rdf:type edam:operation_2409 ;
+  rdf:type p-plan:Plan ;
+  dc:description """#!/usr/bin/env python
+# coding: utf-8
+
+\"\"\"
+RDF generator for the Human Interactome (https://media.nature.com/full/nature-assets/srep/2016/161017/srep35241/extref/srep35241-s3.txt)
+@version 1.0
+@author Remzi Celebi
+\"\"\"
+
+import pandas as pd
+import utils
+from utils import Dataset, DataResource
+
+from rdflib import Namespace
+from rdflib import Graph, URIRef, Literal, RDF, ConjunctiveGraph
+import datetime
+
+DC = Namespace(\"http://purl.org/dc/terms/\")
+
+
+def download():
+    url = 'https://media.nature.com/full/nature-assets/srep/2016/161017/srep35241/extref/srep35241-s3.txt'
+    return pd.read_csv(url,skiprows=25,sep='\\t')
+
+
+interactome_df = download()
+
+interactome_df.rename(columns={'# gene_ID_1':'gene_id_1',' gene_ID_2':'gene_id_2','data_source(s)':'source'}, inplace=True)
+
+# save the file
+interactome_df.to_csv('../data/external/human_interactome.tsv', sep='\\t', index=False)
+
+
+interactome_df.index =interactome_df.apply(lambda row: 'http://bio2rdf.org/openpredict_resource:'+str(row['gene_id_1'])+'_'+str(row['gene_id_2']), axis=1)
+
+interactome_df['gene_id_1'] = interactome_df['gene_id_1'].map(lambda x: 'http://bio2rdf.org/ncbigene:'+str(x))
+interactome_df['gene_id_2'] = interactome_df['gene_id_2'].map(lambda x: 'http://bio2rdf.org/ncbigene:'+str(x))
+interactome_df.rename(columns={'gene_id_1':'http://bio2rdf.org/irefindex_vocabulary:interactor_a'},inplace=True)
+
+interactome_df.rename(columns={'gene_id_2':'http://bio2rdf.org/irefindex_vocabulary:interactor_b'},inplace=True)
+interactome_df.rename(columns={'source':'http://bio2rdf.org/irefindex_vocabulary:source'},inplace=True)
+
+
+column_types ={'http://bio2rdf.org/irefindex_vocabulary:interactor_a':'URI','http://bio2rdf.org/irefindex_vocabulary:interactor_b':'URI','http://bio2rdf.org/irefindex_vocabulary:source':'Literal'}
+graphURI = URIRef('http://fairworkflows.org/openpredict_resource:fairworkflows.dataset.openpredict.interactome.R1')
+g =  ConjunctiveGraph(identifier = graphURI)     
+g=  utils.to_rdf(g, interactome_df, column_types, 'http://edamontology.org/topic_0128' )
+
+def addMetaData(g, graphURI):
+    #generate dataset
+    data_source = Dataset(qname=graphURI, graph = g)
+    data_source.setURI(graphURI)
+    data_source.setTitle('The Human Interactome Dataset')
+    data_source.setDescription('Human Interactome data used in \"Uncovering Disease-Disease Relationships Through The Human Interactome\" study')
+    data_source.setPublisher('https://science.sciencemag.org/')
+    data_source.setPublisherName('American Association for the Advancement of Science')
+    data_source.addRight('no-commercial')
+    data_source.addRight('use')
+    data_source.addTheme('http://www.wikidata.org/entity/Q896177')
+    data_source.addTheme('http://www.wikidata.org/entity/Q25113323')
+    data_source.setLicense('https://www.sciencemag.org/about/terms-service')
+    data_source.setHomepage('https://dx.doi.org/10.1126%2Fscience.1257601')
+    data_source.setVersion('1.0')
+
+
+    #generate dataset distribution
+    data_dist = DataResource(qname=graphURI, graph = data_source.toRDF())
+    data_dist.setURI('https://media.nature.com/full/nature-assets/srep/2016/161017/srep35241/extref/srep35241-s3.txt')
+    data_dist.setTitle('The Human Interactome Dataset (srep35241-s3.txt)')
+    data_dist.setLicense('https://www.sciencemag.org/about/terms-service')
+    data_dist.setVersion('1.0')
+    data_dist.setFormat('text/tab-separated-value')
+    data_dist.setMediaType('text/tab-separated-value')
+    data_dist.setPublisher('https://science.sciencemag.org/')
+    data_dist.addRight('no-commercial')
+    data_dist.addRight('use')
+    data_dist.setRetrievedDate(datetime.datetime.now().strftime(\"%Y-%m-%d %H:%M:%S\"))
+    data_dist.setDataset(data_source.getURI())
+
+    #generate RDF data distrubtion
+    rdf_dist = DataResource(qname=graphURI, graph = data_dist.toRDF() )
+    rdf_dist.setURI('https://github.com/fair-workflows/openpredict/blob/master/data/rdf/human_interactome.nq.gz')
+    rdf_dist.setTitle('RDF Version of the Human Interactome')
+    rdf_dist.setLicense('http://creativecommons.org/licenses/by/3.0/')
+    rdf_dist.setVersion('1.0')
+    rdf_dist.setFormat('application/n-quads')
+    rdf_dist.setMediaType('application/n-quads')
+    rdf_dist.addRight('use-share-modify')
+    rdf_dist.addRight('by-attribution')
+    rdf_dist.addRight('restricted-by-source-license')
+    rdf_dist.setCreateDate(datetime.datetime.now().strftime(\"%Y-%m-%d %H:%M:%S\"))
+    rdf_dist.setCreator('https://github.com/fair-workflows/openpredict/src/HumanInteractome.py')
+    rdf_dist.setDownloadURL('https://github.com/fair-workflows/openpredict/blob/master/data/rdf/human_interactome.nq.gz')
+    rdf_dist.setDataset(data_dist.getURI())
+      
+    return rdf_dist.toRDF()
+
+g = addMetaData(g, graphURI)
+
+
+outfile ='../data/rdf/human_interactome.nq'
+g.serialize(outfile, format='nquads')
+print('RDF is generated at '+outfile)
+
+
+
+""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+  rdfs:label "Download and save human interactome barabasi" ;
+  dcat:downloadURL "https://github.com/fair-workflows/openpredict/blob/2e1bb7b6ba12e2df3e80d2b0a89a116703ce7180/src/HumanInteractome.py" ;
+  prov:qualifiedUsage opredict:Usage_Fetch_download_Human_interactome_barabasi_to_variable ;
+  prov:wasRevisionOf opredict:Plan_Download_and_save_human_interactome_barabasi ;
+.
+opredict:Plan_Download_and_save_mesh_annotation
+  rdf:type edam:operation_2409 ;
+  rdf:type p-plan:Plan ;
+  dc:description """#!/usr/bin/env python
+# coding: utf-8
+\"\"\"
+RDF generator for the PREDICT drug indication gold standard (http://www.paccanarolab.org/static_content/disease_similarity/mim2mesh.tsv)
+@version 1.0
+@author Remzi Celebi
+\"\"\"
+
+
+import pandas as pd
+from csv import reader
+import utils
+from utils import Dataset, DataResource
+from rdflib import Graph, URIRef, Literal, RDF, ConjunctiveGraph
+from rdflib import Namespace
+import datetime
+
+
+DC = Namespace(\"http://purl.org/dc/terms/\")
+
+
+url = 'http://www.paccanarolab.org/static_content/disease_similarity/mim2mesh.tsv'
+df = pd.read_csv(url,header=None)
+#save the original file
+df.to_csv('../data/external/mim2mesh.tsv', sep=',', index=False, header=None)
+
+
+omim_annots =[]
+with open('../data/external/mim2mesh.tsv','r') as mim2mesh_file:
+    for row in mim2mesh_file:
+        line = row.strip().split('\\t')
+        omim =line[0]
+        for i in range(1,len(line)):
+            omim_annots.append([omim,line[i]])
+
+mim2mesh_df = pd.DataFrame(omim_annots, columns=['disease','annotation'])
+
+mim2mesh_df['disease'] = mim2mesh_df['disease'].map(lambda x: 'http://bio2rdf.org/omim:'+str(x))
+mim2mesh_df['annotation'] = mim2mesh_df['annotation'].map(lambda x: 'http://bio2rdf.org/mesh:'+str(x))
+mim2mesh_df = mim2mesh_df.set_index('disease', drop=True)
+mim2mesh_df.rename(columns={'annotation':'http://semanticscience.org/resource/SIO_000255'},inplace=True)
+column_types ={'http://semanticscience.org/resource/SIO_000255':'URI'}
+graphURI = URIRef('http://fairworkflows.org/openpredict_resource:fairworkflows.dataset.openpredict.meshannot.R1')
+    
+g = ConjunctiveGraph(identifier = graphURI )     
+g =  utils.to_rdf(g, mim2mesh_df, column_types, 'http://bio2rdf.org/omim_vocabulary:Phenotype' )
+
+def addMetaData(g, graphURI):
+    #generate dataset
+    data_source = Dataset(qname=graphURI, graph = g)
+    data_source.setURI(graphURI)
+    data_source.setTitle('Mesh Annotations for OMIM diseases')
+    data_source.setDescription('This dataset contains the MeSH terms associated with the publications referenced in OMIM. This dataset is used in  \" https://doi.org/10.1038/srep17658\"')
+    data_source.setPublisher('http://www.paccanarolab.org')
+    data_source.setPublisherName('the Paccanaro Lab')
+    data_source.addRight('use-share-modify')
+    data_source.addTheme('http://www.wikidata.org/entity/Q199897')
+    data_source.addTheme('http://www.wikidata.org/entity/Q857525')
+    data_source.setLicense('http://creativecommons.org/licenses/by/4.0/')
+    data_source.setHomepage('http://www.paccanarolab.org/disease_similarity/')
+    data_source.setVersion('1.0')
+
+
+    #generate dataset distribution
+    data_dist = DataResource(qname=graphURI, graph = data_source.toRDF())
+    data_dist.setURI('http://www.paccanarolab.org/static_content/disease_similarity/mim2mesh.tsv')
+    data_dist.setTitle('Mesh Annotations by the Paccanaro Lab(mim2mesh.tsv)')
+    data_dist.setLicense('http://creativecommons.org/licenses/by/4.0/')
+    data_dist.setVersion('1.0')
+    data_dist.setFormat('text/tab-separated-value')
+    data_dist.setMediaType('text/tab-separated-value')
+    data_dist.setPublisher('http://www.paccanarolab.org')
+    data_dist.addRight('use-share-modify')
+    data_dist.setRetrievedDate(datetime.datetime.now().strftime(\"%Y-%m-%d %H:%M:%S\"))
+    data_dist.setDataset(data_source.getURI())
+
+    #generate RDF data distrubtion
+    rdf_dist = DataResource(qname=graphURI, graph = data_dist.toRDF() )
+    rdf_dist.setURI('https://github.com/fair-workflows/openpredict/blob/master/data/rdf/omim_mesh_annotations.nq.gz')
+    rdf_dist.setTitle('RDF Version of the MESH Annotations for OMIM diseases')
+    rdf_dist.setLicense('http://creativecommons.org/licenses/by/3.0/')
+    rdf_dist.setVersion('1.0')
+    rdf_dist.setFormat('application/n-quads')
+    rdf_dist.setMediaType('application/n-quads')
+    rdf_dist.addRight('use-share-modify')
+    rdf_dist.addRight('by-attribution')
+    rdf_dist.addRight('restricted-by-source-license')
+    rdf_dist.setCreateDate(datetime.datetime.now().strftime(\"%Y-%m-%d %H:%M:%S\"))
+    rdf_dist.setCreator('https://github.com/fair-workflows/openpredict/src/RDFConversionOfMeshAnnotation.py')
+    rdf_dist.setDownloadURL('https://github.com/fair-workflows/openpredict/blob/master/data/rdf/omim_mesh_annotations.nq.gz')
+    rdf_dist.setDataset(data_dist.getURI())
+      
+    return rdf_dist.toRDF()
+
+
+g= addMetaData(g, graphURI)
+
+outfile ='../data/rdf/omim_mesh_annotations.nq'
+g.serialize(outfile, format='nquads')
+print('RDF is generated at '+outfile)
+
+
+""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+  rdfs:label "Download and save drug indication gold standard (http://www.paccanarolab.org/static_content/disease_similarity/mim2mesh.tsv)" ;
+  dcat:downloadURL "https://github.com/fair-workflows/openpredict/blob/2e1bb7b6ba12e2df3e80d2b0a89a116703ce7180/src/RDFConversionOfMeshAnnotation.py" ;
+  prov:qualifiedUsage opredict:Usage_Fetch_download_mesh_annotation_to_variable ;
+.
 opredict:Plan_Download_and_save_phenotype_annotations
+  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Plan ;
   dc:description """1-Download from:
 http://compbio.charite.de/jenkins/job/hpo.annotations/lastStableBuild/artifact/misc/phenotype_annotation_hpoteam.tab
@@ -494,6 +912,217 @@ http://compbio.charite.de/jenkins/job/hpo.annotations/lastStableBuild/artifact/m
   dc:language :LinguisticSystem_xsd_language_English ;
   pwo:hasFirstStep opredict:Step_Download_phenotype_annotations ;
   rdfs:label "Download and save phenotype annotations " ;
+.
+opredict:Plan_Download_and_save_phenotype_annotations_v02
+  rdf:type edam:operation_2409 ;
+  rdf:type p-plan:Plan ;
+  dc:description """#!/usr/bin/env python
+# coding: utf-8
+
+\"\"\"
+RDF generator for the OMIM HPO Annotations (http://compbio.charite.de/jenkins/job/hpo.annotations/lastSuccessfulBuild/artifact/misc/phenotype_annotation_hpoteam.tab)
+@version 1.0
+@author Remzi Celebi
+\"\"\"
+
+
+import pandas as pd
+from csv import reader
+import utils
+from utils import Dataset, DataResource
+from rdflib import Graph, URIRef, Literal, RDF, ConjunctiveGraph
+from rdflib import Namespace
+import datetime
+
+DC = Namespace(\"http://purl.org/dc/terms/\")
+
+
+url = 'http://compbio.charite.de/jenkins/job/hpo.annotations/lastSuccessfulBuild/artifact/misc/phenotype_annotation_hpoteam.tab'
+hpoannot_df = pd.read_csv(url,sep='\\t', header=None)
+
+#save the file
+hpoannot_df.to_csv('../data/external/phenotype_annotation_hpoteam.tab', sep='\\t', index=False, header=None)
+
+#preprocessing
+hpoannot_df.rename(columns={0:'DB',1:'DB_Object_ID',4:'HPO_ID'}, inplace=True)
+hpoannot_df = hpoannot_df[['DB','DB_Object_ID','HPO_ID']]
+hpoannot_df= hpoannot_df[hpoannot_df.DB =='OMIM']
+hpoannot_df.drop(columns=['DB'], inplace=True)
+
+hpoannot_df['DB_Object_ID'] = hpoannot_df['DB_Object_ID'].map(lambda x: 'http://bio2rdf.org/omim:'+str(x))
+hpoannot_df['HPO_ID']= hpoannot_df['HPO_ID'].map(lambda x: 'http://bio2rdf.org/hpo:'+str(x[3:]))
+hpoannot_df = hpoannot_df.set_index('DB_Object_ID', drop=True)
+hpoannot_df.rename(columns={'HPO_ID':'http://semanticscience.org/resource/SIO_000255'},inplace=True)
+
+column_types ={'http://semanticscience.org/resource/SIO_000255':'URI'}
+graphURI = URIRef('http://fairworkflows.org/openpredict_resource:fairworkflows.dataset.openpredict.hpoannot.R1')
+g = ConjunctiveGraph(identifier = graphURI)     
+
+g=  utils.to_rdf(g, hpoannot_df, column_types, 'http://bio2rdf.org/omim_vocabulary:Phenotype' )
+
+def addMetaData(g, graphURI):
+    #generate dataset
+    data_source = Dataset(qname=graphURI, graph = g)
+    data_source.setURI(graphURI)
+    data_source.setTitle('Phenotype annotatations by the HPO-team')
+    data_source.setDescription('This dataset contains manual and semi-automated annotations created by the HPO-team. These are annotations of OMIM-, Orphanet-, and DECIPHER-entries')
+    data_source.setPublisher('https://monarchinitiative.org/')
+    data_source.setPublisherName('Monarch Initiative')
+    data_source.addRight('use')
+    data_source.addTheme('http://www.wikidata.org/entity/Q17027854')
+    data_source.addTheme('http://www.wikidata.org/entity/Q45314346')
+    data_source.setLicense('https://hpo.jax.org/app/license')
+    data_source.setHomepage('https://hpo.jax.org/app/download/annotation')
+    data_source.setVersion('1.0')
+
+
+    #generate dataset distribution
+    data_dist = DataResource(qname=graphURI, graph = data_source.toRDF())
+    data_dist.setURI('http://compbio.charite.de/jenkins/job/hpo.annotations/lastStableBuild/artifact/misc/phenotype_annotation.tab')
+    data_dist.setTitle('Phenotypes annotated by the HPO-team (phenotype_annotation_hpoteam.tab)')
+    data_dist.setLicense('https://hpo.jax.org/app/license')
+    data_dist.setVersion('1.0')
+    data_dist.setFormat('text/tab-separated-value')
+    data_dist.setMediaType('text/tab-separated-value')
+    data_dist.setPublisher('https://monarchinitiative.org/')
+    data_dist.addRight('use')
+    data_dist.setRetrievedDate(datetime.datetime.now().strftime(\"%Y-%m-%d %H:%M:%S\"))
+    data_dist.setDataset(data_source.getURI())
+
+    #generate RDF data distrubtion
+    rdf_dist = DataResource(qname=graphURI, graph = data_dist.toRDF() )
+    rdf_dist.setURI('https://github.com/fair-workflows/openpredict/blob/master/data/rdf/hpo_annotations.nq.gz')
+    rdf_dist.setTitle('RDF Version of the OMIM HPO Annotations')
+    rdf_dist.setLicense('http://creativecommons.org/licenses/by/3.0/')
+    rdf_dist.setVersion('1.0')
+    rdf_dist.setFormat('application/n-quads')
+    rdf_dist.setMediaType('application/n-quads')
+    rdf_dist.addRight('use-share-modify')
+    rdf_dist.addRight('by-attribution')
+    rdf_dist.addRight('restricted-by-source-license')
+    rdf_dist.setCreateDate(datetime.datetime.now().strftime(\"%Y-%m-%d %H:%M:%S\"))
+    rdf_dist.setCreator('https://github.com/fair-workflows/openpredict/src/OMIMHpoAnnotations.py')
+    rdf_dist.setDownloadURL('https://github.com/fair-workflows/openpredict/blob/master/data/rdf/hpo_annotations.nq.gz')
+    rdf_dist.setDataset(data_dist.getURI())
+      
+    return rdf_dist.toRDF()
+
+g = addMetaData(g, graphURI)
+outfile ='../data/rdf/hpo_annotations.nq'
+g.serialize(outfile, format='nquads')
+print('RDF is generated at '+outfile)
+
+""" ;
+  dc:language :LinguisticSystem_xsd_language_English ;
+  rdfs:label "Download and save phenotype annotations " ;
+  dcat:downloadURL "https://raw.githubusercontent.com/fair-workflows/openpredict/master/src/OMIMHpoAnnotations.py?token=AB7DEPUIR4M6G6AKGFIIBF25H4GWC" ;
+  prov:qualifiedUsage opredict:Usage_Fetch_download-_phenotype_annotations_to_variable_v02 ;
+  prov:wasRevisionOf opredict:Plan_Download_and_save_phenotype_annotations ;
+.
+opredict:Plan_Download_and_save_pubchem_to_drugbank
+  rdf:type edam:operation_2409 ;
+  rdf:type p-plan:Plan ;
+  dc:description """#!/usr/bin/env python
+# coding: utf-8
+\"\"\"
+RDF generator for the mappings from Pubchem ids to Drugbank ids (https://raw.githubusercontent.com/dhimmel/drugbank/3e87872db5fca5ac427ce27464ab945c0ceb4ec6/data/mapping/pubchem.tsv)
+@version 1.0
+@author Remzi Celebi
+\"\"\"
+
+
+import pandas as pd
+from csv import reader
+import utils
+from utils import Dataset, DataResource
+from rdflib import Graph, URIRef, Literal, RDF, ConjunctiveGraph
+from rdflib import Namespace
+import datetime
+
+
+DC = Namespace(\"http://purl.org/dc/terms/\")
+
+
+url = 'https://raw.githubusercontent.com/dhimmel/drugbank/3e87872db5fca5ac427ce27464ab945c0ceb4ec6/data/mapping/pubchem.tsv'
+drugbank_map_df = pd.read_csv(url, sep='\\t')
+
+#save the original file
+drugbank_map_df.to_csv('../data/external/pubchem.tsv', sep='\\t', index=False)
+
+
+drugbank_map_df['drugbank_id'] = drugbank_map_df['drugbank_id'].map(lambda x: 'http://bio2rdf.org/drugbank:'+str(x))
+drugbank_map_df['pubchem_id'] = drugbank_map_df['pubchem_id'].map(lambda x: 'http://bio2rdf.org/pubchem.compound:'+str(x))
+drugbank_map_df = drugbank_map_df.set_index('drugbank_id', drop=True)
+drugbank_map_df.rename(columns={'pubchem_id':'http://bio2rdf.org/openpredict_vocabulary:x-pubchemcompound'},inplace=True)
+
+column_types ={'http://bio2rdf.org/openpredict_vocabulary:x-pubchemcompound':'URI'}
+graphURI = URIRef('http://fairworkflows.org/openpredict_resource:fairworkflows.dataset.openpredict.pubchem.R1')
+g = ConjunctiveGraph(identifier = graphURI)     
+
+g = utils.to_rdf(g, drugbank_map_df, column_types, 'http://bio2rdf.org/drugbank:Drug' )
+
+
+def addMetaData(g, graphURI):
+    #generate dataset
+    data_source = Dataset(qname=graphURI, graph = g)
+    data_source.setURI(graphURI)
+    data_source.setTitle('Pubchem mappings for Drugbank drugs')
+    data_source.setDescription('DrugBank to PubChem mapping using InChI strings created by Daniel Himmelstein.')
+    data_source.setPublisher('https://github.com/dhimmel')
+    data_source.setPublisherName('Daniel Himmelstein')
+    data_source.addRight('use-share-modify')
+    data_source.addTheme('http://www.wikidata.org/entity/Q278487')
+    data_source.addTheme('http://www.wikidata.org/entity/Q1122544')
+    data_source.setLicense('http://creativecommons.org/licenses/by/4.0/')
+    data_source.setHomepage('https://github.com/dhimmel/drugbank/blob/gh-pages/pubchem-map.ipynb')
+    data_source.setVersion('1.0')
+
+
+    #generate dataset distribution
+    data_dist = DataResource(qname=graphURI, graph = data_source.toRDF())
+    data_dist.setURI('https://raw.githubusercontent.com/dhimmel/drugbank/3e87872db5fca5ac427ce27464ab945c0ceb4ec6/data/mapping/pubchem.tsv')
+    data_dist.setTitle('Pubchem mappings for Drugbank drugs (pubchem.tsv)')
+    data_dist.setLicense('http://creativecommons.org/licenses/by/4.0/')
+    data_dist.setVersion('1.0')
+    data_dist.setFormat('text/tab-separated-value')
+    data_dist.setMediaType('text/tab-separated-value')
+    data_dist.setPublisher('https://github.com/dhimmel')
+    data_dist.addRight('use-share-modify')
+    data_dist.setRetrievedDate(datetime.datetime.now().strftime(\"%Y-%m-%d %H:%M:%S\"))
+    data_dist.setDataset(data_source.getURI())
+
+    #generate RDF data distrubtion
+    rdf_dist = DataResource(qname=graphURI, graph = data_dist.toRDF() )
+    rdf_dist.setURI('https://github.com/fair-workflows/openpredict/blob/master/data/rdf/pubchem_mapping.nq.gz')
+    rdf_dist.setTitle('RDF Version of the Pubchem mappings for Drugbank drugs')
+    rdf_dist.setLicense('http://creativecommons.org/licenses/by/3.0/')
+    rdf_dist.setVersion('1.0')
+    rdf_dist.setFormat('application/n-quads')
+    rdf_dist.setMediaType('application/n-quads')
+    rdf_dist.addRight('use-share-modify')
+    rdf_dist.addRight('by-attribution')
+    rdf_dist.addRight('restricted-by-source-license')
+    rdf_dist.setCreateDate(datetime.datetime.now().strftime(\"%Y-%m-%d %H:%M:%S\"))
+    rdf_dist.setCreator('https://github.com/fair-workflows/openpredict/src/RDFConversionOfPubchemMapping.py')
+    rdf_dist.setDownloadURL('https://github.com/fair-workflows/openpredict/blob/master/data/rdf/pubchem_mapping.nq.gz')
+    rdf_dist.setDataset(data_dist.getURI())
+      
+    return rdf_dist.toRDF()
+
+
+g = addMetaData(g, graphURI)
+
+outfile ='../data/rdf/pubchem_mapping.nq'
+g.serialize(outfile, format='nquads')
+print('RDF is generated at '+outfile)
+
+
+
+""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+  rdfs:label "Download and save the mappings from Pubchem ids to Drugbank ids (https://raw.githubusercontent.com/dhimmel/drugbank/3e87872db5fca5ac427ce27464ab945c0ceb4ec6/data/mapping/pubchem.tsv)" ;
+  dcat:downloadURL "https://github.com/fair-workflows/openpredict/blob/2e1bb7b6ba12e2df3e80d2b0a89a116703ce7180/src/RDFConversionOfPubchemMapping.py" ;
+  prov:qualifiedUsage opredict:Usage_Fetch_download_pubchem_to_drugbank ;
 .
 opredict:Plan_Download_human_interactome_barabasi
   rdf:type edam:operation_2409 ;
@@ -694,6 +1323,7 @@ opredict:Plan_Format_results_for_presentation
 .
 opredict:Plan_Main_Protocol_v01
   rdf:type p-plan:Plan ;
+  rdf:type dul:Workflow ;
   dc:created "2018-11-27" ;
   dc:creator opredict:Agent_Remzi ;
   dc:description "OpenPREDICT Main Protocol v.0.1" ;
@@ -701,7 +1331,22 @@ opredict:Plan_Main_Protocol_v01
   dc:language :LinguisticSystem_xsd_language_English ;
   dc:modified "2019-05-15" ;
   pwo:hasFirstStep opredict:Step_Prepare_Input_Data_Files ;
-  rdfs:label "Main Protocol" ;
+  rdfs:label "Main Protocol v.0.1" ;
+  prov:wasAttributedTo opredict:Agent_Remzi ;
+.
+opredict:Plan_Main_Protocol_v02
+  rdf:type p-plan:Plan ;
+  rdf:type dul:Workflow ;
+  dc:created "2019-05-15" ;
+  dc:creator opredict:Agent_Remzi ;
+  dc:description "OpenPREDICT Main Protocol v.0.2" ;
+  dc:hasVersion "0.2" ;
+  dc:language :LinguisticSystem_xsd_language_English ;
+  dc:modified "2019-07-03" ;
+  pwo:hasFirstStep opredict:Step_Prepare_Input_Data_Files_v02 ;
+  rdfs:label "Main Protocol v.0.2" ;
+  prov:wasAttributedTo opredict:Agent_Remzi ;
+  prov:wasRevisionOf opredict:Plan_Main_Protocol_v01 ;
 .
 <http://purl.org/plex/Instances/OpenPREDICT#Plan_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb>
   rdf:type p-plan:Plan ;
@@ -719,6 +1364,22 @@ opredict:Plan_Prepare_Input_Data_Files
   pwo:hasFirstStep opredict:Step_Download_and_save_human_interactome_barabasi ;
   pwo:hasFirstStep opredict:Step_Download_and_save_phenotype_annotations ;
   rdfs:label "Prepare Input Data Files" ;
+  prov:wasRevisionOf opredict:Plan_Prepare_Input_Data_Files_v02 ;
+.
+opredict:Plan_Prepare_Input_Data_Files_v02
+  rdf:type p-plan:Plan ;
+  dc:description "Prepare Input Data Files" ;
+  dc:language :LinguisticSystem_xsd_language_English ;
+  pwo:hasFirstStep opredict:Step_Download_and_save_Drugbank_dataset ;
+  pwo:hasFirstStep opredict:Step_Download_and_save_Kegg_dataset ;
+  pwo:hasFirstStep opredict:Step_Download_and_save_SIDER_dataset ;
+  pwo:hasFirstStep opredict:Step_Download_and_save_gold_standard_drug_indications ;
+  pwo:hasFirstStep opredict:Step_Download_and_save_human_interactome_barabasi_v02 ;
+  pwo:hasFirstStep opredict:Step_Download_and_save_mesh_annotation ;
+  pwo:hasFirstStep opredict:Step_Download_and_save_phenotype_annotations_v02 ;
+  pwo:hasFirstStep opredict:Step_Download_and_save_pubchem_to_drugbank ;
+  rdfs:label "Prepare Input Data Files" ;
+  prov:wasRevisionOf opredict:Plan_Prepare_Input_Data_Files ;
 .
 opredict:Plan_Prepare_triplestore_for_input_data
   rdf:type p-plan:Plan ;
@@ -927,6 +1588,7 @@ opredict:Step_Download_and_save_Drugbank_dataset
   rdf:type bpmn:ManualTask ;
   rdf:type p-plan:Step ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02 ;
   dul:isDescribedBy opredict:Plan_Download_and_save_Drugbank_dataset ;
   dul:precedes opredict:Step_Add_files_to_triplestore_and_execute_queries ;
   rdfs:label "Download and save Drugbank dataset" ;
@@ -935,6 +1597,7 @@ opredict:Step_Download_and_save_Kegg_dataset
   rdf:type bpmn:ManualTask ;
   rdf:type p-plan:Step ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02 ;
   dul:isDescribedBy opredict:Plan_Download_and_save_Kegg_dataset ;
   dul:precedes opredict:Step_Add_files_to_triplestore_and_execute_queries ;
   rdfs:label "Download and save Kegg dataset" ;
@@ -943,9 +1606,18 @@ opredict:Step_Download_and_save_SIDER_dataset
   rdf:type bpmn:ManualTask ;
   rdf:type p-plan:Step ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02 ;
   dul:isDescribedBy opredict:Plan_Download_and_save_SIDER_dataset ;
   dul:precedes opredict:Step_Add_files_to_triplestore_and_execute_queries ;
   rdfs:label "Download and save SIDER dataset" ;
+.
+opredict:Step_Download_and_save_gold_standard_drug_indications
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  p-plan:hasInputVar opredict:Variable_gold_standard_drug_indications_file_online ;
+  p-plan:hasOutputVar opredict:Variable_gold_standard_drug_indications_local ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02 ;
+  dul:isDescribedBy opredict:Plan_Download_and_save_gold_standard_drug_indications ;
 .
 opredict:Step_Download_and_save_human_interactome_barabasi
   rdf:type bpmn:ManualTask ;
@@ -955,6 +1627,23 @@ opredict:Step_Download_and_save_human_interactome_barabasi
   dul:precedes opredict:Step_Execute_FAIRifier_process_to_human_interactome_barabasi ;
   rdfs:label "Download and save human interactome barabasi" ;
 .
+opredict:Step_Download_and_save_human_interactome_barabasi_v02
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  p-plan:hasInputVar opredict:Variable_Human_interactome_barabasi_online ;
+  p-plan:hasOutputVar opredict:Variable_Human_interactome_barabasi_local ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02 ;
+  dul:isDescribedBy opredict:Plan_Download_and_save_human_interactome_barabasi_v02 ;
+  rdfs:label "Download and save human interactome barabasi" ;
+.
+opredict:Step_Download_and_save_mesh_annotation
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  p-plan:hasInputVar opredict:Variable_mesh_annotation_file_online ;
+  p-plan:hasOutputVar opredict:Variable_mesh_annotation_file_local ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02 ;
+  dul:isDescribedBy opredict:Plan_Download_and_save_mesh_annotation ;
+.
 opredict:Step_Download_and_save_phenotype_annotations
   rdf:type bpmn:ManualTask ;
   rdf:type p-plan:Step ;
@@ -963,7 +1652,25 @@ opredict:Step_Download_and_save_phenotype_annotations
   dul:precedes opredict:Step_Execute_FAIRifier_process_to_phenotype_annotations ;
   rdfs:label "Download and save phenotype annotations " ;
 .
+opredict:Step_Download_and_save_phenotype_annotations_v02
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  p-plan:hasInputVar opredict:Variable_Phenotype_annotations_file_online ;
+  p-plan:hasOutputVar opredict:Variable_Phenotype_annotations_file_local ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02 ;
+  dul:isDescribedBy opredict:Plan_Download_and_save_phenotype_annotations_v02 ;
+  rdfs:label "Download and save phenotype annotations " ;
+.
+opredict:Step_Download_and_save_pubchem_to_drugbank
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  p-plan:hasInputVar opredict:Variable_mesh_annotation_file_online ;
+  p-plan:hasOutputVar opredict:Variable_pubchem_to_drugbank_file_local ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02 ;
+  dul:isDescribedBy opredict:Plan_Download_and_save_pubchem_to_drugbank ;
+.
 opredict:Step_Download_human_interactome_barabasi
+  rdf:type bpmn:ManualTask ;
   rdf:type p-plan:Step ;
   p-plan:hasOutputVar opredict:Variable_Human_interactome_barabasi_online ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
@@ -996,6 +1703,7 @@ opredict:Step_Execute_FAIRifier_process_to_phenotype_annotations
   rdfs:label "Execute FAIRifier process to phenotype annotations" ;
 .
 opredict:Step_Execute_queries_and_create_input_files_tab
+  rdf:type bpmn:ManualTask ;
   rdf:type p-plan:Step ;
   p-plan:hasInputVar opredict:Variable_Triplestore_endpoint_for_input_data ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
@@ -1119,6 +1827,22 @@ opredict:Step_Feature_generation_Pipeline_OpenPREDICT_ipynb
   dul:precedes opredict:Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb ;
   rdfs:label "Feature generation: Pipeline OpenPREDICT.ipynb" ;
 .
+opredict:Step_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02 ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_OpenPREDICT_ipynb ;
+  dul:precedes opredict:Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb ;
+  rdfs:label "Feature generation: Pipeline OpenPREDICT.ipynb v.0.2" ;
+.
+opredict:Step_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02_1
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02 ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_OpenPREDICT_ipynb ;
+  dul:precedes opredict:Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb ;
+  rdfs:label "Feature generation: Pipeline OpenPREDICT.ipynb v.0.2" ;
+.
 opredict:Step_Format_results_for_presentation
   rdf:type p-plan:Step ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
@@ -1139,6 +1863,14 @@ opredict:Step_Prepare_Input_Data_Files
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
   dul:isDescribedBy opredict:Plan_Prepare_Input_Data_Files ;
   dul:precedes opredict:Step_Feature_generation_Pipeline_OpenPREDICT_ipynb ;
+  rdfs:label "Prepare Input Data Files" ;
+.
+opredict:Step_Prepare_Input_Data_Files_v02
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02 ;
+  dul:isDescribedBy opredict:Plan_Prepare_Input_Data_Files_v02 ;
+  dul:precedes opredict:Step_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02 ;
   rdfs:label "Prepare Input Data Files" ;
 .
 opredict:Step_Prepare_triplestore_for_input_data
@@ -1212,6 +1944,7 @@ opredict:Step_Save_files_in_triplestore
 opredict:Step_Save_human_interactome_barabasi
   rdf:type bpmn:ManualTask ;
   rdf:type p-plan:Step ;
+  p-plan:hasInputVar opredict:Variable_Human_interactome_barabasi_online ;
   p-plan:hasOutputVar opredict:Variable_Human_interactome_barabasi_local ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
   dul:isDescribedBy opredict:Plan_Save_human_interactome_barabasi ;
@@ -1248,6 +1981,12 @@ opredict:Usage_Fetch_download-_phenotype_annotations_to_variable
   prov:entity <http://purl.org/plex/Instances/OpenPREDICT#Distribution_phenotype_annotation_hpoteam.tab_Build_1263> ;
   prov:entity opredict:Variable_Phenotype_annotations_file_online ;
 .
+opredict:Usage_Fetch_download-_phenotype_annotations_to_variable_v02
+  rdf:type prov:Usage ;
+  rdfs:label "Link variable to download- phenotype annotations" ;
+  prov:entity <http://purl.org/plex/Instances/OpenPREDICT#Distribution_phenotype_annotation_hpoteam.tab_Build_1266> ;
+  prov:entity opredict:Variable_Phenotype_annotations_file_online ;
+.
 opredict:Usage_Fetch_download_Drugbank_dataset_to_variable
   rdf:type prov:Usage ;
   rdfs:label "Link variable to download Drugbank dataset" ;
@@ -1271,6 +2010,27 @@ opredict:Usage_Fetch_download_SIDER_dataset_to_variable
   rdfs:label "Link variable to download SIDER dataset" ;
   prov:entity <http://purl.org/plex/Instances/OpenPREDICT#Distribution_release-4-sider-sider-se.nq.gz> ;
   prov:entity opredict:Variable_SIDER_dataset_online ;
+.
+opredict:Usage_Fetch_download_gold_standard_drug_indications
+  rdf:type prov:Usage ;
+  rdfs:label "Link variable to download gold_standard_drug_indications" ;
+  prov:entity <http://purl.org/plex/Instances/OpenPREDICT#Distribution_gold_standard_drug_indications_msb201126-s4.xls> ;
+  prov:entity opredict:Variable_gold_standard_drug_indications_file_online ;
+  prov:entity opredict:Variable_gold_standard_drug_indications_local ;
+.
+opredict:Usage_Fetch_download_mesh_annotation_to_variable
+  rdf:type prov:Usage ;
+  rdfs:label "Link variable to download- mesh_annotation" ;
+  prov:entity <http://purl.org/plex/Instances/OpenPREDICT#Distribution_mesh_annotation_mim2mesh.tsv> ;
+  prov:entity opredict:Variable_mesh_annotation_file_local ;
+  prov:entity opredict:Variable_mesh_annotation_file_online ;
+.
+opredict:Usage_Fetch_download_pubchem_to_drugbank
+  rdf:type prov:Usage ;
+  rdfs:label "Link variable to download Pubchem ids" ;
+  prov:entity <http://purl.org/plex/Instances/OpenPREDICT#Distribution_pubchem_to_drugbank_pubchem.tsv> ;
+  prov:entity opredict:Variable_pubchem_to_drugbank_file_local ;
+  prov:entity opredict:Variable_pubchem_to_drugbank_file_online ;
 .
 opredict:Variable_Drugbank_dataset_local
   rdf:type p-plan:Variable ;
@@ -1333,6 +2093,30 @@ opredict:Variable_SIDER_dataset_online
 opredict:Variable_Triplestore_endpoint_for_input_data
   rdf:type p-plan:Variable ;
 .
+opredict:Variable_gold_standard_drug_indications_file_online
+  rdf:type p-plan:Variable ;
+  rdfs:label "gold_standard_drug_indications file online" ;
+.
+opredict:Variable_gold_standard_drug_indications_local
+  rdf:type p-plan:Variable ;
+  rdfs:label "gold_standard_drug_indications file local" ;
+.
+opredict:Variable_mesh_annotation_file_local
+  rdf:type p-plan:Variable ;
+  rdfs:label "Mesh annotation file local" ;
+.
+opredict:Variable_mesh_annotation_file_online
+  rdf:type p-plan:Variable ;
+  rdfs:label "mesh_annotation file online" ;
+.
+opredict:Variable_pubchem_to_drugbank_file_local
+  rdf:type p-plan:Variable ;
+  rdfs:label "Pubchem file local" ;
+.
+opredict:Variable_pubchem_to_drugbank_file_online
+  rdf:type p-plan:Variable ;
+  rdfs:label "pubchem file online" ;
+.
 fabio:Triplestore
   rdf:type owl:Class ;
   rdfs:isDefinedBy fabio:Triplestore ;
@@ -1350,6 +2134,11 @@ schema:ComputerLanguage
 schema:URL
   rdf:type rdf:Property ;
   rdfs:range xsd:string ;
+.
+dul:Workflow
+  rdf:type owl:Class ;
+  rdfs:seeAlso "http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Workflow" ;
+  rdfs:subClassOf owl:Thing ;
 .
 dul:isDescribedBy
   rdf:type rdf:Property ;
@@ -1449,6 +2238,7 @@ prov:hadRole
 prov:qualifiedUsage
   rdf:type rdf:Property ;
   rdfs:isDefinedBy "http://www.w3.org/ns/prov#qualifiedUsage" ;
+  rdfs:range prov:Usage ;
 .
 prov:used
   rdf:type rdf:Property ;
@@ -1458,6 +2248,12 @@ prov:wasAttributedTo
   rdf:type rdf:Property ;
   rdfs:domain prov:Entity ;
   rdfs:range prov:Agent ;
+.
+prov:wasRevisionOf
+  rdf:type rdf:Property ;
+  rdfs:domain prov:Entity ;
+  rdfs:range prov:Entity ;
+  rdfs:seeAlso "http://www.w3.org/ns/prov#wasRevisionOf" ;
 .
 sh:NodeShape
   rdf:type owl:Class ;
