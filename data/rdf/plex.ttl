@@ -7,6 +7,7 @@
 @prefix dul: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
 @prefix edam: <http://edamontology.org/> .
 @prefix fabio: <http://purl.org/spar/fabio/> .
+@prefix opmw: <http://www.opmw.org/ontology/> .
 @prefix opredict: <http://purl.org/plex/Instances/OpenPREDICT#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix p-plan: <http://purl.org/net/p-plan#> .
@@ -97,6 +98,12 @@ dc:publisher
 dc:title
   rdf:type rdf:Property ;
 .
+p-plan:Activity
+  rdf:type owl:Class ;
+  rdfs:comment "A p-plan:Activity represents the execution of the process planned in a p-plan:Step. p-plan:Activity is a subclass of prov:Activity" ;
+  rdfs:seeAlso "http://purl.org/net/p-plan#Activity" ;
+  rdfs:subClassOf prov:Activity ;
+.
 p-plan:Plan
   rdf:type owl:Class ;
   rdfs:isDefinedBy "http://purl.org/net/p-plan#Plan" ;
@@ -122,6 +129,12 @@ p-plan:Variable
   rdf:type owl:Class ;
   rdfs:isDefinedBy "http://purl.org/net/p-plan#Variable" ;
   rdfs:subClassOf owl:Thing ;
+.
+p-plan:correspondsToStep
+  rdf:type owl:AnnotationProperty ;
+  rdfs:domain p-plan:Activity ;
+  rdfs:range p-plan:Step ;
+  rdfs:seeAlso "http://purl.org/net/p-plan#correspondsToStep" ;
 .
 p-plan:hasInputVar
   rdf:type rdf:Property ;
@@ -162,6 +175,11 @@ p-plan:isStepOfPlan
 .
 :opredict_Variable_Context_Output_Cell0
   rdf:type p-plan:Variable ;
+.
+opredict:Activity_Feature_generation_01_Pipeline_Source_Cell01_Execution_1546300862
+  rdf:type p-plan:Activity ;
+  p-plan:correspondsToStep opredict:Step_Feature_generation_01_Pipeline_Source_Cell01 ;
+  prov:generated opredict:WorkflowExecutionArtifact_Output_Step_Feature_generation_01_Pipeline_Source_Cell01_Execution_1546300862 ;
 .
 opredict:Agent_Ahmed
   rdf:type prov:Agent ;
@@ -389,6 +407,11 @@ opredict:Distribution_Phenotype_annotations_file_local
 <http://purl.org/plex/Instances/OpenPREDICT#Distribution_srep35241-s3.txt_local>
   rdf:type dcat:Distribution ;
   rdfs:label "srep35241-s3.txt local" ;
+.
+opredict:Generation_Output_Step_Feature_generation_01_Pipeline_Source_Cell01_Execution_1546300862
+  rdf:type prov:Generation ;
+  dc:description "This instance can describe information about the generation of the output of the cell, for example here we could have properties for different roles (generator) for each format (html x text), information provided by the user (e.g., data seem to be correct or no data found, etc), etc." ;
+  prov:atTime "2019-01-01T00:01:15.761"^^xsd:dateTime ;
 .
 opredict:Link_Pipeline_Source_Cell0_Variable
   rdf:type prov:Usage ;
@@ -1191,6 +1214,7 @@ opredict:Plan_Feature_generation_01_Pipeline_OpenPREDICT_ipynb
   dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
   pwo:hasFirstStep opredict:Step_Feature_generation_01_Pipeline_Source_Cell00 ;
   rdfs:label "Feature generation: Pipeline OpenPREDICT.ipynb" ;
+  dcat:downloadURL "https://github.com/fair-workflows/openpredict/blob/975324eb5263bc0d5d709f833baca31952817844/FeatureGeneration.ipynb" ;
 .
 opredict:Plan_Feature_generation_01_Pipeline_Source_Cell00
   rdf:type p-plan:Plan ;
@@ -1200,7 +1224,6 @@ import math
 import numpy as np
 import pandas as pd""" ;
   dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
-  rdfs:label "Jupyter Notebook Cell00" ;
   prov:qualifiedUsage opredict:Link_Pipeline_Source_Cell0_Variable ;
 .
 opredict:Plan_Feature_generation_01_Pipeline_Source_Cell01
@@ -1214,7 +1237,6 @@ drug_se = pd.read_csv('data/input/drugbank-sider-se.csv')
 drug_smiles.head()""" ;
   dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
   dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell01_Spec ;
-  rdfs:label "Jupyter Notebook Cell01" ;
 .
 opredict:Plan_Feature_generation_01_Pipeline_Source_Cell01_Spec
   rdf:type p-plan:Plan ;
@@ -1223,6 +1245,7 @@ opredict:Plan_Feature_generation_01_Pipeline_Source_Cell01_Spec
 .
 opredict:Plan_Feature_generation_01_Pipeline_Source_Cell02
   rdf:type p-plan:Plan ;
+  rdf:type reprod:Cell ;
   dc:description """print (\"%d drugs have all Target feature \"%len(  drug_target.drugid.unique()))
 print (\"%d drugs have Target GOA feature \"%len( drug_goa.drugid.unique()))
 print (\"%d drugs have Fingerprint feature \"%len(  drug_smiles.drugid.unique()))
@@ -1232,6 +1255,7 @@ print (\"%d drugs have Sideeffect feature \"%len( drug_se.drugid.unique()))""" ;
 .
 opredict:Plan_Feature_generation_01_Pipeline_Source_Cell03
   rdf:type p-plan:Plan ;
+  rdf:type reprod:Cell ;
   dc:description """drug_target_seq = drug_target.merge(target_seq, on= ['geneid'])
 print (\"%d drugs have Target SEQ feature \"%len( drug_target_seq.drugid.unique()))""" ;
   dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
@@ -1239,6 +1263,7 @@ print (\"%d drugs have Target SEQ feature \"%len( drug_target_seq.drugid.unique(
 .
 opredict:Plan_Feature_generation_01_Pipeline_Source_Cell04
   rdf:type p-plan:Plan ;
+  rdf:type reprod:Cell ;
   dc:description """a=drug_goa['drugid'].unique()
 b=drug_target['drugid'].unique()
 c=drug_smiles['drugid'].unique()
@@ -1251,6 +1276,7 @@ print (len(commonDrugs))""" ;
 .
 opredict:Plan_Feature_generation_01_Pipeline_Source_Cell05
   rdf:type p-plan:Plan ;
+  rdf:type reprod:Cell ;
   dc:description """drug_se.head()
 
 
@@ -1261,6 +1287,7 @@ opredict:Plan_Feature_generation_01_Pipeline_Source_Cell05
 .
 opredict:Plan_Feature_generation_01_Pipeline_Source_Cell06
   rdf:type p-plan:Plan ;
+  rdf:type reprod:Cell ;
   dc:description """drugSEDict = {k: g[\"umlsid\"].tolist() for k,g in drug_se.groupby(\"drugid\")}
 scores = []
 
@@ -1284,29 +1311,102 @@ opredict:Plan_Feature_generation_01_Pipeline_Source_Cell06_Spec
 .
 opredict:Plan_Feature_generation_01_Pipeline_Source_Cell07
   rdf:type p-plan:Plan ;
+  rdf:type reprod:Cell ;
   dc:description "drug_se_df = pd.DataFrame(scores, columns =['Drug1','Drug2','SE-SIM'])" ;
   dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
   dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell06_Spec ;
 .
 opredict:Plan_Feature_generation_01_Pipeline_Source_Cell08
   rdf:type p-plan:Plan ;
+  rdf:type reprod:Cell ;
   dc:description "drug_se_df.head()" ;
   dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
   dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell06_Spec ;
 .
 opredict:Plan_Feature_generation_01_Pipeline_Source_Cell09
   rdf:type p-plan:Plan ;
-  dc:description """drug_se_df.to_csv('data/features/drugs-se-sim.csv', index=False)
-
-
-# ## PPI based drug-drug similarity
-# ###  calculate distance between drugs on protein-protein interaction network""" ;
+  rdf:type reprod:Cell ;
+  dc:description "drug_se_df.to_csv('data/features/drugs-se-sim.csv', index=False)" ;
   dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
   dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell06_Spec ;
 .
 opredict:Plan_Feature_generation_01_Pipeline_Source_Cell10
   rdf:type p-plan:Plan ;
-  dc:description "#!pip install -q networkx==1.11" ;
+  rdf:type reprod:Cell ;
+  dc:description """# ## PPI based drug-drug similarity
+# ###  calculate distance between drugs on protein-protein interaction network
+#!pip install -q networkx==1.11
+
+# calcuate pairwise distance between proteins in the human PPI network
+import networkx as nx
+G= nx.Graph()
+with open('data/input/human-interactome.csv') as ppiFile: # human PPI network
+    next(ppiFile) # skip first line
+    drugs=set()
+    for line in ppiFile:
+        line=line.replace(\"'\",\"\").strip().split(',')
+        G.add_edge(line[0],line[1])
+
+ppi=nx.shortest_path_length(G)
+
+def grapDistance(ppi, target1, target2):
+    \"\"\"
+    return the shortest path between two proteins in the PPI network
+    ppi : dictonary that contains distance of PPI 
+    target1 : first protein name
+    target2 : second protein name
+    \"\"\"
+    maxValue = 9999
+    if target1 not in ppi:
+        return maxValue
+    else:
+        if target2 not in ppi[target1]:
+            return maxValue
+        else:
+            return ppi[target1][target2]
+
+drug_targetlist = {k: g[\"geneid\"].tolist() for k,g in drug_target.groupby(\"drugid\")}
+values = []
+
+# calculate PPI-based pairwise drug similarity (Closeness)
+# First distances between proteins were transformed to similarity values using the formula described in Perlman et al (2011)
+# A, b were chosen according to Perlman et al (2011) to be 0.9 × e and 1, respectively.
+# Self similarity was assigned a value of 1.
+
+# For drugs similarities, maximal values between the two lists of associated genes were averaged 
+# (taking into account both sides for symmetry).
+
+A = 0.9
+b = 1
+for comb in itertools.combinations(commonDrugs,2) :
+    drug1 = comb[0]
+    drug2 = comb[1]
+    targetList1 = drug_targetlist[drug1]
+    targetList2 = drug_targetlist[drug2]
+    allscores =[]
+    for target1 in sorted(targetList1):
+        genescores = []
+        for target2 in sorted(targetList2):
+            target1 =str(target1)
+            target2 =str(target2)    
+            if target1 == target2:
+                score=1.0
+            else:
+                score = A*math.exp(-b* grapDistance(ppi, target1, target2))
+            genescores.append(score)
+    # add maximal values between the two lists of associated genes 
+    allscores.append(max(genescores))
+    if len(allscores) ==0: continue
+    #average the maximal scores 
+    maxScore =np.mean(allscores)
+    if maxScore >= 0:
+        values.append([drug1, drug2, maxScore])
+
+drug_ppi_df = pd.DataFrame(values, columns =['Drug1','Drug2','PPI-SIM'])
+
+drug_ppi_df.head()
+
+drug_ppi_df.to_csv('data/features/drugs-ppi-sim.csv', index=False)""" ;
   dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
   dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell10_Spec ;
 .
@@ -1314,6 +1414,707 @@ opredict:Plan_Feature_generation_01_Pipeline_Source_Cell10_Spec
   rdf:type p-plan:Plan ;
   dc:description "Install NetworkX version 1.11" ;
   dc:language :LinguisticSystem_xsd_language_English ;
+.
+opredict:Plan_Feature_generation_01_Pipeline_Source_Cell11
+  rdf:type p-plan:Plan ;
+  rdf:type reprod:Cell ;
+  dc:description """## Drug fingerprint similarity
+### calculating MACS based fingerprint (substructure) similarity
+
+# install following packages oddt and openbabel using conda
+#!conda install -c oddt oddt
+#!conda install -c openbabel openbabel
+
+from oddt import toolkit
+from oddt import fingerprints
+
+import pandas as pd
+import numpy as np
+import itertools
+
+drug_smiles = drug_smiles[drug_smiles.drugid.isin(commonDrugs)]
+drug_smiles.head()
+
+drug_smiles.head()
+
+#Create a dictionary of chemicals to be compared:
+input_dict = dict()
+for index,line in drug_smiles.iterrows():
+    id = line['drugid']
+    
+    smiles = line['smiles']
+    mol = toolkit.readstring(format='smiles',string=smiles)
+    fp =mol.calcfp(fptype='MACCS').raw
+    input_dict[id] = fp
+
+def tanimoto_score(fp1, fp2):
+    return np.sum(fp1 &  fp2) / np.sum(fp1 | fp2)
+
+sim_values=[]
+for chemical1, chemical2 in itertools.combinations(input_dict.keys(),2):
+    TC= tanimoto_score(input_dict[chemical1], input_dict[chemical2])
+    if chemical1 != chemical2:
+        sim_values.append([chemical1, chemical2, TC])
+
+chem_sim_df = pd.DataFrame(sim_values, columns=['Drug1','Drug2','TC'])
+chem_sim_df.head()
+
+chem_sim_df.to_csv('data/features/drugs-fingerprint-sim.csv', index=False)""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+.
+opredict:Plan_Feature_generation_01_Pipeline_Source_Cell12
+  rdf:type p-plan:Plan ;
+  rdf:type reprod:Cell ;
+  dc:description """## Drug target sequence similarity
+### Calculation of SmithWaterman sequence alignment scores
+
+def fasta2seq(lines):
+    lines = lines[lines.index('\\n')+1:]
+    lines =lines.replace('\\n','')
+    return lines
+
+target_seq.seq =target_seq.seq.map(fasta2seq)
+target_seq = target_seq[target_seq.geneid.isin(drug_target.geneid)]
+
+target_seq.head()
+
+target_seq_file=\"data/intermediate/drugbank-target-seq-trimmed.tab\"
+target_seq.to_csv(target_seq_file,'\\t',index=False,header=None)
+
+target_seq_file=\"data/intermediate/drugbank-target-seq-trimmed.tab\"
+target_seq_sim_file=\"data/intermediate/target-target-seq-sim-biojava.tab\"
+
+!java -cp .:lib/smithwaterman.jar:lib/biojava-alignment-4.0.0.jar:lib/biojava-core-4.0.0.jar:lib/slf4j-api-1.7.10.jar biojava.targetseq.CalcLocalAlign {target_seq_file} > {target_seq_sim_file}
+
+targetSeqSim=dict()
+target_seq_sim_file=\"data/intermediate/target-target-seq-sim-biojava.tab\"
+with open(target_seq_sim_file) as tarSimfile:
+    for row in tarSimfile:
+        row = row.strip().split(\"\\t\")
+        t1 =row[0]
+        t2 = row[1]
+        sim = float(row[2])
+        targetSeqSim[(t1,t2)]=sim
+        targetSeqSim[(t2,t1)]=sim
+
+drug_targetlist = {k: g[\"geneid\"].tolist() for k,g in drug_target_seq.groupby(\"drugid\")}
+values = []
+
+for comb in itertools.combinations(commonDrugs,2) :
+    drug1 = comb[0]
+    drug2 = comb[1]
+    targetList1 = drug_targetlist[drug1]
+    targetList2 = drug_targetlist[drug2]
+    allscores =[]
+    for target1 in sorted(targetList1):
+        genescores = []
+        for target2 in sorted(targetList2):
+            target1 =str(target1)
+            target2 =str(target2)    
+            if target1 == target2:
+                score=1.0
+            else:
+                score = targetSeqSim[(target1,target2)] / (math.sqrt(targetSeqSim[(target1,target1)]) * math.sqrt(targetSeqSim[(target2,target2)]))
+            genescores.append(score)
+    # add maximal values between the two lists of associated genes 
+    allscores.append(max(genescores))
+    if len(allscores) ==0: continue
+    #average the maximal scores 
+    maxScore =np.mean(allscores)
+    values.append([drug1, drug2, maxScore])
+
+drug_seq_df = pd.DataFrame(values, columns =['Drug1','Drug2','TARGETSEQ-SIM'])
+
+drug_seq_df.head()
+
+drug_seq_df.to_csv('data/features/drugs-target-seq-sim.csv', index=False)""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+.
+opredict:Plan_Feature_generation_01_Pipeline_Source_Cell13
+  rdf:type p-plan:Plan ;
+  rdf:type reprod:Cell ;
+  dc:description """## GO based drug-drug similarity
+
+drug_goa.drugid = drug_goa.drugid.map(lambda d: 'http://purl.obolibrary.org/obo/'+d)
+drug_goa.to_csv('data/intermediate/drug_goa.txt',sep='\\t', header=False, index=False)
+
+#cleaning GO annotations
+rows = []
+for comb in itertools.combinations(commonDrugs,2):
+    t1=comb[0]
+    t2=comb[1]
+    rows.append(['http://purl.obolibrary.org/obo/'+str(t1),'http://purl.obolibrary.org/obo/'+str(t2)])
+
+drug_query_df = pd.DataFrame(rows, columns =['Drug1','Drug2'])
+drug_query_df.to_csv('data/intermediate/drug.gene.go.query',sep='\\t', header=False, index=False)
+
+### run the semantic relatedness library with given query and anotation file it will produce a file named: gene.go.sim.out
+!java -jar lib/sml-toolkit-0.9.jar -t sm -xmlconf data/conf/sml.gene.go.conf
+
+go_sim_df = pd.read_csv('data/intermediate/drug.gene.go.sim.out',sep='\\t')
+go_sim_df.head()
+
+go_sim_df.rename(columns={'e1':'Drug1','e2':'Drug2','bma':'GO-SIM'}, inplace=True)
+
+go_sim_df.Drug1 = go_sim_df.Drug1.str.replace('http://purl.obolibrary.org/obo/','')
+go_sim_df.Drug2 = go_sim_df.Drug2.str.replace('http://purl.obolibrary.org/obo/','')
+go_sim_df.head()
+
+go_sim_df.to_csv('data/features/drugs-target-go-sim.csv')""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+.
+opredict:Plan_Feature_generation_01_Pipeline_Source_Cell14
+  rdf:type p-plan:Plan ;
+  rdf:type reprod:Cell ;
+  dc:description """## Disease Phenotype Similarity
+### MESH term based Similarity
+
+predict_df = pd.read_csv('data/input/openpredict-omim-drug.csv')
+predict_df.head()
+
+predict_df.rename(columns={'drugid':'Drug','omimid':'Disease'}, inplace=True)
+
+gold_diseases = set( predict_df.Disease.unique())
+print ('Gold std. diseases',len(gold_diseases))
+
+mesh_ann = {}
+allmeshterm = []
+with open('data/input/omim-disease-mesh.csv') as meshfile:
+    next(meshfile)
+    for line in meshfile:
+        line = line.strip().split(',')
+        if len(line) != 2: continue
+        di = line[0]
+        mesh = line[1].split(',')
+        mesh_ann[di]=mesh
+        allmeshterm.extend(mesh)
+
+vocabulary = list(set(allmeshterm))
+len(vocabulary)
+
+# create a co-occurrence matrix
+co_mat = np.zeros((len(mesh_ann),len(vocabulary)))
+
+commonDiseases = mesh_ann.keys()
+mesh2id= { di:i for i,di in enumerate(mesh_ann.keys())}
+# fill in the co-occurrence matrix
+for key in mesh_ann:
+    annotations = mesh_ann[key]
+    col_index = [vocabulary.index(a) for a in annotations]
+    co_mat[mesh2id[key],col_index] =1
+
+def cosine_similarity(a,b):
+    return  np.dot(a, b)/(np.linalg.norm(a)*np.linalg.norm(b))
+
+values = []
+for comb in itertools.combinations(commonDiseases,2) :
+    disease1 = comb[0]
+    disease2 = comb[1]
+    sim = cosine_similarity(co_mat[mesh2id[disease1],:], co_mat[mesh2id[disease2],:])
+    values.append([disease1, disease2, sim])
+
+disease_pheno_df = pd.DataFrame(values, columns =['Disease1','Disease2','PHENO-SIM'])
+
+disease_pheno_df.head()
+
+disease_pheno_df.to_csv('data/features/diseases-pheno-sim.csv',index=False)
+""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+.
+opredict:Plan_Feature_generation_01_Pipeline_Source_Cell15
+  rdf:type p-plan:Plan ;
+  rdf:type reprod:Cell ;
+  dc:description """## HPO based disease-disease similarity
+
+# reading the hpo annotation file taken from compbio.charite.de/jennkins/jobs/hpo.annotations/
+disease_hpo = pd.read_csv('data/input/omim-disease-hpo.csv')
+disease_hpo.head()
+
+disease_hpo.rename(columns={'diseaseid':'Disease','hpoid':'HPO'}, inplace=True)
+disease_hpo.HPO= disease_hpo.HPO.str.replace('hpo','hp')
+
+#disease_hpo[\"Disease\"] = disease_hpo[\"Disease\"].astype(str)
+
+disease_hpo.head()
+
+#gold_diseases = set(gold_ind_dc[\"OMIMID\"].unique()).union(gold_ind_sider[\"OMIMID\"].unique()).union(gold_ind.Disease.unique())
+diseasesWithFeatures= set(disease_hpo.Disease.unique()).intersection( gold_diseases )
+print (len(diseasesWithFeatures))
+rows = []
+for comb in itertools.combinations(diseasesWithFeatures,2):
+    t1=comb[0]
+    t2=comb[1]
+    rows.append(['omim:'+str(t1),'omim:'+str(t2)])
+
+disease_hpo[\"Disease\"]=disease_hpo[\"Disease\"].map(lambda d: 'omim:'+str(d))
+disease_hpo.to_csv('data/intermediate/disease_hpo.txt',sep='\\t', header=False, index=False)
+
+disease_query_df = pd.DataFrame(rows, columns =['Disease1','Disease2'])
+disease_query_df.to_csv('data/intermediate/hpo.sml.omim.query',sep='\\t', header=False, index=False)
+
+### run the semantic relatedness library with given query and anotation file it will produce a file named: hpo.sim.out
+!java -jar lib/sml-toolkit-0.9.jar -t sm -xmlconf data/conf/sml.omim.hpo.conf
+
+hpo_sim_df = pd.read_csv('data/intermediate/omim.hpo.sim.out',sep='\\t')
+
+hpo_sim_df.head()
+
+hpo_sim_df.rename(columns={'e1':'Disease1','e2':'Disease2','bma':'HPO-SIM'}, inplace=True)
+
+hpo_sim_df.Disease1 = hpo_sim_df.Disease1.str.replace('omim:','')
+hpo_sim_df.Disease2 = hpo_sim_df.Disease2.str.replace('omim:','')
+hpo_sim_df.head()
+
+hpo_sim_df.to_csv('data/features/diseases-hpo-sim.csv', index=False)""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+.
+opredict:Plan_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02
+  rdf:type p-plan:Plan ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+  pwo:hasFirstStep opredict:Step_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02_Download_and_Save_Input ;
+  rdfs:label "Feature generation: Download and Save Input.ipynb and FeatureGeneration.ipynb" ;
+.
+opredict:Plan_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02_Download_and_Save_Input
+  rdf:type p-plan:Plan ;
+  rdf:type reprod:Cell ;
+  dc:description """# Download and Save Input Data
+
+sparql_endpoint=\"http://graphdb.dumontierlab.com/repositories/openpredict\"
+!curl -H \"Accept: text/csv\" --data-urlencode query@data/sparql/drugbank-drug-target.rq {sparql_endpoint} > data/input/drugbank-drug-target.csv
+
+!curl -H \"Accept: text/csv\" --data-urlencode query@data/sparql/drugbank-target-seq.rq {sparql_endpoint} > data/input/drugbank-target-seq.csv
+
+!curl -H \"Accept: text/csv\" --data-urlencode query@data/sparql/drugbank-drug-smiles.rq {sparql_endpoint} > data/input/drugbank-drug-smiles.csv
+
+!curl -H \"Accept: text/csv\" --data-urlencode query@data/sparql/drugbank-drug-goa.rq {sparql_endpoint} > data/input/drugbank-drug-goa.csv
+
+!curl -H \"Accept: text/csv\" --data-urlencode query@data/sparql/drugbank-sider-sideeffects.rq {sparql_endpoint} > data/input/drugbank-sider-se.csv
+
+!curl -H \"Accept: text/csv\" --data-urlencode query@data/sparql/openpredict-omim-drug.rq {sparql_endpoint} > data/input/openpredict-omim-drug.csv
+
+!curl -H \"Accept: text/csv\" --data-urlencode query@data/sparql/human-interactome.rq {sparql_endpoint} > data/input/human-interactome.csv
+
+!curl -H \"Accept: text/csv\" --data-urlencode query@data/sparql/omim-disease-mesh.rq {sparql_endpoint} > data/input/omim-disease-mesh.csv
+
+!curl -H \"Accept: text/csv\" --data-urlencode query@data/sparql/omim-disease-hpo.rq {sparql_endpoint} > data/input/omim-disease-hpo.csv
+
+!curl -H \"Accept: text/csv\" --data-urlencode query@data/sparql/drugbank-drug-synonym.rq {sparql_endpoint} > data/input/drugbank-drug-synonym.csv
+
+# Create Feature Matrix
+
+import pandas as pd
+drug_target = pd.read_csv('data/input/drugbank-drug-target.csv')
+target_seq = pd.read_csv('data/input/drugbank-target-seq.csv')
+drug_goa = pd.read_csv('data/input/drugbank-drug-goa.csv')
+drug_smiles = pd.read_csv('data/input/drugbank-drug-smiles.csv')
+drug_se = pd.read_csv('data/input/drugbank-sider-se.csv')
+drug_smiles.head()
+
+target_seq.head()
+
+drug_se.head()
+
+drug_goa.head()
+
+a=drug_goa['drugid'].unique()
+b=drug_target['drugid'].unique()
+c=drug_smiles['drugid'].unique()
+d=drug_se['drugid'].unique()
+commonDrugs= set(a).intersection(b).intersection(c).intersection(d)
+print (len(a),len(b),len(c),len(d))
+print (len(commonDrugs))
+
+gold_ind =pd.read_csv('data/input/openpredict-omim-drug.csv')
+gold_ind.head()
+
+gold_ind.rename(columns={'drugid':'Drug','omimid':'Disease'}, inplace=True)
+
+print (\"%d drugs have all features \"%len( commonDrugs.intersection( gold_ind.Drug.unique())))
+print (\"%d drugs have GOA feature \"%len( set(a).intersection( gold_ind.Drug.unique())))
+print (\"%d drugs have Target feature \"%len( set(b).intersection( gold_ind.Drug.unique())))
+print (\"%d drugs have Fingerprint feature \"%len( set(c).intersection( gold_ind.Drug.unique())))
+print (\"%d drugs have Sideeffect feature \"%len( set(d).intersection( gold_ind.Drug.unique())))
+
+disease_hpo = pd.read_csv('data/input/omim-disease-hpo.csv')
+disease_mesh = pd.read_csv('data/input/omim-disease-mesh.csv')
+
+dis1 = disease_mesh['diseaseid'].unique()
+dis2 = disease_hpo['diseaseid'].unique()
+
+disease_mesh.head()
+
+commonDiseases = set(dis1).intersection(dis2)
+print (\"%d drugs that have all features \"%len( commonDiseases.intersection( gold_ind.Disease.unique())))
+print (\"%d drugs that have MESH feature \"%len( set(dis1).intersection( gold_ind.Disease.unique())))
+print (\"%d drugs that have HPO feature \"%len( set(dis2).intersection( gold_ind.Disease.unique())))""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+  dcat:downloadURL "https://github.com/fair-workflows/openpredict/blob/975324eb5263bc0d5d709f833baca31952817844/Download%20and%20Save%20Input.ipynb" ;
+.
+opredict:Plan_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02_FeatureGeneration
+  rdf:type p-plan:Plan ;
+  rdf:type reprod:Cell ;
+  dc:description """import itertools
+import math
+import numpy as np
+import pandas as pd
+
+drug_target = pd.read_csv('data/input/drugbank-drug-target.csv')
+target_seq = pd.read_csv('data/input/drugbank-target-seq.csv')
+drug_goa = pd.read_csv('data/input/drugbank-drug-goa.csv')
+drug_smiles = pd.read_csv('data/input/drugbank-drug-smiles.csv')
+drug_se = pd.read_csv('data/input/drugbank-sider-se.csv')
+drug_smiles.head()
+
+## Get the drug data
+
+print (\"%d drugs have all Target feature \"%len(  drug_target.drugid.unique()))
+print (\"%d drugs have Target GOA feature \"%len( drug_goa.drugid.unique()))
+print (\"%d drugs have Fingerprint feature \"%len(  drug_smiles.drugid.unique()))
+print (\"%d drugs have Sideeffect feature \"%len( drug_se.drugid.unique()))
+
+drug_target_seq = drug_target.merge(target_seq, on= ['geneid'])
+print (\"%d drugs have Target SEQ feature \"%len( drug_target_seq.drugid.unique()))
+
+a=drug_goa['drugid'].unique()
+b=drug_target['drugid'].unique()
+c=drug_smiles['drugid'].unique()
+d=drug_se['drugid'].unique()
+commonDrugs= set(a).intersection(b).intersection(c).intersection(d)
+print (len(a),len(b),len(c),len(d))
+print (len(commonDrugs))
+
+drug_se.head()
+
+## Drug side effect similarity
+## calculating Jaccard coefficient based on drug sideefects
+
+drugSEDict = {k: g[\"umlsid\"].tolist() for k,g in drug_se.groupby(\"drugid\")}
+scores = []
+
+for comb in itertools.combinations(commonDrugs,2):
+    drug1 =comb[0]
+    drug2 =comb[1]
+
+    sideeffects1 = drugSEDict[drug1]
+    sideeffects2 = drugSEDict[drug2]
+    c = set(sideeffects1).intersection(sideeffects2)
+    u = set(sideeffects1).union(sideeffects2)
+    score = len(c)/float(len(u))
+    scores.append([drug1, drug2, score])
+
+drug_se_df = pd.DataFrame(scores, columns =['Drug1','Drug2','SE-SIM'])
+
+drug_se_df.head()
+
+drug_se_df.to_csv('data/features/drugs-se-sim.csv', index=False)
+
+## PPI based drug-drug similarity
+###  calculate distance between drugs on protein-protein interaction network
+
+#!pip install -q networkx==1.11
+
+# calcuate pairwise distance between proteins in the human PPI network
+import networkx as nx
+G= nx.Graph()
+with open('data/input/human-interactome.csv') as ppiFile: # human PPI network
+    next(ppiFile) # skip first line
+    drugs=set()
+    for line in ppiFile:
+        line=line.replace(\"'\",\"\").strip().split(',')
+        G.add_edge(line[0],line[1])
+
+ppi=nx.shortest_path_length(G)
+
+def grapDistance(ppi, target1, target2):
+    \"\"\"
+    return the shortest path between two proteins in the PPI network
+    ppi : dictonary that contains distance of PPI 
+    target1 : first protein name
+    target2 : second protein name
+    \"\"\"
+    maxValue = 9999
+    if target1 not in ppi:
+        return maxValue
+    else:
+        if target2 not in ppi[target1]:
+            return maxValue
+        else:
+            return ppi[target1][target2]
+
+drug_targetlist = {k: g[\"geneid\"].tolist() for k,g in drug_target.groupby(\"drugid\")}
+values = []
+
+# calculate PPI-based pairwise drug similarity (Closeness)
+# First distances between proteins were transformed to similarity values using the formula described in Perlman et al (2011)
+# A, b were chosen according to Perlman et al (2011) to be 0.9 × e and 1, respectively.
+# Self similarity was assigned a value of 1.
+
+# For drugs similarities, maximal values between the two lists of associated genes were averaged 
+# (taking into account both sides for symmetry).
+
+A = 0.9
+b = 1
+for comb in itertools.combinations(commonDrugs,2) :
+    drug1 = comb[0]
+    drug2 = comb[1]
+    targetList1 = drug_targetlist[drug1]
+    targetList2 = drug_targetlist[drug2]
+    allscores =[]
+    for target1 in sorted(targetList1):
+        genescores = []
+        for target2 in sorted(targetList2):
+            target1 =str(target1)
+            target2 =str(target2)    
+            if target1 == target2:
+                score=1.0
+            else:
+                score = A*math.exp(-b* grapDistance(ppi, target1, target2))
+            genescores.append(score)
+    # add maximal values between the two lists of associated genes 
+    allscores.append(max(genescores))
+    if len(allscores) ==0: continue
+    #average the maximal scores 
+    maxScore =np.mean(allscores)
+    if maxScore >= 0:
+        values.append([drug1, drug2, maxScore])
+
+drug_ppi_df = pd.DataFrame(values, columns =['Drug1','Drug2','PPI-SIM'])
+
+drug_ppi_df.head()
+
+drug_ppi_df.to_csv('data/features/drugs-ppi-sim.csv', index=False)
+
+##Drug fingerprint similarity
+###calculating MACS based fingerprint (substructure) similarity
+
+# install following packages oddt and openbabel using conda
+#!conda install -c oddt oddt
+#!conda install -c openbabel openbabel
+
+from oddt import toolkit
+from oddt import fingerprints
+
+import pandas as pd
+import numpy as np
+import itertools
+
+drug_smiles = drug_smiles[drug_smiles.drugid.isin(commonDrugs)]
+drug_smiles.head()
+
+drug_smiles.head()
+
+#Create a dictionary of chemicals to be compared:
+input_dict = dict()
+for index,line in drug_smiles.iterrows():
+    id = line['drugid']
+    
+    smiles = line['smiles']
+    mol = toolkit.readstring(format='smiles',string=smiles)
+    fp =mol.calcfp(fptype='MACCS').raw
+    input_dict[id] = fp
+
+def tanimoto_score(fp1, fp2):
+    return np.sum(fp1 &  fp2) / np.sum(fp1 | fp2)
+
+sim_values=[]
+for chemical1, chemical2 in itertools.combinations(input_dict.keys(),2):
+    TC= tanimoto_score(input_dict[chemical1], input_dict[chemical2])
+    if chemical1 != chemical2:
+        sim_values.append([chemical1, chemical2, TC])
+
+chem_sim_df = pd.DataFrame(sim_values, columns=['Drug1','Drug2','TC'])
+chem_sim_df.head()
+
+chem_sim_df.to_csv('data/features/drugs-fingerprint-sim.csv', index=False)
+
+##Drug target sequence similarity
+###Calculation of SmithWaterman sequence alignment scores
+
+def fasta2seq(lines):
+    lines = lines[lines.index('\\n')+1:]
+    lines =lines.replace('\\n','')
+    return lines
+
+target_seq.seq =target_seq.seq.map(fasta2seq)
+target_seq = target_seq[target_seq.geneid.isin(drug_target.geneid)]
+
+target_seq.head()
+
+target_seq_file=\"data/intermediate/drugbank-target-seq-trimmed.tab\"
+target_seq.to_csv(target_seq_file,'\\t',index=False,header=None)
+
+target_seq_file=\"data/intermediate/drugbank-target-seq-trimmed.tab\"
+target_seq_sim_file=\"data/intermediate/target-target-seq-sim-biojava.tab\"
+
+!java -cp .:lib/smithwaterman.jar:lib/biojava-alignment-4.0.0.jar:lib/biojava-core-4.0.0.jar:lib/slf4j-api-1.7.10.jar biojava.targetseq.CalcLocalAlign {target_seq_file} > {target_seq_sim_file}
+
+targetSeqSim=dict()
+target_seq_sim_file=\"data/intermediate/target-target-seq-sim-biojava.tab\"
+with open(target_seq_sim_file) as tarSimfile:
+    for row in tarSimfile:
+        row = row.strip().split(\"\\t\")
+        t1 =row[0]
+        t2 = row[1]
+        sim = float(row[2])
+        targetSeqSim[(t1,t2)]=sim
+        targetSeqSim[(t2,t1)]=sim
+
+drug_targetlist = {k: g[\"geneid\"].tolist() for k,g in drug_target_seq.groupby(\"drugid\")}
+values = []
+
+for comb in itertools.combinations(commonDrugs,2) :
+    drug1 = comb[0]
+    drug2 = comb[1]
+    targetList1 = drug_targetlist[drug1]
+    targetList2 = drug_targetlist[drug2]
+    allscores =[]
+    for target1 in sorted(targetList1):
+        genescores = []
+        for target2 in sorted(targetList2):
+            target1 =str(target1)
+            target2 =str(target2)    
+            if target1 == target2:
+                score=1.0
+            else:
+                score = targetSeqSim[(target1,target2)] / (math.sqrt(targetSeqSim[(target1,target1)]) * math.sqrt(targetSeqSim[(target2,target2)]))
+            genescores.append(score)
+    # add maximal values between the two lists of associated genes 
+    allscores.append(max(genescores))
+    if len(allscores) ==0: continue
+    #average the maximal scores 
+    maxScore =np.mean(allscores)
+    values.append([drug1, drug2, maxScore])
+
+drug_seq_df = pd.DataFrame(values, columns =['Drug1','Drug2','TARGETSEQ-SIM'])
+
+drug_seq_df.head()
+
+drug_seq_df.to_csv('data/features/drugs-target-seq-sim.csv', index=False)
+
+##GO based drug-drug similarity
+
+drug_goa.drugid = drug_goa.drugid.map(lambda d: 'http://purl.obolibrary.org/obo/'+d)
+drug_goa.to_csv('data/intermediate/drug_goa.txt',sep='\\t', header=False, index=False)
+
+#cleaning GO annotations
+rows = []
+for comb in itertools.combinations(commonDrugs,2):
+    t1=comb[0]
+    t2=comb[1]
+    rows.append(['http://purl.obolibrary.org/obo/'+str(t1),'http://purl.obolibrary.org/obo/'+str(t2)])
+
+drug_query_df = pd.DataFrame(rows, columns =['Drug1','Drug2'])
+drug_query_df.to_csv('data/intermediate/drug.gene.go.query',sep='\\t', header=False, index=False)
+
+### run the semantic relatedness library with given query and anotation file it will produce a file named: gene.go.sim.out
+!java -jar lib/sml-toolkit-0.9.jar -t sm -xmlconf data/conf/sml.gene.go.conf
+
+go_sim_df = pd.read_csv('data/intermediate/drug.gene.go.sim.out',sep='\\t')
+go_sim_df.head()
+
+go_sim_df.rename(columns={'e1':'Drug1','e2':'Drug2','bma':'GO-SIM'}, inplace=True)
+
+go_sim_df.Drug1 = go_sim_df.Drug1.str.replace('http://purl.obolibrary.org/obo/','')
+go_sim_df.Drug2 = go_sim_df.Drug2.str.replace('http://purl.obolibrary.org/obo/','')
+go_sim_df.head()
+
+go_sim_df.to_csv('data/features/drugs-target-go-sim.csv')
+
+##Disease Phenotype Similarity
+###MESH term based Similarity
+
+predict_df = pd.read_csv('data/input/openpredict-omim-drug.csv')
+predict_df.head()
+
+predict_df.rename(columns={'drugid':'Drug','omimid':'Disease'}, inplace=True)
+
+gold_diseases = set( predict_df.Disease.unique())
+print ('Gold std. diseases',len(gold_diseases))
+
+mesh_ann = {}
+allmeshterm = []
+with open('data/input/omim-disease-mesh.csv') as meshfile:
+    next(meshfile)
+    for line in meshfile:
+        line = line.strip().split(',')
+        if len(line) != 2: continue
+        di = line[0]
+        mesh = line[1].split(',')
+        mesh_ann[di]=mesh
+        allmeshterm.extend(mesh)
+
+vocabulary = list(set(allmeshterm))
+len(vocabulary)
+
+# create a co-occurrence matrix
+co_mat = np.zeros((len(mesh_ann),len(vocabulary)))
+
+commonDiseases = mesh_ann.keys()
+mesh2id= { di:i for i,di in enumerate(mesh_ann.keys())}
+# fill in the co-occurrence matrix
+for key in mesh_ann:
+    annotations = mesh_ann[key]
+    col_index = [vocabulary.index(a) for a in annotations]
+    co_mat[mesh2id[key],col_index] =1
+
+def cosine_similarity(a,b):
+    return  np.dot(a, b)/(np.linalg.norm(a)*np.linalg.norm(b))
+
+values = []
+# calculate cosine similarity between diseases using mesh annotation vector
+for comb in itertools.combinations(commonDiseases,2) :
+    disease1 = comb[0]
+    disease2 = comb[1]
+    sim = cosine_similarity(co_mat[mesh2id[disease1],:], co_mat[mesh2id[disease2],:])
+    values.append([disease1, disease2, sim])
+
+disease_pheno_df = pd.DataFrame(values, columns =['Disease1','Disease2','PHENO-SIM'])
+
+disease_pheno_df.head()
+
+disease_pheno_df.to_csv('data/features/diseases-pheno-sim.csv',index=False)
+
+##HPO based disease-disease similarity
+
+# reading the hpo annotation file taken from compbio.charite.de/jennkins/jobs/hpo.annotations/
+disease_hpo = pd.read_csv('data/input/omim-disease-hpo.csv')
+disease_hpo.head()
+
+disease_hpo.rename(columns={'diseaseid':'Disease','hpoid':'HPO'}, inplace=True)
+disease_hpo.HPO= disease_hpo.HPO.str.replace('hpo','hp')
+
+disease_hpo.head()
+
+diseasesWithFeatures= set(disease_hpo.Disease.unique()).intersection( gold_diseases )
+print (len(diseasesWithFeatures))
+rows = []
+for comb in itertools.combinations(diseasesWithFeatures,2):
+    t1=comb[0]
+    t2=comb[1]
+    rows.append(['omim:'+str(t1),'omim:'+str(t2)])
+
+disease_hpo[\"Disease\"]=disease_hpo[\"Disease\"].map(lambda d: 'omim:'+str(d))
+disease_hpo.to_csv('data/intermediate/disease_hpo.txt',sep='\\t', header=False, index=False)
+
+disease_query_df = pd.DataFrame(rows, columns =['Disease1','Disease2'])
+disease_query_df.to_csv('data/intermediate/hpo.sml.omim.query',sep='\\t', header=False, index=False)
+
+### run the semantic relatedness library with given query and anotation file it will produce a file named: hpo.sim.out
+!java -jar lib/sml-toolkit-0.9.jar -t sm -xmlconf data/conf/sml.omim.hpo.conf
+
+hpo_sim_df = pd.read_csv('data/intermediate/omim.hpo.sim.out',sep='\\t')
+
+hpo_sim_df.head()
+
+hpo_sim_df.rename(columns={'e1':'Disease1','e2':'Disease2','bma':'HPO-SIM'}, inplace=True)
+
+hpo_sim_df.Disease1 = hpo_sim_df.Disease1.str.replace('omim:','')
+hpo_sim_df.Disease2 = hpo_sim_df.Disease2.str.replace('omim:','')
+hpo_sim_df.head()
+
+hpo_sim_df.to_csv('data/features/diseases-hpo-sim.csv', index=False)""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+  dcat:downloadURL "https://github.com/fair-workflows/openpredict/blob/74d3d7ae2b3182c071f490e8353d5dfdbf9f3f08/FeatureGeneration.ipynb" ;
 .
 opredict:Plan_Format_results_for_presentation
   rdf:type p-plan:Plan ;
@@ -1353,6 +2154,663 @@ opredict:Plan_Main_Protocol_v02
   dc:description "Model preparation, train and evaluation Workflow: OpenPREDCIT - ML.ipynb" ;
   dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
   rdfs:label "Model preparation, train and evaluation Workflow: OpenPREDCIT - ML.ipynb" ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Plan_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell00>
+  rdf:type p-plan:Plan ;
+  rdf:type reprod:Cell ;
+  dc:description """import random
+import numpy as np
+from sklearn import model_selection
+from sklearn.model_selection import GroupKFold
+import pandas as pd
+import math
+import time""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+  rdfs:label "Jupyter Notebook Cell00" ;
+  prov:qualifiedUsage opredict:Link_Pipeline_Source_Cell0_Variable ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Plan_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell01>
+  rdf:type p-plan:Plan ;
+  rdf:type reprod:Cell ;
+  dc:description """# Get the features and gold standard 
+
+drugfeatfiles = ['features/drugs-fingerprint-sim.txt','features/drugs-se-sim.txt', 
+                 'features/drugs-ppi-sim.txt', 'features/drugs-target-go-sim.txt','features/drugs-target-seq-sim.txt']
+diseasefeatfiles =['features/diseases-hpo-sim.txt',  'features/diseases-pheno-sim.txt' ]
+
+goldindfile = 'known_associations/predict-gold-standard-omim.txt'
+drugDiseaseKnown = pd.read_csv(goldindfile,delimiter='\\t') 
+drugDiseaseKnown.Disease = drugDiseaseKnown.Disease.astype(str)
+drugDiseaseKnown.head()""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Plan_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell02>
+  rdf:type p-plan:Plan ;
+  rdf:type reprod:Cell ;
+  dc:description """# Merge feature matrix
+
+def adjcencydict2matrix(df, name1, name2):
+    df1 = df.copy()
+    df1= df1.rename(index=str, columns={name1: name2, name2: name1})
+    print (len(df))
+    df =df.append(df1)
+    print (len(df))
+    return df.pivot(index=name1, columns=name2)
+
+def mergeFeatureMatrix(drugfeatfiles, diseasefeatfiles):
+    for i,featureFilename in enumerate(drugfeatfiles):
+        df = pd.read_csv(featureFilename, delimiter='\\t')
+        cond = df.Drug1 > df.Drug2
+        df.loc[cond, ['Drug1', 'Drug2']] = df.loc[cond, ['Drug2', 'Drug1']].values
+        if i != 0:
+            drug_df=drug_df.merge(df,on=['Drug1','Drug2'],how='inner')
+            #drug_df=drug_df.merge(temp,how='outer',on='Drug')
+        else:
+            drug_df =df
+    drug_df.fillna(0, inplace=True)
+    
+    drug_df = adjcencydict2matrix(drug_df, 'Drug1', 'Drug2')
+    drug_df = drug_df.fillna(1.0)
+
+    
+    for i,featureFilename in enumerate(diseasefeatfiles):
+        print (featureFilename)
+        df=pd.read_csv(featureFilename, delimiter='\\t')
+        cond = df.Disease1 > df.Disease2
+        df.loc[cond, ['Disease1','Disease2']] = df.loc[cond, ['Disease2','Disease1']].values
+        if i != 0:
+            disease_df = disease_df.merge(df,on=['Disease1','Disease2'], how='inner')
+            #drug_df=drug_df.merge(temp,how='outer',on='Drug')
+        else:
+            disease_df = df
+    disease_df.fillna(0, inplace=True)
+    disease_df.Disease1 = disease_df.Disease1.astype(str)
+    disease_df.Disease2 = disease_df.Disease2.astype(str)
+    
+    disease_df = adjcencydict2matrix(disease_df, 'Disease1', 'Disease2')
+    disease_df = disease_df.fillna(1.0)
+    
+    return drug_df, disease_df
+
+drug_df, disease_df = mergeFeatureMatrix(drugfeatfiles, diseasefeatfiles)
+
+drug_df.head()
+
+disease_df.head()""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Plan_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell03>
+  rdf:type p-plan:Plan ;
+  rdf:type reprod:Cell ;
+  dc:description """# Generate positive and negative pairs
+
+def generatePairs(drug_df, disease_df, drugDiseaseKnown):
+    drugwithfeatures = set(drug_df.columns.levels[1])
+    diseaseswithfeatures = set(disease_df.columns.levels[1])
+    
+    drugDiseaseDict  = set([tuple(x) for x in  drugDiseaseKnown[['Drug','Disease']].values])
+
+    commonDrugs= drugwithfeatures.intersection( drugDiseaseKnown.Drug.unique())
+    commonDiseases=  diseaseswithfeatures.intersection(drugDiseaseKnown.Disease.unique() )
+    print (\"commonDrugs: %d commonDiseases : %d\"%(len(commonDrugs),len(commonDiseases)))
+
+    #abridged_drug_disease = [(dr,di)  for  (dr,di)  in drugDiseaseDict if dr in drugwithfeatures and di in diseaseswithfeatures ]
+
+    #commonDrugs = set( [ dr  for dr,di in  abridged_drug_disease])
+    #commonDiseases  =set([ di  for dr,di in  abridged_drug_disease])
+
+    print (\"Gold standard, associations: %d drugs: %d diseases: %d\"%(len(drugDiseaseKnown),len(drugDiseaseKnown.Drug.unique()),len(drugDiseaseKnown.Disease.unique())))
+    print (\"Drugs with features: %d Diseases with features: %d\"%(len(drugwithfeatures),len(diseaseswithfeatures)))
+    print (\"commonDrugs: %d commonDiseases : %d\"%(len(commonDrugs),len(commonDiseases)))
+
+    pairs=[]
+    classes=[]
+    for dr in commonDrugs:
+        for di in commonDiseases:
+            cls = (1 if (dr,di) in drugDiseaseDict else 0)
+            pairs.append((dr,di))
+            classes.append(cls)
+            
+    return pairs, classes
+
+pairs, classes = generatePairs(drug_df, disease_df, drugDiseaseKnown)""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Plan_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell04>
+  rdf:type p-plan:Plan ;
+  rdf:type reprod:Cell ;
+  dc:description """# Balance negative samples/postives
+
+from sklearn.model_selection import GroupKFold
+from sklearn.model_selection import StratifiedKFold
+def balance_data(pairs, classes, n_proportion):
+    classes = np.array(classes)
+    pairs = np.array(pairs)
+    
+    indices_true = np.where(classes == 1)[0]
+    indices_false = np.where(classes == 0)[0]
+
+    np.random.shuffle(indices_false)
+    indices = indices_false[:(n_proportion*indices_true.shape[0])]
+    print (\"+/-:\", len(indices_true), len(indices), len(indices_false))
+    pairs = np.concatenate((pairs[indices_true], pairs[indices]), axis=0)
+    classes = np.concatenate((classes[indices_true], classes[indices]), axis=0) 
+    
+ 
+    return pairs, classes
+
+n_proportion = 2
+pairs, classes= balance_data(pairs, classes, n_proportion)""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Plan_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell05>
+  rdf:type p-plan:Plan ;
+  rdf:type reprod:Cell ;
+  dc:description """# Train-Test Splitting
+
+pairs_train, pairs_test, classes_train, classes_test = model_selection.train_test_split(pairs, classes, stratify=classes, test_size=0.2, shuffle=True)
+
+len(pairs_train), len(pairs_test)""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Plan_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell06>
+  rdf:type p-plan:Plan ;
+  rdf:type reprod:Cell ;
+  dc:description """# Feature extraction (Best Combined similarity)
+
+def geometricMean(drug, disease, knownDrugDisease, drugDF, diseaseDF):
+    #print (drug, disease)
+    a  = drugDF.loc[knownDrugDisease[:,0]][drug].values
+    b  = diseaseDF.loc[knownDrugDisease[:,1]][disease].values
+    #print (a,b)
+    c = np.sqrt( np.multiply(a,b) )
+    ix2 = (knownDrugDisease == [drug, disease])
+    c[ix2[:,1]& ix2[:,0]]=0.0
+    return float(np.max(c))
+
+
+def createFeatureDF(pairs, classes, knownDrugDisease, drugDFs, diseaseDFs):
+    totalNumFeatures = len(drugDFs)*len(diseaseDFs)
+    #featureMatri x= np.empty((len(classes),totalNumFeatures), float)
+    df =pd.DataFrame(list(zip(pairs[:,0], pairs[:,1], classes)), columns =['Drug','Disease','Class'])
+    index = 0
+    for i,drug_col in enumerate(drugDFs.columns.levels[0]):
+        for j,disease_col in enumerate(diseaseDFs.columns.levels[0]):
+            drugDF = drugDFs[drug_col]
+            diseaseDF = diseaseDFs[disease_col]
+            df[\"Feature_\"+str(drug_col)+'_'+str(disease_col)] = df.apply(lambda row: geometricMean( row.Drug, row.Disease, knownDrugDisease, drugDF, diseaseDF), axis=1)
+    return df
+
+def calculateCombinedSimilarity(pairs_train, pairs_test, classes_train, classes_test, drug_df, disease_df, knownDrugDisease):
+    train_df  = createFeatureDF(pairs_train, classes_train, knownDrugDisease, drug_df, disease_df)
+    test_df = createFeatureDF(pairs_test, classes_test, knownDrugDisease, drug_df, disease_df)
+    return train_df, test_df
+
+knownDrugDisease= pairs_train[classes_train==1]
+train_df, test_df = calculateCombinedSimilarity(pairs_train, pairs_test, classes_train, classes_test, drug_df, disease_df, knownDrugDisease)""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Plan_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell07>
+  rdf:type p-plan:Plan ;
+  rdf:type reprod:Cell ;
+  dc:description """# Model Training
+
+from sklearn import tree, ensemble
+from sklearn import svm, linear_model, neighbors
+
+def trainModel(train_df, clf):
+    features = list(train_df.columns.difference(['Drug','Disease','Class']))
+    X = train_df[features]
+    y = train_df['Class']
+    print ('fiting classifier...')
+    clf.fit(X, y)
+    return clf
+
+n_seed = 100
+clf = linear_model.LogisticRegression(penalty='l2', dual=False, tol=0.0001, C=1.0, random_state=n_seed) 
+clf = trainModel(train_df, clf)""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Plan_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell08>
+  rdf:type p-plan:Plan ;
+  rdf:type reprod:Cell ;
+  dc:description """# Evaulation
+
+from sklearn import metrics
+import numbers
+def multimetric_score(estimator, X_test, y_test, scorers):
+    \"\"\"Return a dict of score for multimetric scoring\"\"\"
+    scores = {}
+    for name, scorer in scorers.items():
+        if y_test is None:
+            score = scorer(estimator, X_test)
+        else:
+            score = scorer(estimator, X_test, y_test)
+
+        if hasattr(score, 'item'):
+            try:
+                # e.g. unwrap memmapped scalars
+                score = score.item()
+            except ValueError:
+                # non-scalar?
+                pass
+        scores[name] = score
+
+        if not isinstance(score, numbers.Number):
+            raise ValueError(\"scoring must return a number, got %s (%s) \"
+                             \"instead. (scorer=%s)\"
+                             % (str(score), type(score), name))
+    return scores
+
+def evaluate(test_df, clf):
+    features = list(train_df.columns.difference(['Drug','Disease','Class']))
+    X_test =  test_df[features]
+    y_test = test_df['Class']
+
+    scoring = ['precision', 'recall', 'accuracy', 'roc_auc', 'f1', 'average_precision']
+    scorers, multimetric = metrics.scorer._check_multimetric_scoring(clf, scoring=scoring)
+    scores = multimetric_score(clf, X_test, y_test, scorers)
+    return scores
+
+scores = evaluate(test_df, clf)
+print (\"Test:\",scores)""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Plan_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell09>
+  rdf:type p-plan:Plan ;
+  rdf:type reprod:Cell ;
+  dc:description """# 10-fold drug-disjoint cross-validation (PREDICT - CV scheme )
+
+disjoint = True
+n_fold = 10
+
+if disjoint:
+    print ('Disjoint')
+    groups = pairs[:,0] # group by drug
+    group_kfold = GroupKFold(n_splits=n_fold)
+    cv = group_kfold.split(pairs, classes, groups)
+else:
+    print ('Non-disjoint')
+    skf = StratifiedKFold(n_splits=n_fold, shuffle=True, random_state=n_seed)
+    cv = skf.split(pairs, classes)
+
+n_seed = 100
+cv_results = pd.DataFrame()
+clf = linear_model.LogisticRegression(penalty='l2', dual=False, tol=0.0001, C=1.0, random_state=n_seed) 
+  
+for i, (train, test) in enumerate(cv):
+    print ('Fold',i+1)
+    start_time = time.time()
+    pairs_train = pairs[train]
+    classes_train = classes[train] 
+    pairs_test = pairs[test]
+    classes_test = classes[test]
+    knownDrugDisease= pairs_train[classes_train==1]
+    
+    train_df, test_df = calculateCombinedSimilarity(pairs_train, pairs_test, classes_train, classes_test, drug_df, disease_df, knownDrugDisease)
+    elapsed_time = time.time() - start_time
+    print ('Time elapsed to generate features:',time.strftime(\"%H:%M:%S\", time.gmtime(elapsed_time)))
+
+    clf = trainModel(train_df, clf)
+    
+    scores = evaluate(test_df, clf)
+    print (\"Scores:\",scores)
+    cv_results = cv_results.append(scores, ignore_index=True)
+
+cv_results.mean()
+
+cv_results.to_csv('results/DCV_runs_transd.csv')""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+.
+opredict:Plan_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb_v02
+  rdf:type p-plan:Plan ;
+  dc:description """import random
+import numpy as np
+from sklearn import model_selection
+from sklearn.model_selection import GroupKFold
+import pandas as pd
+import math
+import time
+
+##Get the features and gold standard
+
+drugfeatfiles = ['data/features/drugs-fingerprint-sim.csv','data/features/drugs-se-sim.csv', 
+                 'data/features/drugs-ppi-sim.csv', 'data/features/drugs-target-go-sim.csv','data/features/drugs-target-seq-sim.csv']
+diseasefeatfiles =['data/features/diseases-hpo-sim.csv',  'data/features/diseases-pheno-sim.csv' ]
+
+goldindfile = 'data/input/openpredict-omim-drug.csv'
+drugDiseaseKnown = pd.read_csv(goldindfile,delimiter=',') 
+drugDiseaseKnown.head()
+
+drugDiseaseKnown.rename(columns={'drugid':'Drug','omimid':'Disease'}, inplace=True)
+drugDiseaseKnown.Disease = drugDiseaseKnown.Disease.astype(str)
+drugDiseaseKnown.head()
+
+##Merge feature matrix
+
+def adjcencydict2matrix(df, name1, name2):
+    df1 = df.copy()
+    df1= df1.rename(index=str, columns={name1: name2, name2: name1})
+    print (len(df))
+    df =df.append(df1)
+    print (len(df))
+    return df.pivot(index=name1, columns=name2)
+
+def mergeFeatureMatrix(drugfeatfiles, diseasefeatfiles):
+    for i,featureFilename in enumerate(drugfeatfiles):
+        print (featureFilename)
+        df = pd.read_csv(featureFilename, delimiter=',')
+        cond = df.Drug1 > df.Drug2
+        df.loc[cond, ['Drug1', 'Drug2']] = df.loc[cond, ['Drug2', 'Drug1']].values
+        if i != 0:
+            drug_df=drug_df.merge(df,on=['Drug1','Drug2'],how='inner')
+            #drug_df=drug_df.merge(temp,how='outer',on='Drug')
+        else:
+            drug_df =df
+    drug_df.fillna(0, inplace=True)
+    
+    drug_df = adjcencydict2matrix(drug_df, 'Drug1', 'Drug2')
+    drug_df = drug_df.fillna(1.0)
+
+    
+    for i,featureFilename in enumerate(diseasefeatfiles):
+        print (featureFilename)
+        df=pd.read_csv(featureFilename, delimiter=',')
+        cond = df.Disease1 > df.Disease2
+        df.loc[cond, ['Disease1','Disease2']] = df.loc[cond, ['Disease2','Disease1']].values
+        if i != 0:
+            disease_df = disease_df.merge(df,on=['Disease1','Disease2'], how='inner')
+            #drug_df=drug_df.merge(temp,how='outer',on='Drug')
+        else:
+            disease_df = df
+    disease_df.fillna(0, inplace=True)
+    disease_df.Disease1 = disease_df.Disease1.astype(str)
+    disease_df.Disease2 = disease_df.Disease2.astype(str)
+    
+    disease_df = adjcencydict2matrix(disease_df, 'Disease1', 'Disease2')
+    disease_df = disease_df.fillna(1.0)
+    
+    return drug_df, disease_df
+
+drug_df, disease_df = mergeFeatureMatrix(drugfeatfiles, diseasefeatfiles)
+
+drug_df.head()
+
+disease_df.head()
+
+def generatePairs(drug_df, disease_df, drugDiseaseKnown):
+    drugwithfeatures = set(drug_df.columns.levels[1])
+    diseaseswithfeatures = set(disease_df.columns.levels[1])
+    
+    drugDiseaseDict  = set([tuple(x) for x in  drugDiseaseKnown[['Drug','Disease']].values])
+
+    commonDrugs= drugwithfeatures.intersection( drugDiseaseKnown.Drug.unique())
+    commonDiseases=  diseaseswithfeatures.intersection(drugDiseaseKnown.Disease.unique() )
+    print (\"commonDrugs: %d commonDiseases : %d\"%(len(commonDrugs),len(commonDiseases)))
+
+    #abridged_drug_disease = [(dr,di)  for  (dr,di)  in drugDiseaseDict if dr in drugwithfeatures and di in diseaseswithfeatures ]
+
+    #commonDrugs = set( [ dr  for dr,di in  abridged_drug_disease])
+    #commonDiseases  =set([ di  for dr,di in  abridged_drug_disease])
+
+    print (\"Gold standard, associations: %d drugs: %d diseases: %d\"%(len(drugDiseaseKnown),len(drugDiseaseKnown.Drug.unique()),len(drugDiseaseKnown.Disease.unique())))
+    print (\"Drugs with features: %d Diseases with features: %d\"%(len(drugwithfeatures),len(diseaseswithfeatures)))
+    print (\"commonDrugs: %d commonDiseases : %d\"%(len(commonDrugs),len(commonDiseases)))
+
+    pairs=[]
+    classes=[]
+    for dr in commonDrugs:
+        for di in commonDiseases:
+            cls = (1 if (dr,di) in drugDiseaseDict else 0)
+            pairs.append((dr,di))
+            classes.append(cls)
+            
+    return pairs, classes
+
+pairs, classes = generatePairs(drug_df, disease_df, drugDiseaseKnown)
+
+##Balance negative samples/postives
+
+from sklearn.model_selection import GroupKFold
+from sklearn.model_selection import StratifiedKFold
+def balance_data(pairs, classes, n_proportion):
+    classes = np.array(classes)
+    pairs = np.array(pairs)
+    
+    indices_true = np.where(classes == 1)[0]
+    indices_false = np.where(classes == 0)[0]
+
+    np.random.shuffle(indices_false)
+    indices = indices_false[:(n_proportion*indices_true.shape[0])]
+    print (\"+/-:\", len(indices_true), len(indices), len(indices_false))
+    pairs = np.concatenate((pairs[indices_true], pairs[indices]), axis=0)
+    classes = np.concatenate((classes[indices_true], classes[indices]), axis=0) 
+    
+ 
+    return pairs, classes
+
+n_proportion = 2
+pairs, classes= balance_data(pairs, classes, n_proportion)
+
+##Train-Test Splitting
+pairs_train, pairs_test, classes_train, classes_test = model_selection.train_test_split(pairs, classes, stratify=classes, test_size=0.2, shuffle=True)
+
+len(pairs_train), len(pairs_test)
+
+##Feature extraction (Best Combined similarity)
+
+def geometricMean(drug, disease, knownDrugDisease, drugDF, diseaseDF):
+    #print (drug, disease)
+    a  = drugDF.loc[knownDrugDisease[:,0]][drug].values
+    b  = diseaseDF.loc[knownDrugDisease[:,1]][disease].values
+    #print (a,b)
+    c = np.sqrt( np.multiply(a,b) )
+    ix2 = (knownDrugDisease == [drug, disease])
+    c[ix2[:,1]& ix2[:,0]]=0.0
+    return float(np.max(c))
+
+
+def createFeatureDF(pairs, classes, knownDrugDisease, drugDFs, diseaseDFs):
+    totalNumFeatures = len(drugDFs)*len(diseaseDFs)
+    #featureMatri x= np.empty((len(classes),totalNumFeatures), float)
+    df =pd.DataFrame(list(zip(pairs[:,0], pairs[:,1], classes)), columns =['Drug','Disease','Class'])
+    index = 0
+    for i,drug_col in enumerate(drugDFs.columns.levels[0]):
+        for j,disease_col in enumerate(diseaseDFs.columns.levels[0]):
+            drugDF = drugDFs[drug_col]
+            diseaseDF = diseaseDFs[disease_col]
+            df[\"Feature_\"+str(drug_col)+'_'+str(disease_col)] = df.apply(lambda row: geometricMean( row.Drug, row.Disease, knownDrugDisease, drugDF, diseaseDF), axis=1)
+    return df
+
+def calculateCombinedSimilarity(pairs_train, pairs_test, classes_train, classes_test, drug_df, disease_df, knownDrugDisease):
+    train_df  = createFeatureDF(pairs_train, classes_train, knownDrugDisease, drug_df, disease_df)
+    test_df = createFeatureDF(pairs_test, classes_test, knownDrugDisease, drug_df, disease_df)
+    return train_df, test_df
+
+knownDrugDisease= pairs_train[classes_train==1]
+train_df, test_df = calculateCombinedSimilarity(pairs_train, pairs_test, classes_train, classes_test, drug_df, disease_df, knownDrugDisease)
+
+##Model Training
+
+from sklearn import tree, ensemble
+from sklearn import svm, linear_model, neighbors
+
+def trainModel(train_df, clf):
+    features = list(train_df.columns.difference(['Drug','Disease','Class']))
+    X = train_df[features]
+    y = train_df['Class']
+    print ('fiting classifier...')
+    clf.fit(X, y)
+    return clf
+
+n_seed = 100
+clf = linear_model.LogisticRegression(penalty='l2', dual=False, tol=0.0001, C=1.0, random_state=n_seed) 
+clf = trainModel(train_df, clf)
+
+##Evaulation
+
+from sklearn import metrics
+import numbers
+def multimetric_score(estimator, X_test, y_test, scorers):
+    \"\"\"Return a dict of score for multimetric scoring\"\"\"
+    scores = {}
+    for name, scorer in scorers.items():
+        if y_test is None:
+            score = scorer(estimator, X_test)
+        else:
+            score = scorer(estimator, X_test, y_test)
+
+        if hasattr(score, 'item'):
+            try:
+                # e.g. unwrap memmapped scalars
+                score = score.item()
+            except ValueError:
+                # non-scalar?
+                pass
+        scores[name] = score
+
+        if not isinstance(score, numbers.Number):
+            raise ValueError(\"scoring must return a number, got %s (%s) \"
+                             \"instead. (scorer=%s)\"
+                             % (str(score), type(score), name))
+    return scores
+
+def evaluate(test_df, clf):
+    features = list(train_df.columns.difference(['Drug','Disease','Class']))
+    X_test =  test_df[features]
+    y_test = test_df['Class']
+
+    scoring = ['precision', 'recall', 'accuracy', 'roc_auc', 'f1', 'average_precision']
+    scorers, multimetric = metrics.scorer._check_multimetric_scoring(clf, scoring=scoring)
+    scores = multimetric_score(clf, X_test, y_test, scorers)
+    return scores
+
+scores = evaluate(test_df, clf)
+print (\"Test:\",scores)
+
+##10-fold drug-disjoint cross-validation (PREDICT - CV scheme )
+
+disjoint = True
+n_fold = 10
+
+if disjoint:
+    print ('Disjoint')
+    groups = pairs[:,0] # group by drug
+    group_kfold = GroupKFold(n_splits=n_fold)
+    cv = group_kfold.split(pairs, classes, groups)
+else:
+    print ('Non-disjoint')
+    skf = StratifiedKFold(n_splits=n_fold, shuffle=True, random_state=n_seed)
+    cv = skf.split(pairs, classes)
+
+n_seed = 100
+cv_results = pd.DataFrame()
+clf = linear_model.LogisticRegression(penalty='l2', solver='lbfgs', dual=False, tol=0.0001, C=1.0, random_state=n_seed) 
+  
+for i, (train, test) in enumerate(cv):
+    print ('Fold',i+1)
+    start_time = time.time()
+    pairs_train = pairs[train]
+    classes_train = classes[train] 
+    pairs_test = pairs[test]
+    classes_test = classes[test]
+    knownDrugDisease= pairs_train[classes_train==1]
+    
+    train_df, test_df = calculateCombinedSimilarity(pairs_train, pairs_test, classes_train, classes_test, drug_df, disease_df, knownDrugDisease)
+    elapsed_time = time.time() - start_time
+    print ('Time elapsed to generate features:',time.strftime(\"%H:%M:%S\", time.gmtime(elapsed_time)))
+
+    clf = trainModel(train_df, clf)
+    
+    scores = evaluate(test_df, clf)
+    #print (\"Scores:\",scores)
+    cv_results = cv_results.append(scores, ignore_index=True)
+
+cv_results.mean()
+
+cv_results.to_csv('data/results/disjoint_lr.csv')
+
+import pandas as pd
+
+cv_results = pd.read_csv('data/results/disjoint_lr.csv')
+
+cv_results.head()
+
+from rdflib import Graph, URIRef, Literal, RDF, ConjunctiveGraph, Namespace
+from rdflib import Graph, URIRef, Literal, RDF, ConjunctiveGraph
+def to_rdf(g, df, column_types, row_uri):
+    \"\"\"
+    Parameters
+    ----------
+    g : input rdflib.Graph  
+    df: DataFrame to be converted into RDF Graph
+    column_types: dictonary of column and its type, type can be URI or Literal
+    row_uri: rdf:type value for row index, should be URI
+    Returns
+    -------
+    g: rdflib.Graph generated from DataFrame object
+    \"\"\"
+    
+    for (index, series) in df.iterrows():
+        g.add((URIRef(index), RDF.type, URIRef(row_uri)) )
+        for (column, value) in series.iteritems():
+            if column_types[column] == 'URI':
+                g.add((URIRef(index), URIRef(column), URIRef(value)))
+            else:
+                g.add((URIRef(index), URIRef(column), Literal(value)))
+                
+    return g
+
+import time
+def generateURI(prefix):
+    uniqueID= int(round(time.time() * 1000))
+    uri = URIRef(prefix+str(uniqueID))
+    return uri
+
+DC = Namespace(\"http://purl.org/dc/terms/\")
+MLS = Namespace(\"http://www.w3.org/ns/mls#\")
+RPC = Namespace(\"https://w3id.org/reproduceme#\")
+RDFS = Namespace(\"http://www.w3.org/2000/01/rdf-schema#\")
+def addProvanace(g):
+    #graphURI = URIRef('http://bio2rdf.org/openpredict_resource:bio2rdf.output.openpredict.R1')
+
+    runURI = generateURI('http://www.w3.org/ns/mls#Run')
+    evalURI = generateURI('http://www.w3.org/ns/mls#ModelEvaluation')
+    accURI = generateURI('http://www.w3.org/ns/mls#Accuracy')
+    evalSpecURI = generateURI('http://www.w3.org/ns/mls#EvaluationSpecification')
+    
+    g.add((runURI, RDF['type'], MLS['Run']))
+    g.add((runURI, MLS['achieves'], RPC['Pipeline_OpenPREDICT']))
+          
+    g.add((runURI, MLS['hasOutput'], evalURI))
+    g.add((evalURI, RDF['type'], MLS['ModelEvaluation']))
+    
+    g.add((evalSpecURI, MLS['defines'],  RPC['Pipeline_OpenPREDICT']))
+    g.add((evalSpecURI, MLS['hasPart'],  MLS['TenFoldCrossValidation']))
+    g.add((MLS['TenFoldCrossValidation'], RDF['type'],  MLS['EvaluationProcedure']))
+    g.add((MLS['TenFoldCrossValidation'], RDFS['label'],  Literal('10-fold CV')))
+    
+    g.add((evalSpecURI, MLS['hasPart'],  MLS['DrugwiseCrossValidation']))
+    g.add((MLS['DrugwiseCrossValidation'], RDF['type'],  MLS['EvaluationProcedure']))
+    g.add((MLS['DrugwiseCrossValidation'], RDFS['label'],  Literal('Drugwise CrossValidation')))
+    g.add((MLS['DrugwiseCrossValidation'], DC['description'],  Literal('Split drugs in 10-fold, remove drugs of each fold in the gold standard and consequently remove all the known indication sassociated with them')))
+    
+    g.add((evalSpecURI, MLS['hasPart'],  accURI))      
+    g.add((evalURI, MLS['specifiedBy'],accURI ))
+    g.add((accURI, RDF['type'], MLS['EvaluationMeasure']))  
+    g.add((accURI, RDFS['label'],  Literal('Accuracy')))
+    g.add((accURI, MLS['hasValue'],  Literal('0.85')))
+   
+    return g
+
+g =  ConjunctiveGraph(identifier = URIRef('http://bio2rdf.org/openpredict_resource:bio2rdf.dataset.openpredict.R1'))
+
+g= addProvanace(g)
+
+g.serialize('data/rdf/results_disjoint_lr.nq', format='nquads')""" ;
+  dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+  rdfs:label "Model preparation, train and evaluation Workflow: OpenPREDCIT - ML.ipynb v.0.2" ;
+  dcat:downloadURL "https://github.com/fair-workflows/openpredict/blob/975324eb5263bc0d5d709f833baca31952817844/OpenPREDCIT%20-%20ML.ipynb" ;
 .
 opredict:Plan_Prepare_Input_Data_Files
   rdf:type p-plan:Plan ;
@@ -1554,6 +3012,7 @@ opredict:Step_Add_files_to_triplestore_and_execute_queries
   rdf:type bpmn:ManualTask ;
   rdf:type p-plan:Step ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02 ;
   dul:isDescribedBy opredict:Plan_Add_files_to_triplestore_and_execute_queries ;
   rdfs:label "Add files to triplestore and execute queries" ;
 .
@@ -1571,6 +3030,7 @@ opredict:Step_Download_Kegg_dataset
   rdf:type p-plan:Step ;
   p-plan:hasOutputVar opredict:Variable_Kegg_dataset_online ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02 ;
   dul:isDescribedBy opredict:Plan_Download_Kegg_dataset ;
   dul:precedes opredict:Step_Save_Kegg_dataset ;
   rdfs:label "Download Kegg dataset" ;
@@ -1580,6 +3040,7 @@ opredict:Step_Download_SIDER_dataset
   rdf:type p-plan:Step ;
   p-plan:hasOutputVar opredict:Variable_SIDER_dataset_online ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02 ;
   dul:isDescribedBy opredict:Plan_Download_SIDER_dataset ;
   dul:precedes opredict:Step_Save_SIDER_dataset ;
   rdfs:label "Download SIDER dataset" ;
@@ -1707,6 +3168,7 @@ opredict:Step_Execute_queries_and_create_input_files_tab
   rdf:type p-plan:Step ;
   p-plan:hasInputVar opredict:Variable_Triplestore_endpoint_for_input_data ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02 ;
   dul:isDescribedBy opredict:Plan_Execute_queries_and_create_input_files_tab ;
 .
 opredict:Step_Execute_query_DRUG_SIDE_EFFECTS_from_SIDER
@@ -1813,11 +3275,41 @@ opredict:Step_Feature_generation_01_Pipeline_Source_Cell10
   rdf:type bpmn:ScriptTask ;
   rdf:type p-plan:Step ;
   dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell10 ;
+  dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell11 ;
 .
 opredict:Step_Feature_generation_01_Pipeline_Source_Cell10_Spec
   rdf:type bpmn:ManualTask ;
   rdf:type p-plan:Step ;
   dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell10_Spec ;
+.
+opredict:Step_Feature_generation_01_Pipeline_Source_Cell11
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell11 ;
+  dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell12 ;
+.
+opredict:Step_Feature_generation_01_Pipeline_Source_Cell12
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell12 ;
+  dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell13 ;
+.
+opredict:Step_Feature_generation_01_Pipeline_Source_Cell13
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell13 ;
+  dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell14 ;
+.
+opredict:Step_Feature_generation_01_Pipeline_Source_Cell14
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell14 ;
+  dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell15 ;
+.
+opredict:Step_Feature_generation_01_Pipeline_Source_Cell15
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell15 ;
 .
 opredict:Step_Feature_generation_Pipeline_OpenPREDICT_ipynb
   rdf:type bpmn:ScriptTask ;
@@ -1831,8 +3323,8 @@ opredict:Step_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02
   rdf:type bpmn:ScriptTask ;
   rdf:type p-plan:Step ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02 ;
-  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_OpenPREDICT_ipynb ;
-  dul:precedes opredict:Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02 ;
+  dul:precedes opredict:Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb_v02 ;
   rdfs:label "Feature generation: Pipeline OpenPREDICT.ipynb v.0.2" ;
 .
 opredict:Step_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02_1
@@ -1843,17 +3335,106 @@ opredict:Step_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02_1
   dul:precedes opredict:Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb ;
   rdfs:label "Feature generation: Pipeline OpenPREDICT.ipynb v.0.2" ;
 .
+opredict:Step_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02_Download_and_Save_Input
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02_Download_and_Save_Input ;
+  dul:precedes opredict:Step_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02_FeatureGeneration ;
+.
+opredict:Step_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02_FeatureGeneration
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02 ;
+  dul:isDescribedBy opredict:Plan_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02_FeatureGeneration ;
+.
 opredict:Step_Format_results_for_presentation
   rdf:type p-plan:Step ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
   dul:isDescribedBy opredict:Plan_Format_results_for_presentation ;
   rdfs:label "Format results for presentation" ;
 .
+<http://purl.org/plex/Instances/OpenPREDICT#Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell00>
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
+  dul:isDescribedBy <http://purl.org/plex/Instances/OpenPREDICT#Plan_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell00> ;
+  dul:precedes <http://purl.org/plex/Instances/OpenPREDICT#Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell01> ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell01>
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
+  dul:isDescribedBy <http://purl.org/plex/Instances/OpenPREDICT#Plan_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell01> ;
+  dul:precedes <http://purl.org/plex/Instances/OpenPREDICT#Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell02> ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell02>
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
+  dul:isDescribedBy <http://purl.org/plex/Instances/OpenPREDICT#Plan_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell02> ;
+  dul:precedes <http://purl.org/plex/Instances/OpenPREDICT#Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell03> ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell03>
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
+  dul:isDescribedBy <http://purl.org/plex/Instances/OpenPREDICT#Plan_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell03> ;
+  dul:precedes <http://purl.org/plex/Instances/OpenPREDICT#Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell04> ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell04>
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
+  dul:isDescribedBy <http://purl.org/plex/Instances/OpenPREDICT#Plan_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell04> ;
+  dul:precedes <http://purl.org/plex/Instances/OpenPREDICT#Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell05> ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell05>
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
+  dul:isDescribedBy <http://purl.org/plex/Instances/OpenPREDICT#Plan_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell05> ;
+  dul:precedes <http://purl.org/plex/Instances/OpenPREDICT#Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell06> ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell06>
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
+  dul:isDescribedBy <http://purl.org/plex/Instances/OpenPREDICT#Plan_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell06> ;
+  dul:precedes <http://purl.org/plex/Instances/OpenPREDICT#Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell07> ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell07>
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
+  dul:isDescribedBy <http://purl.org/plex/Instances/OpenPREDICT#Plan_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell07> ;
+  dul:precedes <http://purl.org/plex/Instances/OpenPREDICT#Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell08> ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell08>
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
+  dul:isDescribedBy <http://purl.org/plex/Instances/OpenPREDICT#Plan_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell08> ;
+  dul:precedes <http://purl.org/plex/Instances/OpenPREDICT#Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell09> ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell09>
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
+  dul:isDescribedBy <http://purl.org/plex/Instances/OpenPREDICT#Plan_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell09> ;
+.
 opredict:Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb
   rdf:type bpmn:ScriptTask ;
   rdf:type p-plan:Step ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
   dul:isDescribedBy <http://purl.org/plex/Instances/OpenPREDICT#Plan_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb> ;
+  dul:precedes opredict:Step_Format_results_for_presentation ;
+  rdfs:label "Model preparation, train and evaluation Workflow: OpenPREDCIT - ML.ipynb" ;
+.
+opredict:Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb_v02
+  rdf:type bpmn:ScriptTask ;
+  rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02 ;
+  dul:isDescribedBy opredict:Plan_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb_v02 ;
   dul:precedes opredict:Step_Format_results_for_presentation ;
   rdfs:label "Model preparation, train and evaluation Workflow: OpenPREDCIT - ML.ipynb" ;
 .
@@ -1897,6 +3478,7 @@ opredict:Step_Save_Kegg_dataset
   p-plan:hasInputVar opredict:Variable_Kegg_dataset_online ;
   p-plan:hasOutputVar opredict:Variable_Kegg_dataset_local ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02 ;
   dul:isDescribedBy opredict:Plan_Save_Kegg_dataset ;
   rdfs:label "Save Kegg dataset" ;
 .
@@ -1906,6 +3488,7 @@ opredict:Step_Save_SIDER_dataset
   p-plan:hasInputVar opredict:Variable_SIDER_dataset_online ;
   p-plan:hasOutputVar opredict:Variable_SIDER_dataset_local ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02 ;
   dul:isDescribedBy opredict:Plan_Save_SIDER_dataset ;
   rdfs:label "Save SIDER dataset" ;
 .
@@ -1963,6 +3546,7 @@ opredict:Step_Upload_files_to_a_triplestore
   rdf:type bpmn:ManualTask ;
   rdf:type p-plan:Step ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02 ;
   dul:isDescribedBy opredict:Plan_Upload_files_to_a_triplestore ;
   dul:precedes opredict:Step_Execute_queries_and_create_input_files_tab ;
 .
@@ -2117,6 +3701,72 @@ opredict:Variable_pubchem_to_drugbank_file_online
   rdf:type p-plan:Variable ;
   rdfs:label "pubchem file online" ;
 .
+opredict:WorkflowExecutionArtifact_Output_Step_Feature_generation_01_Pipeline_Source_Cell01_Execution_1546300862
+  rdf:type opmw:WorkflowExecutionArtifact ;
+  dc:description """
+      \"text/html\": [
+       \"<div>\\n\",
+       \"<style scoped>\\n\",
+       \"    .dataframe tbody tr th:only-of-type {\\n\",
+       \"        vertical-align: middle;\\n\",
+       \"    }\\n\",
+       \"\\n\",
+       \"    .dataframe tbody tr th {\\n\",
+       \"        vertical-align: top;\\n\",
+       \"    }\\n\",
+       \"\\n\",
+       \"    .dataframe thead th {\\n\",
+       \"        text-align: right;\\n\",
+       \"    }\\n\",
+       \"</style>\\n\",
+       \"<table border=\\\"1\\\" class=\\\"dataframe\\\">\\n\",
+       \"  <thead>\\n\",
+       \"    <tr style=\\\"text-align: right;\\\">\\n\",
+       \"      <th></th>\\n\",
+       \"      <th>drugid</th>\\n\",
+       \"      <th>smiles</th>\\n\",
+       \"    </tr>\\n\",
+       \"  </thead>\\n\",
+       \"  <tbody>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>0</th>\\n\",
+       \"      <td>DB00014</td>\\n\",
+       \"      <td>CC(C)C[C@H](NC(=O)[C@@H](COC(C)(C)C)NC(=O)[C@H...</td>\\n\",
+       \"    </tr>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>1</th>\\n\",
+       \"      <td>DB00035</td>\\n\",
+       \"      <td>NC(=O)CC[C@@H]1NC(=O)[C@H](CC2=CC=CC=C2)NC(=O)...</td>\\n\",
+       \"    </tr>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>2</th>\\n\",
+       \"      <td>DB00091</td>\\n\",
+       \"      <td>CCC1NC(=O)C(C(O)C(C)CC=CC)N(C)C(=O)C(C(C)C)N(C...</td>\\n\",
+       \"    </tr>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>3</th>\\n\",
+       \"      <td>DB00104</td>\\n\",
+       \"      <td>C[C@@H](O)[C@@H](CO)NC(=O)[C@@H]1CSSC[C@H](NC(...</td>\\n\",
+       \"    </tr>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>4</th>\\n\",
+       \"      <td>DB00114</td>\\n\",
+       \"      <td>CC1=NC=C(COP(O)(O)=O)C(C=O)=C1O</td>\\n\",
+       \"    </tr>\\n\",
+       \"  </tbody>\\n\",
+       \"</table>\\n\",
+       \"</div>\"
+      ],
+      \"text/plain\": [
+       \"    drugid                                             smiles\\n\",
+       \"0  DB00014  CC(C)C[C@H](NC(=O)[C@@H](COC(C)(C)C)NC(=O)[C@H...\\n\",
+       \"1  DB00035  NC(=O)CC[C@@H]1NC(=O)[C@H](CC2=CC=CC=C2)NC(=O)...\\n\",
+       \"2  DB00091  CCC1NC(=O)C(C(O)C(C)CC=CC)N(C)C(=O)C(C(C)C)N(C...\\n\",
+       \"3  DB00104  C[C@@H](O)[C@@H](CO)NC(=O)[C@@H]1CSSC[C@H](NC(...\\n\",
+       \"4  DB00114                    CC1=NC=C(COP(O)(O)=O)C(C=O)=C1O\"
+      ]""" ;
+  prov:qualifiedGeneration opredict:Generation_Output_Step_Feature_generation_01_Pipeline_Source_Cell01_Execution_1546300862 ;
+.
 fabio:Triplestore
   rdf:type owl:Class ;
   rdfs:isDefinedBy fabio:Triplestore ;
@@ -2137,6 +3787,7 @@ schema:URL
 .
 dul:Workflow
   rdf:type owl:Class ;
+  rdfs:comment "A Plan that defines Role(s), Task(s), and a specific structure for tasks to be executed, usually supporting the work of an Organization" ;
   rdfs:seeAlso "http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Workflow" ;
   rdfs:subClassOf owl:Thing ;
 .
@@ -2147,6 +3798,11 @@ dul:isDescribedBy
 dul:precedes
   rdf:type rdf:Property ;
   rdfs:isDefinedBy "http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#precedes" ;
+.
+opmw:WorkflowExecutionArtifact
+  rdf:type owl:Class ;
+  rdfs:seeAlso "http://www.opmw.org/ontology/WorkflowExecutionArtifact" ;
+  rdfs:subClassOf prov:Entity ;
 .
 dcat:Dataset
   rdf:type owl:Class ;
@@ -2172,6 +3828,11 @@ dcat:mediaType
   rdfs:range edam:format_1915 ;
   rdfs:seeAlso "https://www.w3.org/ns/dcat#mediaType" ;
 .
+prov:Activity
+  rdf:type owl:Class ;
+  rdfs:seeAlso "http://www.w3.org/ns/prov#Activity" ;
+  rdfs:subClassOf owl:Thing ;
+.
 prov:Agent
   rdf:type owl:Class ;
   rdfs:seeAlso "https://www.w3.org/TR/prov-o/#Agent" ;
@@ -2190,6 +3851,12 @@ prov:Bundle
 prov:Entity
   rdf:type owl:Class ;
   rdfs:seeAlso "https://www.w3.org/TR/prov-o/#Entity" ;
+  rdfs:subClassOf owl:Thing ;
+.
+prov:Generation
+  rdf:type owl:Class ;
+  rdfs:comment "Generation is the completion of production of a new entity by an activity. This entity did not exist before generation and becomes available for usage after this generation." ;
+  rdfs:seeAlso "http://www.w3.org/ns/prov#Generation" ;
   rdfs:subClassOf owl:Thing ;
 .
 prov:Plan
@@ -2219,9 +3886,21 @@ prov:agent
   rdfs:range prov:Agent ;
   rdfs:seeAlso "https://www.w3.org/TR/prov-o/#p_agent" ;
 .
+prov:atTime
+  rdf:type rdf:Property ;
+  rdfs:comment "The PROV data model is implicitly based on a notion of instantaneous events (or just events), that mark transitions in the world. Events include generation, usage, or invalidation of entities, as well as starting or ending of activities. This notion of event is not first-class in the data model, but it is useful for explaining its other concepts and its semantics." ;
+  rdfs:range xsd:dateTime ;
+  rdfs:seeAlso "http://www.w3.org/ns/prov#atTime" ;
+.
 prov:entity
   rdf:type rdf:Property ;
   rdfs:isDefinedBy "http://www.w3.org/ns/prov#entity" ;
+.
+prov:generated
+  rdf:type rdf:Property ;
+  rdfs:domain prov:Activity ;
+  rdfs:range prov:Entity ;
+  rdfs:seeAlso "http://www.w3.org/ns/prov#generated" ;
 .
 prov:hadPlan
   rdf:type rdf:Property ;
@@ -2234,6 +3913,13 @@ prov:hadRole
   rdfs:domain prov:Association ;
   rdfs:range prov:Role ;
   rdfs:seeAlso "https://www.w3.org/TR/prov-o/#hadRole" ;
+.
+prov:qualifiedGeneration
+  rdf:type rdf:Property ;
+  rdfs:comment "Generation is the completion of production of a new entity by an activity. This entity did not exist before generation and becomes available for usage after this generation." ;
+  rdfs:domain prov:Entity ;
+  rdfs:range prov:Generation ;
+  rdfs:seeAlso "http://www.w3.org/ns/prov#qualifiedGeneration" ;
 .
 prov:qualifiedUsage
   rdf:type rdf:Property ;
