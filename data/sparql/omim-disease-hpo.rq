@@ -5,10 +5,9 @@
  SELECT distinct ?diseaseid ?hpoid
  WHERE{
     ?drug ov:indication ?disease .
-    GRAPH <http://fairworkflows.org/openpredict_resource:fairworkflows.dataset.openpredict.hpoannot.R1>{
+    GRAPH <http://w3id.org/fairworkflows/dataset.openpredict.hpoannot.R1>{
     ?disease <http://semanticscience.org/resource/SIO_000255> ?hpo .
     BIND( STRAFTER(str(?disease),"http://bio2rdf.org/omim:") AS ?diseaseid)
     BIND( STRAFTER(str(?hpo),"http://bio2rdf.org/") AS ?hpoid)
 }
 }
-

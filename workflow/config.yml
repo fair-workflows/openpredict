@@ -1,0 +1,22 @@
+ab_path: /home/jovyan/work/openpredict/ 
+sparql_ep: "http://graphdb.dumontierlab.com/repositories/openpredict"
+se_sparql_path : drugbank-sider-sideeffects.rq
+se_download_path: drugbank-sider-se.csv
+se_output: drugs-se-sim.csv
+seq_sim_output: drugs-target-seq-sim.csv
+dt_sparql_path: drugbank-drug-target.rq
+dt_download_path: drugbank-drug-target.csv
+ds_sparql_path: drugbank-drug-smiles.rq
+ds_download_path: drugbank-drug-smiles.csv
+goa_sparql_path: drugbank-drug-goa.rq
+goa_download_path: drugbank-drug-goa.csv
+di_sparql_path: openpredict-omim-drug.rq
+di_download_path: openpredict-omim-drug.csv
+ppi_sparql_path: human-interactome.rq
+ppi_download_path: human-interactome.csv
+tseq_sparql_path: drugbank-target-seq.rq
+tseq_download_path: drugbank-target-seq.csv
+mesh_sparql_path: omim-disease-mesh-bioportal.rq
+mesh_download_path: omim-disease-mesh.csv
+hpo_sparql_path: omim-disease-hpo.rq
+hpo_download_path: omim-disease-hpo.csv 
