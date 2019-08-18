@@ -3,3 +3,4 @@ pandas==0.24.2
 sklearn==0.20.3
 rdflib==4.2.2
 networkx==1.11
+papermill==1.0.1
