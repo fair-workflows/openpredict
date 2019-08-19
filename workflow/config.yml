@@ -1,4 +1,4 @@
-ab_path: /home/jovyan/work/openpredict/ 
+ab_path: /juypter/
 sparql_ep: "http://graphdb.dumontierlab.com/repositories/openpredict"
 se_sparql_path : drugbank-sider-sideeffects.rq
 se_download_path: drugbank-sider-se.csv
