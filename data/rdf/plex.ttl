@@ -7,6 +7,7 @@
 @prefix dul: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
 @prefix edam: <http://edamontology.org/> .
 @prefix fabio: <http://purl.org/spar/fabio/> .
+@prefix mls: <http://www.w3.org/ns/mls#> .
 @prefix opmw: <http://www.opmw.org/ontology/> .
 @prefix opredict: <http://purl.org/plex/Instances/OpenPREDICT#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -180,6 +181,82 @@ opredict:Activity_Feature_generation_01_Pipeline_Source_Cell01_Execution_1546300
   rdf:type p-plan:Activity ;
   p-plan:correspondsToStep opredict:Step_Feature_generation_01_Pipeline_Source_Cell01 ;
   prov:generated opredict:WorkflowExecutionArtifact_Output_Step_Feature_generation_01_Pipeline_Source_Cell01_Execution_1546300862 ;
+.
+opredict:Activity_Feature_generation_01_Pipeline_Source_Cell02_Execution_1546300862
+  rdf:type p-plan:Activity ;
+  p-plan:correspondsToStep opredict:Step_Feature_generation_01_Pipeline_Source_Cell02 ;
+  prov:generated opredict:WorkflowExecutionArtifact_Output_Step_Feature_generation_01_Pipeline_Source_Cell02_Execution_1546300862 ;
+.
+opredict:Activity_Feature_generation_01_Pipeline_Source_Cell03_Execution_1546300862
+  rdf:type p-plan:Activity ;
+  p-plan:correspondsToStep opredict:Step_Feature_generation_01_Pipeline_Source_Cell03 ;
+  prov:generated opredict:WorkflowExecutionArtifact_Output_Step_Feature_generation_01_Pipeline_Source_Cell03_Execution_1546300862 ;
+.
+opredict:Activity_Feature_generation_01_Pipeline_Source_Cell04_Execution_1546300862
+  rdf:type p-plan:Activity ;
+  p-plan:correspondsToStep opredict:Step_Feature_generation_01_Pipeline_Source_Cell04 ;
+  prov:generated opredict:WorkflowExecutionArtifact_Output_Step_Feature_generation_01_Pipeline_Source_Cell04_Execution_1546300862 ;
+.
+opredict:Activity_Feature_generation_01_Pipeline_Source_Cell05_Execution_1546300862
+  rdf:type p-plan:Activity ;
+  p-plan:correspondsToStep opredict:Step_Feature_generation_01_Pipeline_Source_Cell05 ;
+  prov:generated opredict:WorkflowExecutionArtifact_Output_Step_Feature_generation_01_Pipeline_Source_Cell05_Execution_1546300862 ;
+.
+opredict:Activity_Feature_generation_01_Pipeline_Source_Cell08_Execution_1546300862
+  rdf:type p-plan:Activity ;
+  p-plan:correspondsToStep opredict:Step_Feature_generation_01_Pipeline_Source_Cell08 ;
+  prov:generated opredict:WorkflowExecutionArtifact_Output_Step_Feature_generation_01_Pipeline_Source_Cell08_Execution_1546300862 ;
+.
+opredict:Activity_Feature_generation_01_Pipeline_Source_Cell10_Execution_1546300862
+  rdf:type p-plan:Activity ;
+  p-plan:correspondsToStep opredict:Step_Feature_generation_01_Pipeline_Source_Cell10 ;
+  prov:generated opredict:WorkflowExecutionArtifact_Output_Step_Feature_generation_01_Pipeline_Source_Cell10_Execution_1546300862 ;
+.
+opredict:Activity_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02_FeatureGeneration_Execution_1546335555
+  rdf:type p-plan:Activity ;
+  p-plan:correspondsToStep opredict:Step_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02_FeatureGeneration ;
+  prov:generated opredict:WorkflowExecutionArtifact_Output_Step_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02_FeatureGeneration_Execution_1546335555 ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Activity_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell01_Execution_1546302862>
+  rdf:type p-plan:Activity ;
+  p-plan:correspondsToStep <http://purl.org/plex/Instances/OpenPREDICT#Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell01> ;
+  prov:generated <http://purl.org/plex/Instances/OpenPREDICT#WorkflowExecutionArtifact_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell01_Execution_1546302862> ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Activity_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell05_Execution_1546302862>
+  rdf:type p-plan:Activity ;
+  p-plan:correspondsToStep <http://purl.org/plex/Instances/OpenPREDICT#Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell05> ;
+  prov:generated <http://purl.org/plex/Instances/OpenPREDICT#WorkflowExecutionArtifact_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell05_Execution_1546302862> ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Activity_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell08_Execution_1546302862>
+  rdf:type p-plan:Activity ;
+  p-plan:correspondsToStep <http://purl.org/plex/Instances/OpenPREDICT#Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell08> ;
+  prov:generated <http://purl.org/plex/Instances/OpenPREDICT#WorkflowExecutionArtifact_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell08_Execution_1546302862> ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Activity_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell09_Execution_1546302862>
+  rdf:type p-plan:Activity ;
+  p-plan:correspondsToStep <http://purl.org/plex/Instances/OpenPREDICT#Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell09> ;
+  prov:generated <http://purl.org/plex/Instances/OpenPREDICT#WorkflowExecutionArtifact_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell09_Execution_1546302862> ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Activity_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Execution_1546302862>
+  rdf:type p-plan:Activity ;
+  p-plan:correspondsToStep opredict:Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb ;
+  prov:generated <http://purl.org/plex/Instances/OpenPREDICT#ModelEvaluation_Accuracy_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Execution_1546302862> ;
+  prov:generated <http://purl.org/plex/Instances/OpenPREDICT#ModelEvaluation_AveragePrecision_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Execution_1546302862> ;
+  prov:generated <http://purl.org/plex/Instances/OpenPREDICT#ModelEvaluation_F1_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Execution_1546302862> ;
+  prov:generated <http://purl.org/plex/Instances/OpenPREDICT#ModelEvaluation_Precision_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Execution_1546302862> ;
+  prov:generated <http://purl.org/plex/Instances/OpenPREDICT#ModelEvaluation_Recall_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Execution_1546302862> ;
+  prov:generated <http://purl.org/plex/Instances/OpenPREDICT#ModelEvaluation_RocAuc_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Execution_1546302862> ;
+.
+opredict:Activity_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb_v02_Execution_1546335555
+  rdf:type p-plan:Activity ;
+  p-plan:correspondsToStep opredict:Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb_v02 ;
+  prov:generated opredict:ModelEvaluation_Accuracy_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb_v02_Execution_1546335555 ;
+  prov:generated opredict:ModelEvaluation_AveragePrecision_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb_v02_Execution_1546335555 ;
+  prov:generated opredict:ModelEvaluation_F1_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb_v02_Execution_1546335555 ;
+  prov:generated opredict:ModelEvaluation_Precision_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb_v02_Execution_1546335555 ;
+  prov:generated opredict:ModelEvaluation_Recall_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb_v02_Execution_1546335555 ;
+  prov:generated opredict:ModelEvaluation_RocAuc_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb_v02_Execution_1546335555 ;
+  prov:generated opredict:WorkflowExecutionArtifact_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb_v02_Execution_1546335555 ;
 .
 opredict:Agent_Ahmed
   rdf:type prov:Agent ;
@@ -408,10 +485,80 @@ opredict:Distribution_Phenotype_annotations_file_local
   rdf:type dcat:Distribution ;
   rdfs:label "srep35241-s3.txt local" ;
 .
+opredict:EvaluationMeasure_PredictiveAccuracy
+  rdf:type mls:EvaluationMeasure ;
+.
+opredict:EvaluationMeasure_PredictiveAveragePrecision
+  rdf:type mls:EvaluationMeasure ;
+.
+opredict:EvaluationMeasure_PredictiveF1
+  rdf:type mls:EvaluationMeasure ;
+.
+opredict:EvaluationMeasure_PredictivePrecision
+  rdf:type mls:EvaluationMeasure ;
+.
+opredict:EvaluationMeasure_PredictiveRecall
+  rdf:type mls:EvaluationMeasure ;
+.
+opredict:EvaluationMeasure_PredictiveRocAuc
+  rdf:type mls:EvaluationMeasure ;
+.
 opredict:Generation_Output_Step_Feature_generation_01_Pipeline_Source_Cell01_Execution_1546300862
   rdf:type prov:Generation ;
   dc:description "This instance can describe information about the generation of the output of the cell, for example here we could have properties for different roles (generator) for each format (html x text), information provided by the user (e.g., data seem to be correct or no data found, etc), etc." ;
   prov:atTime "2019-01-01T00:01:15.761"^^xsd:dateTime ;
+.
+opredict:Generation_Output_Step_Feature_generation_01_Pipeline_Source_Cell02_Execution_1546300862
+  rdf:type prov:Generation ;
+  prov:atTime "2019-01-01T00:01:15.961"^^xsd:dateTime ;
+.
+opredict:Generation_Output_Step_Feature_generation_01_Pipeline_Source_Cell03_Execution_1546300862
+  rdf:type prov:Generation ;
+  prov:atTime "2019-01-01T00:01:16.961"^^xsd:dateTime ;
+.
+opredict:Generation_Output_Step_Feature_generation_01_Pipeline_Source_Cell04_Execution_1546300862
+  rdf:type prov:Generation ;
+  prov:atTime "2019-01-01T00:01:16.961"^^xsd:dateTime ;
+.
+opredict:Generation_Output_Step_Feature_generation_01_Pipeline_Source_Cell05_Execution_1546300862
+  rdf:type prov:Generation ;
+  prov:atTime "2019-01-01T00:01:16.961"^^xsd:dateTime ;
+.
+opredict:Generation_Output_Step_Feature_generation_01_Pipeline_Source_Cell08_Execution_1546300862
+  rdf:type prov:Generation ;
+  prov:atTime "2019-01-01T00:01:17.961"^^xsd:dateTime ;
+.
+opredict:Generation_Output_Step_Feature_generation_01_Pipeline_Source_Cell10_Execution_1546300862
+  rdf:type prov:Generation ;
+  prov:atTime "2019-01-01T00:01:17.961"^^xsd:dateTime ;
+.
+opredict:Generation_Output_Step_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02_FeatureGeneration_Execution_1546335555
+  rdf:type prov:Generation ;
+  prov:atTime "2019-05-21T00:02:11.011"^^xsd:dateTime ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Generation_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell01_Execution_1546302862>
+  rdf:type prov:Generation ;
+  prov:atTime "2019-01-01T00:01:17.961"^^xsd:dateTime ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Generation_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell05_Execution_1546302862>
+  rdf:type prov:Generation ;
+  prov:atTime "2019-01-01T00:02:01.011"^^xsd:dateTime ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Generation_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell08_Execution_1546302862>
+  rdf:type prov:Generation ;
+  prov:atTime "2019-01-01T00:02:11.011"^^xsd:dateTime ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Generation_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell09_Execution_1546302862>
+  rdf:type prov:Generation ;
+  prov:atTime "2019-01-01T00:02:31.011"^^xsd:dateTime ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#Generation_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Execution_1546302862>
+  rdf:type prov:Generation ;
+  prov:atTime "2019-01-01T00:02:31.011"^^xsd:dateTime ;
+.
+opredict:Generation_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb_v02_Execution_1546335555
+  rdf:type prov:Generation ;
+  prov:atTime "2019-05-21T00:02:31.011"^^xsd:dateTime ;
 .
 opredict:Link_Pipeline_Source_Cell0_Variable
   rdf:type prov:Usage ;
@@ -461,6 +608,78 @@ opredict:Link_variable_to_local_phenotype_annotations
   rdfs:label "Link variable to local phenotype annotations" ;
   prov:entity opredict:Distribution_Phenotype_annotations_file_local ;
   prov:entity opredict:Variable_Phenotype_annotations_file_local ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#ModelEvaluation_Accuracy_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Execution_1546302862>
+  rdf:type mls:ModelEvaluation ;
+  dc:description "0.833336" ;
+  mls:specifiedBy opredict:EvaluationMeasure_PredictiveAccuracy ;
+  prov:qualifiedGeneration <http://purl.org/plex/Instances/OpenPREDICT#Generation_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Execution_1546302862> ;
+.
+opredict:ModelEvaluation_Accuracy_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb_v02_Execution_1546335555
+  rdf:type mls:ModelEvaluation ;
+  dc:description "0.6803722301090722" ;
+  mls:specifiedBy opredict:EvaluationMeasure_PredictiveAccuracy ;
+  prov:qualifiedGeneration opredict:Generation_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb_v02_Execution_1546335555 ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#ModelEvaluation_AveragePrecision_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Execution_1546302862>
+  rdf:type mls:ModelEvaluation ;
+  dc:description "0.810000" ;
+  mls:specifiedBy opredict:EvaluationMeasure_PredictiveAveragePrecision ;
+  prov:qualifiedGeneration <http://purl.org/plex/Instances/OpenPREDICT#Generation_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Execution_1546302862> ;
+.
+opredict:ModelEvaluation_AveragePrecision_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb_v02_Execution_1546335555
+  rdf:type mls:ModelEvaluation ;
+  dc:description "0.0" ;
+  mls:specifiedBy opredict:EvaluationMeasure_PredictiveAveragePrecision ;
+  prov:qualifiedGeneration opredict:Generation_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb_v02_Execution_1546335555 ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#ModelEvaluation_F1_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Execution_1546302862>
+  rdf:type mls:ModelEvaluation ;
+  dc:description "0.685671" ;
+  mls:specifiedBy opredict:EvaluationMeasure_PredictiveF1 ;
+  prov:qualifiedGeneration <http://purl.org/plex/Instances/OpenPREDICT#Generation_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Execution_1546302862> ;
+.
+opredict:ModelEvaluation_F1_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb_v02_Execution_1546335555
+  rdf:type mls:ModelEvaluation ;
+  dc:description "0.0" ;
+  mls:specifiedBy opredict:EvaluationMeasure_PredictiveF1 ;
+  prov:qualifiedGeneration opredict:Generation_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb_v02_Execution_1546335555 ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#ModelEvaluation_Precision_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Execution_1546302862>
+  rdf:type mls:ModelEvaluation ;
+  dc:description "0.918820" ;
+  mls:specifiedBy opredict:EvaluationMeasure_PredictivePrecision ;
+  prov:qualifiedGeneration <http://purl.org/plex/Instances/OpenPREDICT#Generation_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Execution_1546302862> ;
+.
+opredict:ModelEvaluation_Precision_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb_v02_Execution_1546335555
+  rdf:type mls:ModelEvaluation ;
+  dc:description "0.0" ;
+  mls:specifiedBy opredict:EvaluationMeasure_PredictivePrecision ;
+  prov:qualifiedGeneration opredict:Generation_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb_v02_Execution_1546335555 ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#ModelEvaluation_Recall_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Execution_1546302862>
+  rdf:type mls:ModelEvaluation ;
+  dc:description "0.549804" ;
+  mls:specifiedBy opredict:EvaluationMeasure_PredictiveRecall ;
+  prov:qualifiedGeneration <http://purl.org/plex/Instances/OpenPREDICT#Generation_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Execution_1546302862> ;
+.
+opredict:ModelEvaluation_Recall_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb_v02_Execution_1546335555
+  rdf:type mls:ModelEvaluation ;
+  dc:description "0.0" ;
+  mls:specifiedBy opredict:EvaluationMeasure_PredictiveRecall ;
+  prov:qualifiedGeneration opredict:Generation_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb_v02_Execution_1546335555 ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#ModelEvaluation_RocAuc_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Execution_1546302862>
+  rdf:type mls:ModelEvaluation ;
+  dc:description "0.549804" ;
+  mls:specifiedBy opredict:EvaluationMeasure_PredictiveRocAuc ;
+  prov:qualifiedGeneration <http://purl.org/plex/Instances/OpenPREDICT#Generation_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Execution_1546302862> ;
+.
+opredict:ModelEvaluation_RocAuc_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb_v02_Execution_1546335555
+  rdf:type mls:ModelEvaluation ;
+  dc:description "0.7155250305250306" ;
+  mls:specifiedBy opredict:EvaluationMeasure_PredictiveRocAuc ;
+  prov:qualifiedGeneration opredict:Generation_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb_v02_Execution_1546335555 ;
 .
 opredict:NodeShape_DRUG_SIDE_EFFECTS_from_SIDER
   rdf:type sh:NodeShape ;
@@ -1277,18 +1496,17 @@ print (len(commonDrugs))""" ;
 opredict:Plan_Feature_generation_01_Pipeline_Source_Cell05
   rdf:type p-plan:Plan ;
   rdf:type reprod:Cell ;
-  dc:description """drug_se.head()
-
-
-# ## Drug side effect similarity¶
-# ## calculating Jaccard coefficient based on drug sideefects""" ;
+  dc:description "drug_se.head()" ;
   dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
   dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell01_Spec ;
 .
 opredict:Plan_Feature_generation_01_Pipeline_Source_Cell06
   rdf:type p-plan:Plan ;
   rdf:type reprod:Cell ;
-  dc:description """drugSEDict = {k: g[\"umlsid\"].tolist() for k,g in drug_se.groupby(\"drugid\")}
+  dc:description """# ## Drug side effect similarity¶
+# ## calculating Jaccard coefficient based on drug sideefects
+
+drugSEDict = {k: g[\"umlsid\"].tolist() for k,g in drug_se.groupby(\"drugid\")}
 scores = []
 
 for comb in itertools.combinations(commonDrugs,2):
@@ -2153,7 +2371,9 @@ opredict:Plan_Main_Protocol_v02
   rdf:type p-plan:Plan ;
   dc:description "Model preparation, train and evaluation Workflow: OpenPREDCIT - ML.ipynb" ;
   dc:language <http://purl.org/plex#ComputerLanguage_Python_3.7> ;
+  pwo:hasFirstStep <http://purl.org/plex/Instances/OpenPREDICT#Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell00> ;
   rdfs:label "Model preparation, train and evaluation Workflow: OpenPREDCIT - ML.ipynb" ;
+  dcat:downloadURL "https://github.com/fair-workflows/openpredict/blob/f60431d37cf3ac80e5245ded143f03f368017489/OpenPREDCIT%20-%20ML.ipynb" ;
 .
 <http://purl.org/plex/Instances/OpenPREDICT#Plan_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell00>
   rdf:type p-plan:Plan ;
@@ -3220,30 +3440,35 @@ opredict:Step_Feature_generation_01_Pipeline_Source_Cell01_Spec
 opredict:Step_Feature_generation_01_Pipeline_Source_Cell02
   rdf:type bpmn:ScriptTask ;
   rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
   dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell02 ;
   dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell03 ;
 .
 opredict:Step_Feature_generation_01_Pipeline_Source_Cell03
   rdf:type bpmn:ScriptTask ;
   rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
   dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell03 ;
   dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell04 ;
 .
 opredict:Step_Feature_generation_01_Pipeline_Source_Cell04
   rdf:type bpmn:ScriptTask ;
   rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
   dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell04 ;
   dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell05 ;
 .
 opredict:Step_Feature_generation_01_Pipeline_Source_Cell05
   rdf:type bpmn:ScriptTask ;
   rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
   dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell05 ;
   dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell06 ;
 .
 opredict:Step_Feature_generation_01_Pipeline_Source_Cell06
   rdf:type bpmn:ScriptTask ;
   rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
   dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell06 ;
   dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell07 ;
 .
@@ -3256,24 +3481,28 @@ opredict:Step_Feature_generation_01_Pipeline_Source_Cell06_Spec
 opredict:Step_Feature_generation_01_Pipeline_Source_Cell07
   rdf:type bpmn:ScriptTask ;
   rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
   dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell07 ;
   dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell08 ;
 .
 opredict:Step_Feature_generation_01_Pipeline_Source_Cell08
   rdf:type bpmn:ScriptTask ;
   rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
   dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell08 ;
   dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell09 ;
 .
 opredict:Step_Feature_generation_01_Pipeline_Source_Cell09
   rdf:type bpmn:ScriptTask ;
   rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
   dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell09 ;
   dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell10 ;
 .
 opredict:Step_Feature_generation_01_Pipeline_Source_Cell10
   rdf:type bpmn:ScriptTask ;
   rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
   dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell10 ;
   dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell11 ;
 .
@@ -3285,30 +3514,35 @@ opredict:Step_Feature_generation_01_Pipeline_Source_Cell10_Spec
 opredict:Step_Feature_generation_01_Pipeline_Source_Cell11
   rdf:type bpmn:ScriptTask ;
   rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
   dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell11 ;
   dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell12 ;
 .
 opredict:Step_Feature_generation_01_Pipeline_Source_Cell12
   rdf:type bpmn:ScriptTask ;
   rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
   dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell12 ;
   dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell13 ;
 .
 opredict:Step_Feature_generation_01_Pipeline_Source_Cell13
   rdf:type bpmn:ScriptTask ;
   rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
   dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell13 ;
   dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell14 ;
 .
 opredict:Step_Feature_generation_01_Pipeline_Source_Cell14
   rdf:type bpmn:ScriptTask ;
   rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
   dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell14 ;
   dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell15 ;
 .
 opredict:Step_Feature_generation_01_Pipeline_Source_Cell15
   rdf:type bpmn:ScriptTask ;
   rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
   dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell15 ;
 .
 opredict:Step_Feature_generation_Pipeline_OpenPREDICT_ipynb
@@ -3325,14 +3559,6 @@ opredict:Step_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02 ;
   dul:isDescribedBy opredict:Plan_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02 ;
   dul:precedes opredict:Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb_v02 ;
-  rdfs:label "Feature generation: Pipeline OpenPREDICT.ipynb v.0.2" ;
-.
-opredict:Step_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02_1
-  rdf:type bpmn:ScriptTask ;
-  rdf:type p-plan:Step ;
-  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02 ;
-  dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_OpenPREDICT_ipynb ;
-  dul:precedes opredict:Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb ;
   rdfs:label "Feature generation: Pipeline OpenPREDICT.ipynb v.0.2" ;
 .
 opredict:Step_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02_Download_and_Save_Input
@@ -3767,6 +3993,460 @@ opredict:WorkflowExecutionArtifact_Output_Step_Feature_generation_01_Pipeline_So
       ]""" ;
   prov:qualifiedGeneration opredict:Generation_Output_Step_Feature_generation_01_Pipeline_Source_Cell01_Execution_1546300862 ;
 .
+opredict:WorkflowExecutionArtifact_Output_Step_Feature_generation_01_Pipeline_Source_Cell02_Execution_1546300862
+  rdf:type opmw:WorkflowExecutionArtifact ;
+  dc:description """\"text\": [
+      \"579 drugs have all Target feature \\n\",
+      \"579 drugs have all Target GOA feature \\n\",
+      \"583 drugs have all Fingerprint feature \\n\",
+      \"524 drugs have all Sideeffect feature \\n\"
+     ]""" ;
+  prov:qualifiedGeneration opredict:Generation_Output_Step_Feature_generation_01_Pipeline_Source_Cell02_Execution_1546300862 ;
+.
+opredict:WorkflowExecutionArtifact_Output_Step_Feature_generation_01_Pipeline_Source_Cell03_Execution_1546300862
+  rdf:type opmw:WorkflowExecutionArtifact ;
+  dc:description """\"text\": [
+      \"579 drugs have all Target SEQ feature \\n\"
+     ]""" ;
+  prov:qualifiedGeneration opredict:Generation_Output_Step_Feature_generation_01_Pipeline_Source_Cell03_Execution_1546300862 ;
+.
+opredict:WorkflowExecutionArtifact_Output_Step_Feature_generation_01_Pipeline_Source_Cell04_Execution_1546300862
+  rdf:type opmw:WorkflowExecutionArtifact ;
+  dc:description """\"text\": [
+      \"579 579 583 524\\n\",
+      \"510\\n\"
+     ]""" ;
+  prov:qualifiedGeneration opredict:Generation_Output_Step_Feature_generation_01_Pipeline_Source_Cell04_Execution_1546300862 ;
+.
+opredict:WorkflowExecutionArtifact_Output_Step_Feature_generation_01_Pipeline_Source_Cell05_Execution_1546300862
+  rdf:type opmw:WorkflowExecutionArtifact ;
+  dc:description """\"text/html\": [
+       \"<div>\\n\",
+       \"<style scoped>\\n\",
+       \"    .dataframe tbody tr th:only-of-type {\\n\",
+       \"        vertical-align: middle;\\n\",
+       \"    }\\n\",
+       \"\\n\",
+       \"    .dataframe tbody tr th {\\n\",
+       \"        vertical-align: top;\\n\",
+       \"    }\\n\",
+       \"\\n\",
+       \"    .dataframe thead th {\\n\",
+       \"        text-align: right;\\n\",
+       \"    }\\n\",
+       \"</style>\\n\",
+       \"<table border=\\\"1\\\" class=\\\"dataframe\\\">\\n\",
+       \"  <thead>\\n\",
+       \"    <tr style=\\\"text-align: right;\\\">\\n\",
+       \"      <th></th>\\n\",
+       \"      <th>drugid</th>\\n\",
+       \"      <th>umlsid</th>\\n\",
+       \"    </tr>\\n\",
+       \"  </thead>\\n\",
+       \"  <tbody>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>0</th>\\n\",
+       \"      <td>DB00583</td>\\n\",
+       \"      <td>C0000729</td>\\n\",
+       \"    </tr>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>1</th>\\n\",
+       \"      <td>DB00583</td>\\n\",
+       \"      <td>C0000737</td>\\n\",
+       \"    </tr>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>2</th>\\n\",
+       \"      <td>DB00583</td>\\n\",
+       \"      <td>C0002418</td>\\n\",
+       \"    </tr>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>3</th>\\n\",
+       \"      <td>DB00583</td>\\n\",
+       \"      <td>C0002871</td>\\n\",
+       \"    </tr>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>4</th>\\n\",
+       \"      <td>DB00583</td>\\n\",
+       \"      <td>C0003123</td>\\n\",
+       \"    </tr>\\n\",
+       \"  </tbody>\\n\",
+       \"</table>\\n\",
+       \"</div>\"
+      ],
+      \"text/plain\": [
+       \"    drugid    umlsid\\n\",
+       \"0  DB00583  C0000729\\n\",
+       \"1  DB00583  C0000737\\n\",
+       \"2  DB00583  C0002418\\n\",
+       \"3  DB00583  C0002871\\n\",
+       \"4  DB00583  C0003123\"
+      ]""" ;
+  prov:qualifiedGeneration opredict:Generation_Output_Step_Feature_generation_01_Pipeline_Source_Cell05_Execution_1546300862 ;
+.
+opredict:WorkflowExecutionArtifact_Output_Step_Feature_generation_01_Pipeline_Source_Cell08_Execution_1546300862
+  rdf:type opmw:WorkflowExecutionArtifact ;
+  dc:description """\"text/html\": [
+       \"<div>\\n\",
+       \"<style scoped>\\n\",
+       \"    .dataframe tbody tr th:only-of-type {\\n\",
+       \"        vertical-align: middle;\\n\",
+       \"    }\\n\",
+       \"\\n\",
+       \"    .dataframe tbody tr th {\\n\",
+       \"        vertical-align: top;\\n\",
+       \"    }\\n\",
+       \"\\n\",
+       \"    .dataframe thead th {\\n\",
+       \"        text-align: right;\\n\",
+       \"    }\\n\",
+       \"</style>\\n\",
+       \"<table border=\\\"1\\\" class=\\\"dataframe\\\">\\n\",
+       \"  <thead>\\n\",
+       \"    <tr style=\\\"text-align: right;\\\">\\n\",
+       \"      <th></th>\\n\",
+       \"      <th>Drug1</th>\\n\",
+       \"      <th>Drug2</th>\\n\",
+       \"      <th>SE-SIM</th>\\n\",
+       \"    </tr>\\n\",
+       \"  </thead>\\n\",
+       \"  <tbody>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>0</th>\\n\",
+       \"      <td>DB00882</td>\\n\",
+       \"      <td>DB00366</td>\\n\",
+       \"      <td>0.085502</td>\\n\",
+       \"    </tr>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>1</th>\\n\",
+       \"      <td>DB00882</td>\\n\",
+       \"      <td>DB01029</td>\\n\",
+       \"      <td>0.131285</td>\\n\",
+       \"    </tr>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>2</th>\\n\",
+       \"      <td>DB00882</td>\\n\",
+       \"      <td>DB01217</td>\\n\",
+       \"      <td>0.145215</td>\\n\",
+       \"    </tr>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>3</th>\\n\",
+       \"      <td>DB00882</td>\\n\",
+       \"      <td>DB00304</td>\\n\",
+       \"      <td>0.074890</td>\\n\",
+       \"    </tr>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>4</th>\\n\",
+       \"      <td>DB00882</td>\\n\",
+       \"      <td>DB01400</td>\\n\",
+       \"      <td>0.076000</td>\\n\",
+       \"    </tr>\\n\",
+       \"  </tbody>\\n\",
+       \"</table>\\n\",
+       \"</div>\"
+      ],
+      \"text/plain\": [
+       \"     Drug1    Drug2    SE-SIM\\n\",
+       \"0  DB00882  DB00366  0.085502\\n\",
+       \"1  DB00882  DB01029  0.131285\\n\",
+       \"2  DB00882  DB01217  0.145215\\n\",
+       \"3  DB00882  DB00304  0.074890\\n\",
+       \"4  DB00882  DB01400  0.076000\"
+      ]""" ;
+  prov:qualifiedGeneration opredict:Generation_Output_Step_Feature_generation_01_Pipeline_Source_Cell08_Execution_1546300862 ;
+.
+opredict:WorkflowExecutionArtifact_Output_Step_Feature_generation_01_Pipeline_Source_Cell10_Execution_1546300862
+  rdf:type opmw:WorkflowExecutionArtifact ;
+  dc:description """\"text/html\": [
+       \"<div>\\n\",
+       \"<style scoped>\\n\",
+       \"    .dataframe tbody tr th:only-of-type {\\n\",
+       \"        vertical-align: middle;\\n\",
+       \"    }\\n\",
+       \"\\n\",
+       \"    .dataframe tbody tr th {\\n\",
+       \"        vertical-align: top;\\n\",
+       \"    }\\n\",
+       \"\\n\",
+       \"    .dataframe thead th {\\n\",
+       \"        text-align: right;\\n\",
+       \"    }\\n\",
+       \"</style>\\n\",
+       \"<table border=\\\"1\\\" class=\\\"dataframe\\\">\\n\",
+       \"  <thead>\\n\",
+       \"    <tr style=\\\"text-align: right;\\\">\\n\",
+       \"      <th></th>\\n\",
+       \"      <th>Drug1</th>\\n\",
+       \"      <th>Drug2</th>\\n\",
+       \"      <th>PPI-SIM</th>\\n\",
+       \"    </tr>\\n\",
+       \"  </thead>\\n\",
+       \"  <tbody>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>0</th>\\n\",
+       \"      <td>DB00882</td>\\n\",
+       \"      <td>DB00366</td>\\n\",
+       \"      <td>0.044808</td>\\n\",
+       \"    </tr>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>1</th>\\n\",
+       \"      <td>DB00882</td>\\n\",
+       \"      <td>DB01029</td>\\n\",
+       \"      <td>0.121802</td>\\n\",
+       \"    </tr>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>2</th>\\n\",
+       \"      <td>DB00882</td>\\n\",
+       \"      <td>DB01217</td>\\n\",
+       \"      <td>0.121802</td>\\n\",
+       \"    </tr>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>3</th>\\n\",
+       \"      <td>DB00882</td>\\n\",
+       \"      <td>DB00304</td>\\n\",
+       \"      <td>0.331091</td>\\n\",
+       \"    </tr>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>4</th>\\n\",
+       \"      <td>DB00882</td>\\n\",
+       \"      <td>DB01400</td>\\n\",
+       \"      <td>0.044808</td>\\n\",
+       \"    </tr>\\n\",
+       \"  </tbody>\\n\",
+       \"</table>\\n\",
+       \"</div>\"
+      ],
+      \"text/plain\": [
+       \"     Drug1    Drug2   PPI-SIM\\n\",
+       \"0  DB00882  DB00366  0.044808\\n\",
+       \"1  DB00882  DB01029  0.121802\\n\",
+       \"2  DB00882  DB01217  0.121802\\n\",
+       \"3  DB00882  DB00304  0.331091\\n\",
+       \"4  DB00882  DB01400  0.044808\"
+      ]""" ;
+  prov:qualifiedGeneration opredict:Generation_Output_Step_Feature_generation_01_Pipeline_Source_Cell10_Execution_1546300862 ;
+.
+opredict:WorkflowExecutionArtifact_Output_Step_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02_FeatureGeneration_Execution_1546335555
+  rdf:type opmw:WorkflowExecutionArtifact ;
+  dc:description """\"text/html\": [
+       \"<div>\\n\",
+       \"<style scoped>\\n\",
+       \"    .dataframe tbody tr th:only-of-type {\\n\",
+       \"        vertical-align: middle;\\n\",
+       \"    }\\n\",
+       \"\\n\",
+       \"    .dataframe tbody tr th {\\n\",
+       \"        vertical-align: top;\\n\",
+       \"    }\\n\",
+       \"\\n\",
+       \"    .dataframe thead th {\\n\",
+       \"        text-align: right;\\n\",
+       \"    }\\n\",
+       \"</style>\\n\",
+       \"<table border=\\\"1\\\" class=\\\"dataframe\\\">\\n\",
+       \"  <thead>\\n\",
+       \"    <tr style=\\\"text-align: right;\\\">\\n\",
+       \"      <th></th>\\n\",
+       \"      <th>drugid</th>\\n\",
+       \"      <th>smiles</th>\\n\",
+       \"    </tr>\\n\",
+       \"  </thead>\\n\",
+       \"  <tbody>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>0</th>\\n\",
+       \"      <td>DB00014</td>\\n\",
+       \"      <td>CC(C)C[C@H](NC(=O)[C@@H](COC(C)(C)C)NC(=O)[C@H...</td>\\n\",
+       \"    </tr>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>1</th>\\n\",
+       \"      <td>DB00035</td>\\n\",
+       \"      <td>NC(=O)CC[C@@H]1NC(=O)[C@H](CC2=CC=CC=C2)NC(=O)...</td>\\n\",
+       \"    </tr>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>2</th>\\n\",
+       \"      <td>DB00091</td>\\n\",
+       \"      <td>CCC1NC(=O)C(C(O)C(C)CC=CC)N(C)C(=O)C(C(C)C)N(C...</td>\\n\",
+       \"    </tr>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>3</th>\\n\",
+       \"      <td>DB00104</td>\\n\",
+       \"      <td>C[C@@H](O)[C@@H](CO)NC(=O)[C@@H]1CSSC[C@H](NC(...</td>\\n\",
+       \"    </tr>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>4</th>\\n\",
+       \"      <td>DB00114</td>\\n\",
+       \"      <td>CC1=NC=C(COP(O)(O)=O)C(C=O)=C1O</td>\\n\",
+       \"    </tr>\\n\",
+       \"  </tbody>\\n\",
+       \"</table>\\n\",
+       \"</div>\"
+      ],
+      \"text/plain\": [
+       \"    drugid                                             smiles\\n\",
+       \"0  DB00014  CC(C)C[C@H](NC(=O)[C@@H](COC(C)(C)C)NC(=O)[C@H...\\n\",
+       \"1  DB00035  NC(=O)CC[C@@H]1NC(=O)[C@H](CC2=CC=CC=C2)NC(=O)...\\n\",
+       \"2  DB00091  CCC1NC(=O)C(C(O)C(C)CC=CC)N(C)C(=O)C(C(C)C)N(C...\\n\",
+       \"3  DB00104  C[C@@H](O)[C@@H](CO)NC(=O)[C@@H]1CSSC[C@H](NC(...\\n\",
+       \"4  DB00114                    CC1=NC=C(COP(O)(O)=O)C(C=O)=C1O\"
+      ]""" ;
+  prov:qualifiedGeneration opredict:Generation_Output_Step_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02_FeatureGeneration_Execution_1546335555 ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#WorkflowExecutionArtifact_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell01_Execution_1546302862>
+  rdf:type opmw:WorkflowExecutionArtifact ;
+  dc:description """\"text/html\": [
+       \"<div>\\n\",
+       \"<style scoped>\\n\",
+       \"    .dataframe tbody tr th:only-of-type {\\n\",
+       \"        vertical-align: middle;\\n\",
+       \"    }\\n\",
+       \"\\n\",
+       \"    .dataframe tbody tr th {\\n\",
+       \"        vertical-align: top;\\n\",
+       \"    }\\n\",
+       \"\\n\",
+       \"    .dataframe thead th {\\n\",
+       \"        text-align: right;\\n\",
+       \"    }\\n\",
+       \"</style>\\n\",
+       \"<table border=\\\"1\\\" class=\\\"dataframe\\\">\\n\",
+       \"  <thead>\\n\",
+       \"    <tr style=\\\"text-align: right;\\\">\\n\",
+       \"      <th></th>\\n\",
+       \"      <th>Drug</th>\\n\",
+       \"      <th>Disease</th>\\n\",
+       \"    </tr>\\n\",
+       \"  </thead>\\n\",
+       \"  <tbody>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>0</th>\\n\",
+       \"      <td>DB00659</td>\\n\",
+       \"      <td>103780</td>\\n\",
+       \"    </tr>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>1</th>\\n\",
+       \"      <td>DB00284</td>\\n\",
+       \"      <td>125853</td>\\n\",
+       \"    </tr>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>2</th>\\n\",
+       \"      <td>DB00284</td>\\n\",
+       \"      <td>125850</td>\\n\",
+       \"    </tr>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>3</th>\\n\",
+       \"      <td>DB00284</td>\\n\",
+       \"      <td>125851</td>\\n\",
+       \"    </tr>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>4</th>\\n\",
+       \"      <td>DB00284</td>\\n\",
+       \"      <td>600496</td>\\n\",
+       \"    </tr>\\n\",
+       \"  </tbody>\\n\",
+       \"</table>\\n\",
+       \"</div>\"
+      ],
+      \"text/plain\": [
+       \"      Drug Disease\\n\",
+       \"0  DB00659  103780\\n\",
+       \"1  DB00284  125853\\n\",
+       \"2  DB00284  125850\\n\",
+       \"3  DB00284  125851\\n\",
+       \"4  DB00284  600496\"
+      ]""" ;
+  prov:qualifiedGeneration <http://purl.org/plex/Instances/OpenPREDICT#Generation_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell01_Execution_1546302862> ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#WorkflowExecutionArtifact_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell05_Execution_1546302862>
+  rdf:type opmw:WorkflowExecutionArtifact ;
+  dc:description """\"text/plain\": [
+       \"(4123, 1031)\"
+      ]""" ;
+  prov:qualifiedGeneration <http://purl.org/plex/Instances/OpenPREDICT#Generation_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell05_Execution_1546302862> ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#WorkflowExecutionArtifact_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell08_Execution_1546302862>
+  rdf:type opmw:WorkflowExecutionArtifact ;
+  dc:description """\"text\": [
+      \"Test: {'f1': 0.760655737704918, 'average_precision': 0.8566906000076772, 'accuracy': 0.8583899127061105, 'recall': 0.6744186046511628, 'roc_auc': 0.8802152093700281, 'precision': 0.8721804511278195}\\n\"
+     ]""" ;
+  prov:qualifiedGeneration <http://purl.org/plex/Instances/OpenPREDICT#Generation_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell08_Execution_1546302862> ;
+.
+<http://purl.org/plex/Instances/OpenPREDICT#WorkflowExecutionArtifact_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell09_Execution_1546302862>
+  rdf:type opmw:WorkflowExecutionArtifact ;
+  dc:description """text/plain\": [
+       \"accuracy             0.833336\\n\",
+       \"average_precision    0.810000\\n\",
+       \"f1                   0.685671\\n\",
+       \"precision            0.918820\\n\",
+       \"recall               0.549804\\n\",
+       \"roc_auc              0.836133\\n\",
+       \"dtype: float64\"
+      ]""" ;
+  prov:qualifiedGeneration <http://purl.org/plex/Instances/OpenPREDICT#Generation_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML.ipynb_Cell09_Execution_1546302862> ;
+.
+opredict:WorkflowExecutionArtifact_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb_v02_Execution_1546335555
+  rdf:type opmw:WorkflowExecutionArtifact ;
+  dc:description """\"text/html\": [
+       \"<div>\\n\",
+       \"<style scoped>\\n\",
+       \"    .dataframe tbody tr th:only-of-type {\\n\",
+       \"        vertical-align: middle;\\n\",
+       \"    }\\n\",
+       \"\\n\",
+       \"    .dataframe tbody tr th {\\n\",
+       \"        vertical-align: top;\\n\",
+       \"    }\\n\",
+       \"\\n\",
+       \"    .dataframe thead th {\\n\",
+       \"        text-align: right;\\n\",
+       \"    }\\n\",
+       \"</style>\\n\",
+       \"<table border=\\\"1\\\" class=\\\"dataframe\\\">\\n\",
+       \"  <thead>\\n\",
+       \"    <tr style=\\\"text-align: right;\\\">\\n\",
+       \"      <th></th>\\n\",
+       \"      <th>Drug</th>\\n\",
+       \"      <th>Disease</th>\\n\",
+       \"    </tr>\\n\",
+       \"  </thead>\\n\",
+       \"  <tbody>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>0</th>\\n\",
+       \"      <td>DB01148</td>\\n\",
+       \"      <td>231200</td>\\n\",
+       \"    </tr>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>1</th>\\n\",
+       \"      <td>DB01148</td>\\n\",
+       \"      <td>155100</td>\\n\",
+       \"    </tr>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>2</th>\\n\",
+       \"      <td>DB01148</td>\\n\",
+       \"      <td>273800</td>\\n\",
+       \"    </tr>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>3</th>\\n\",
+       \"      <td>DB00575</td>\\n\",
+       \"      <td>607554</td>\\n\",
+       \"    </tr>\\n\",
+       \"    <tr>\\n\",
+       \"      <th>4</th>\\n\",
+       \"      <td>DB00575</td>\\n\",
+       \"      <td>171300</td>\\n\",
+       \"    </tr>\\n\",
+       \"  </tbody>\\n\",
+       \"</table>\\n\",
+       \"</div>\"
+      ],
+      \"text/plain\": [
+       \"      Drug Disease\\n\",
+       \"0  DB01148  231200\\n\",
+       \"1  DB01148  155100\\n\",
+       \"2  DB01148  273800\\n\",
+       \"3  DB00575  607554\\n\",
+       \"4  DB00575  171300\"
+      ]""" ;
+  prov:qualifiedGeneration opredict:Generation_Output_Step_Model_preparation_train_and_evaluation_Workflow_OpenPREDCIT_-_ML_ipynb_v02_Execution_1546335555 ;
+.
 fabio:Triplestore
   rdf:type owl:Class ;
   rdfs:isDefinedBy fabio:Triplestore ;
@@ -3827,6 +4507,27 @@ dcat:mediaType
   rdfs:domain dcat:Distribution ;
   rdfs:range edam:format_1915 ;
   rdfs:seeAlso "https://www.w3.org/ns/dcat#mediaType" ;
+.
+mls:EvaluationMeasure
+  rdf:type owl:Class ;
+  rdfs:seeAlso "http://www.w3.org/ns/mls#EvaluationMeasure" ;
+  rdfs:subClassOf owl:Thing ;
+.
+mls:ModelEvaluation
+  rdf:type owl:Class ;
+  rdfs:seeAlso "http://www.w3.org/ns/mls#ModelEvaluation" ;
+  rdfs:subClassOf opmw:WorkflowExecutionArtifact ;
+.
+mls:Run
+  rdf:type owl:Class ;
+  rdfs:seeAlso "http://www.w3.org/ns/mls#Run" ;
+  rdfs:subClassOf p-plan:Activity ;
+.
+mls:specifiedBy
+  rdf:type rdf:Property ;
+  rdfs:domain mls:ModelEvaluation ;
+  rdfs:range mls:EvaluationMeasure ;
+  rdfs:seeAlso "http://www.w3.org/ns/mls#specifiedBy" ;
 .
 prov:Activity
   rdf:type owl:Class ;
