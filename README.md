@@ -128,26 +128,26 @@ git clone https://github.com/fair-workflows/openpredict.git
 To install docker:  https://docs.docker.com/install/
 
 * Build
+From openpredict directory, edit workflow/config.yml file, set sparql_ep to the running SPARQL endpoint or your own SPARQL endpoint
 ```shell
 cd openpredict/
 docker build -t openpredict .
  ```
-* Run
-```shell
-docker run -d --rm --name openpredict -p 8888:8888 -v /data:/jupyter openpredict
- ```
+
 * Run CWL workflow
 
-First go to localhost:8888 and enter your token
-
-From current directory, edit workflow/config.yml file, set sparql_ep to the running SPARQL endpoint or your own SPARQL endpoint
-
-Open a terminal and run the command below
 ```shell
-usage: cwltool --outdir=run/ workflow/openpredict-ipynb.cwl workflow/config.yml
+usage: docker exec -it openpredict cwltool --outdir=/juypter/run/ workflow/openpredict-ipynb.cwl workflow/config.yml
 
 --outdir	enter folder in which you want to generate the outputs
  
+ ```
+You would expect to see two juypter notebook output file (output_fg.ipynb, output_ml.ipynb) and the generated output files will be stored in your outdir ('/juypter/run/')  
+ 
+ 
+ * Run Juypter
+```shell
+docker run -d --rm --name openpredict -p 8888:8888 -v /data:/jupyter openpredict
  ```
 
 
