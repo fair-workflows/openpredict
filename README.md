@@ -105,6 +105,7 @@ Upload each RDF data into triple-store (GraphDB or Virtuoso)
 
 ## Requirement
 ```bash
+docker
 python 3.6
 pip install networkx==1.11
 pip install numpy==1.15.4
@@ -119,12 +120,13 @@ conda install -c openbabel openbabel
 
 ## How to reproduce the results?  
 * Use the OpenPREDICT GraphDB SPARQL endpoint (http://graphdb.dumontierlab.com/repositories/openpredict) to query all data
-* Or collect all sources from given links and pre-process bio2rdf datasets (see section: Pre-processing Bio2RDF data ), then create a triple-store and upload each RDF data into triple-store (currently tested with GraphDB or Virtuoso)
+* If you don't want to use the given SPARQL endpoint, collect all sources from given links and pre-process bio2rdf datasets (see section: Pre-processing Bio2RDF data ), then create your triple store and upload each RDF data into your triple store (currently tested with GraphDB or Virtuoso)
 * Clone the project
 ```shell
 git clone https://github.com/fair-workflows/openpredict.git
  ```
 * Install docker to set up the environment
+
 To install docker:  https://docs.docker.com/install/
 
 * Build
@@ -133,8 +135,13 @@ From openpredict directory, edit workflow/config.yml file, set sparql_ep to the 
 cd openpredict/
 docker build -t openpredict .
  ```
+ 
+  * Run Juypter
+```shell
+docker run -d --rm --name openpredict -p 8888:8888 -v /data:/jupyter openpredict
+ ```
 
-* Run CWL workflow
+* Execute CWL workflow
 
 ```shell
 usage: docker exec -it openpredict cwltool --outdir=/juypter/run/ workflow/openpredict-ipynb.cwl workflow/config.yml
@@ -142,12 +149,9 @@ usage: docker exec -it openpredict cwltool --outdir=/juypter/run/ workflow/openp
 --outdir	enter folder in which you want to generate the outputs
  
  ```
-You would expect to see two juypter notebook output file (output_fg.ipynb, output_ml.ipynb) and the generated output files will be stored in your outdir ('/juypter/run/')  
+You would expect to see two juypter notebook output notebook files (output_fg.ipynb, output_ml.ipynb) and the other generated results to be stored in your outdir ('/juypter/run/')  
  
  
- * Run Juypter
-```shell
-docker run -d --rm --name openpredict -p 8888:8888 -v /data:/jupyter openpredict
- ```
+
 
 
