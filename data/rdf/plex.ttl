@@ -24,12 +24,12 @@
 bpmn:ManualTask
   rdf:type owl:Class ;
   rdfs:isDefinedBy "http://dkm.fbk.eu/index.php/BPMN2_Ontology#manualTask" ;
-  rdfs:subClassOf owl:Thing ;
+  rdfs:subClassOf p-plan:Step ;
 .
 bpmn:ScriptTask
   rdf:type owl:Class ;
   rdfs:isDefinedBy "http://dkm.fbk.eu/index.php/BPMN2_Ontology#scriptTask" ;
-  rdfs:subClassOf owl:Thing ;
+  rdfs:subClassOf p-plan:Step ;
 .
 edam:format_1915
   rdf:type owl:Class ;
@@ -59,7 +59,7 @@ edam:operation_2409
   rdf:type owl:Class ;
   rdfs:label "Data handling" ;
   rdfs:seeAlso "http://edamontology.org/operation_2409" ;
-  rdfs:subClassOf owl:Thing ;
+  rdfs:subClassOf p-plan:Step ;
 .
 dc:LinguisticSystem
   rdf:type owl:Class ;
@@ -400,7 +400,7 @@ opredict:DataFormat_nq_compressed_gz
   rdf:type edam:format_3256 ;
   rdfs:label ".nq compressed as .gz" ;
 .
-opredict:Dataset_OpenPREDICT_Input
+opredict:Dataset_OpenPREDICT_InputDatasetPrepared
   rdf:type dcat:Dataset ;
   dcat:distribution opredict:Triplestore_endpoint_input_data ;
 .
@@ -704,7 +704,6 @@ opredict:Plan_Add_files_to_triplestore_and_execute_queries
   rdfs:label "Add files to triplestore and execute queries" ;
 .
 opredict:Plan_Download_Drugbank_dataset
-  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Plan ;
   dc:description "Download Drugbank dataset" ;
   dc:language :LinguisticSystem_xsd_language_English ;
@@ -712,7 +711,6 @@ opredict:Plan_Download_Drugbank_dataset
   prov:qualifiedUsage opredict:Usage_Fetch_download_Drugbank_dataset_to_variable ;
 .
 opredict:Plan_Download_Kegg_dataset
-  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Plan ;
   dc:description "Download Kegg dataset" ;
   dc:language :LinguisticSystem_xsd_language_English ;
@@ -720,7 +718,6 @@ opredict:Plan_Download_Kegg_dataset
   prov:qualifiedUsage opredict:Usage_Fetch_download_Kegg_dataset_to_variable ;
 .
 opredict:Plan_Download_SIDER_dataset
-  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Plan ;
   dc:description "Download SIDER dataset" ;
   dc:language :LinguisticSystem_xsd_language_English ;
@@ -728,7 +725,6 @@ opredict:Plan_Download_SIDER_dataset
   prov:qualifiedUsage opredict:Usage_Fetch_download_SIDER_dataset_to_variable ;
 .
 opredict:Plan_Download_and_save_Drugbank_dataset
-  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Plan ;
   dc:description "Download and save Drugbank dataset" ;
   dc:language :LinguisticSystem_xsd_language_English ;
@@ -736,7 +732,6 @@ opredict:Plan_Download_and_save_Drugbank_dataset
   rdfs:label "Download and save Drugbank dataset" ;
 .
 opredict:Plan_Download_and_save_Kegg_dataset
-  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Plan ;
   dc:description "Download and save Kegg dataset" ;
   dc:language :LinguisticSystem_xsd_language_English ;
@@ -744,7 +739,6 @@ opredict:Plan_Download_and_save_Kegg_dataset
   rdfs:label "Download and save Kegg dataset" ;
 .
 opredict:Plan_Download_and_save_SIDER_dataset
-  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Plan ;
   dc:description "Download and save SIDER dataset" ;
   dc:language :LinguisticSystem_xsd_language_English ;
@@ -752,7 +746,6 @@ opredict:Plan_Download_and_save_SIDER_dataset
   rdfs:label "Download and save SIDER dataset" ;
 .
 opredict:Plan_Download_and_save_gold_standard_drug_indications
-  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Plan ;
   dc:description """#!/usr/bin/env python
 # coding: utf-8
@@ -910,7 +903,6 @@ print('RDF is generated at '+outfile)
   prov:qualifiedUsage opredict:Usage_Fetch_download_gold_standard_drug_indications ;
 .
 opredict:Plan_Download_and_save_human_interactome_barabasi
-  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Plan ;
   dc:description "Download and save human interactome barabasi" ;
   dc:language :LinguisticSystem_xsd_language_English ;
@@ -918,7 +910,6 @@ opredict:Plan_Download_and_save_human_interactome_barabasi
   rdfs:label "Download and save human interactome barabasi" ;
 .
 opredict:Plan_Download_and_save_human_interactome_barabasi_v02
-  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Plan ;
   dc:description """#!/usr/bin/env python
 # coding: utf-8
@@ -1034,7 +1025,6 @@ print('RDF is generated at '+outfile)
   prov:wasRevisionOf opredict:Plan_Download_and_save_human_interactome_barabasi ;
 .
 opredict:Plan_Download_and_save_mesh_annotation
-  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Plan ;
   dc:description """#!/usr/bin/env python
 # coding: utf-8
@@ -1145,7 +1135,6 @@ print('RDF is generated at '+outfile)
   prov:qualifiedUsage opredict:Usage_Fetch_download_mesh_annotation_to_variable ;
 .
 opredict:Plan_Download_and_save_phenotype_annotations
-  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Plan ;
   dc:description """1-Download from:
 http://compbio.charite.de/jenkins/job/hpo.annotations/lastStableBuild/artifact/misc/phenotype_annotation_hpoteam.tab
@@ -1156,7 +1145,6 @@ http://compbio.charite.de/jenkins/job/hpo.annotations/lastStableBuild/artifact/m
   rdfs:label "Download and save phenotype annotations " ;
 .
 opredict:Plan_Download_and_save_phenotype_annotations_v02
-  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Plan ;
   dc:description """#!/usr/bin/env python
 # coding: utf-8
@@ -1262,7 +1250,6 @@ print('RDF is generated at '+outfile)
   prov:wasRevisionOf opredict:Plan_Download_and_save_phenotype_annotations ;
 .
 opredict:Plan_Download_and_save_pubchem_to_drugbank
-  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Plan ;
   dc:description """#!/usr/bin/env python
 # coding: utf-8
@@ -1367,7 +1354,6 @@ print('RDF is generated at '+outfile)
   prov:qualifiedUsage opredict:Usage_Fetch_download_pubchem_to_drugbank ;
 .
 opredict:Plan_Download_human_interactome_barabasi
-  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Plan ;
   dc:description "Download human interactome barabasi" ;
   dc:language :LinguisticSystem_xsd_language_English ;
@@ -1375,7 +1361,6 @@ opredict:Plan_Download_human_interactome_barabasi
   prov:qualifiedUsage opredict:Usage_Fetch_download_Human_interactome_barabasi_to_variable ;
 .
 opredict:Plan_Download_phenotype_annotations
-  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Plan ;
   dc:description "Download phenotype annotations" ;
   dc:language :LinguisticSystem_xsd_language_English ;
@@ -3238,6 +3223,7 @@ opredict:Step_Add_files_to_triplestore_and_execute_queries
 .
 opredict:Step_Download_Drugbank_dataset
   rdf:type bpmn:ManualTask ;
+  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Step ;
   p-plan:hasOutputVar opredict:Variable_Drugbank_dataset_online ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
@@ -3247,6 +3233,7 @@ opredict:Step_Download_Drugbank_dataset
 .
 opredict:Step_Download_Kegg_dataset
   rdf:type bpmn:ManualTask ;
+  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Step ;
   p-plan:hasOutputVar opredict:Variable_Kegg_dataset_online ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
@@ -3257,6 +3244,7 @@ opredict:Step_Download_Kegg_dataset
 .
 opredict:Step_Download_SIDER_dataset
   rdf:type bpmn:ManualTask ;
+  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Step ;
   p-plan:hasOutputVar opredict:Variable_SIDER_dataset_online ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
@@ -3267,6 +3255,7 @@ opredict:Step_Download_SIDER_dataset
 .
 opredict:Step_Download_and_save_Drugbank_dataset
   rdf:type bpmn:ManualTask ;
+  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Step ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02 ;
@@ -3276,6 +3265,7 @@ opredict:Step_Download_and_save_Drugbank_dataset
 .
 opredict:Step_Download_and_save_Kegg_dataset
   rdf:type bpmn:ManualTask ;
+  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Step ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02 ;
@@ -3285,6 +3275,7 @@ opredict:Step_Download_and_save_Kegg_dataset
 .
 opredict:Step_Download_and_save_SIDER_dataset
   rdf:type bpmn:ManualTask ;
+  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Step ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02 ;
@@ -3294,6 +3285,7 @@ opredict:Step_Download_and_save_SIDER_dataset
 .
 opredict:Step_Download_and_save_gold_standard_drug_indications
   rdf:type bpmn:ScriptTask ;
+  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Step ;
   p-plan:hasInputVar opredict:Variable_gold_standard_drug_indications_file_online ;
   p-plan:hasOutputVar opredict:Variable_gold_standard_drug_indications_local ;
@@ -3302,6 +3294,7 @@ opredict:Step_Download_and_save_gold_standard_drug_indications
 .
 opredict:Step_Download_and_save_human_interactome_barabasi
   rdf:type bpmn:ManualTask ;
+  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Step ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
   dul:isDescribedBy opredict:Plan_Download_and_save_human_interactome_barabasi ;
@@ -3310,6 +3303,7 @@ opredict:Step_Download_and_save_human_interactome_barabasi
 .
 opredict:Step_Download_and_save_human_interactome_barabasi_v02
   rdf:type bpmn:ScriptTask ;
+  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Step ;
   p-plan:hasInputVar opredict:Variable_Human_interactome_barabasi_online ;
   p-plan:hasOutputVar opredict:Variable_Human_interactome_barabasi_local ;
@@ -3319,6 +3313,7 @@ opredict:Step_Download_and_save_human_interactome_barabasi_v02
 .
 opredict:Step_Download_and_save_mesh_annotation
   rdf:type bpmn:ScriptTask ;
+  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Step ;
   p-plan:hasInputVar opredict:Variable_mesh_annotation_file_online ;
   p-plan:hasOutputVar opredict:Variable_mesh_annotation_file_local ;
@@ -3327,6 +3322,7 @@ opredict:Step_Download_and_save_mesh_annotation
 .
 opredict:Step_Download_and_save_phenotype_annotations
   rdf:type bpmn:ManualTask ;
+  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Step ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
   dul:isDescribedBy opredict:Plan_Download_and_save_phenotype_annotations ;
@@ -3335,6 +3331,7 @@ opredict:Step_Download_and_save_phenotype_annotations
 .
 opredict:Step_Download_and_save_phenotype_annotations_v02
   rdf:type bpmn:ScriptTask ;
+  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Step ;
   p-plan:hasInputVar opredict:Variable_Phenotype_annotations_file_online ;
   p-plan:hasOutputVar opredict:Variable_Phenotype_annotations_file_local ;
@@ -3344,6 +3341,7 @@ opredict:Step_Download_and_save_phenotype_annotations_v02
 .
 opredict:Step_Download_and_save_pubchem_to_drugbank
   rdf:type bpmn:ScriptTask ;
+  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Step ;
   p-plan:hasInputVar opredict:Variable_mesh_annotation_file_online ;
   p-plan:hasOutputVar opredict:Variable_pubchem_to_drugbank_file_local ;
@@ -3352,6 +3350,7 @@ opredict:Step_Download_and_save_pubchem_to_drugbank
 .
 opredict:Step_Download_human_interactome_barabasi
   rdf:type bpmn:ManualTask ;
+  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Step ;
   p-plan:hasOutputVar opredict:Variable_Human_interactome_barabasi_online ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
@@ -3361,6 +3360,7 @@ opredict:Step_Download_human_interactome_barabasi
 .
 opredict:Step_Download_phenotype_annotations
   rdf:type bpmn:ManualTask ;
+  rdf:type edam:operation_2409 ;
   rdf:type p-plan:Step ;
   p-plan:hasOutputVar opredict:Variable_Phenotype_annotations_file_online ;
   p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
@@ -3434,6 +3434,7 @@ opredict:Step_Feature_generation_01_Pipeline_Source_Cell01
 opredict:Step_Feature_generation_01_Pipeline_Source_Cell01_Spec
   rdf:type bpmn:ManualTask ;
   rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
   dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell01_Spec ;
   dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell06_Spec ;
 .
@@ -3475,6 +3476,7 @@ opredict:Step_Feature_generation_01_Pipeline_Source_Cell06
 opredict:Step_Feature_generation_01_Pipeline_Source_Cell06_Spec
   rdf:type bpmn:ManualTask ;
   rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
   dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell06_Spec ;
   dul:precedes opredict:Step_Feature_generation_01_Pipeline_Source_Cell10_Spec ;
 .
@@ -3509,6 +3511,7 @@ opredict:Step_Feature_generation_01_Pipeline_Source_Cell10
 opredict:Step_Feature_generation_01_Pipeline_Source_Cell10_Spec
   rdf:type bpmn:ManualTask ;
   rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01 ;
   dul:isDescribedBy opredict:Plan_Feature_generation_01_Pipeline_Source_Cell10_Spec ;
 .
 opredict:Step_Feature_generation_01_Pipeline_Source_Cell11
@@ -3564,6 +3567,7 @@ opredict:Step_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02
 opredict:Step_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02_Download_and_Save_Input
   rdf:type bpmn:ScriptTask ;
   rdf:type p-plan:Step ;
+  p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02 ;
   dul:isDescribedBy opredict:Plan_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02_Download_and_Save_Input ;
   dul:precedes opredict:Step_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02_FeatureGeneration ;
 .
