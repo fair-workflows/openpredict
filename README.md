@@ -130,6 +130,7 @@ git clone https://github.com/fair-workflows/openpredict.git
 To install docker:  https://docs.docker.com/install/
 
 * Build
+
 From openpredict directory, edit workflow/config.yml file, set sparql_ep to the running SPARQL endpoint or your own SPARQL endpoint
 ```shell
 cd openpredict/
@@ -144,7 +145,7 @@ docker run -d --rm --name openpredict -p 8888:8888 openpredict
 * Execute CWL workflow
 
 ```shell
-usage: docker exec -it openpredict cwltool --outdir=/juypter/run/ workflow/openpredict-ipynb.cwl workflow/config.yml
+docker exec -it openpredict cwltool --outdir=/juypter/run/ workflow/openpredict-ipynb.cwl workflow/config.yml
 
 --outdir	enter folder in which you want to generate the outputs
  
