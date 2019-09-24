@@ -138,7 +138,7 @@ docker build -t openpredict .
  
   * Run Juypter
 ```shell
-docker run -d --rm --name openpredict -p 8888:8888 -v /data:/jupyter openpredict
+docker run -d --rm --name openpredict -p 8888:8888 openpredict
  ```
 
 * Execute CWL workflow
