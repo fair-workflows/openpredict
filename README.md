@@ -39,6 +39,340 @@ Upload each RDF data into triple-store (GraphDB or Virtuoso)
 ## Requirement
 see [Dockerfile](Dockerfile)
 
+## Answering Competency Questions with SPARQL
+**CQ1.1: Which steps are meant to be executed manually and which to be executed computationally?** 
+```shell
+
+PREFIX bpmn: <http://dkm.fbk.eu/index.php/BPMN2_Ontology#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX p-plan: <http://purl.org/net/p-plan#>
+PREFIX dul: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#>
+PREFIX dc: <http://purl.org/dc/terms/>
+PREFIX opredict: <http://purl.org/plex/Instances/OpenPREDICT#>
+SELECT ?step ?stepType ?instructions ?description 
+                WHERE  
+	                {
+					values ?stepType { bpmn:ManualTask bpmn:ScriptTask }
+
+					?instructions rdf:type p-plan:Plan.
+					?step rdf:type ?stepType.
+					?step dul:isDescribedBy ?instructions.					
+					?instructions dc:description ?description.
+					?step p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01.
+	                } 
+                 
+ ```
+To run : [Yasgui Link](http://yasgui.org/short/wyaWkVECj)
+
+**CQ1.2: For the manual parts, who are the developers and who are the agents responsible to execute each step?** 
+
+```shell
+PREFIX bpmn: <http://dkm.fbk.eu/index.php/BPMN2_Ontology#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX p-plan: <http://purl.org/net/p-plan#>
+PREFIX dul: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#>
+PREFIX dc: <http://purl.org/dc/terms/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX opredict: <http://purl.org/plex/Instances/OpenPREDICT#>
+SELECT ?step ?role ?agent ?creator ?publisher ?instructions ?description 
+                WHERE  
+	                {
+					values ?stepType { bpmn:ManualTask }
+
+					?instructions rdf:type p-plan:Plan.
+					?step rdf:type ?stepType.
+					?step dul:isDescribedBy ?instructions.					
+					?instructions dc:description ?description.
+					?association prov:hadPlan ?instructions.
+					?association prov:agent ?agent.
+					?association prov:hadRole ?role.
+					OPTIONAL {?plan dc:creator ?creator}
+					OPTIONAL {?plan dc:publisher ?publisher}
+
+					?step p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01.
+	                } 
+
+
+ ```
+To run : [Yasgui Link](http://yasgui.org/short/4TSG5Tly1)
+
+
+
+**CQ1.3: Which datasets were used as input for the computational steps and their respective formats?** 
+
+```shell
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX dul: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#>
+PREFIX edam: <http://edamontology.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dc: <http://purl.org/dc/terms/>
+PREFIX p-plan: <http://purl.org/net/p-plan#>
+PREFIX opredict: <http://purl.org/plex/Instances/OpenPREDICT#>
+SELECT ?step ?instructions ?usage ?usageEntity ?downloadURL ?dataFormat ?dataFormatLabel
+WHERE  
+{
+	?usageEntity rdf:type dcat:Distribution. 
+	?usage prov:entity ?usageEntity.
+	?plan prov:qualifiedUsage ?usage.
+	?step dul:isDescribedBy ?plan.
+	?step rdf:type edam:operation_2409.
+
+	?usageEntity dcat:mediaType ?dataFormat
+	OPTIONAL { ?dataFormat rdfs:label ?dataFormatLabel.}
+	
+	OPTIONAL { ?usageEntity dcat:downloadURL ?downloadURL.}
+	OPTIONAL { ?plan dc:description ?instructions.}
+	OPTIONAL { ?step p-plan:hasInputVar ?varInput.}
+	OPTIONAL { ?step p-plan:hasOutputVar ?varOutput.}
+
+	?step p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01.
+
+} 
+
+
+ ```
+To run : [Yasgui Link](http://yasgui.org/short/FxN8TZZOH)
+
+
+
+**CQ1.4: What are the inputs and outputs of manual steps?** 
+
+```shell
+PREFIX bpmn: <http://dkm.fbk.eu/index.php/BPMN2_Ontology#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX p-plan: <http://purl.org/net/p-plan#>
+PREFIX dul: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#>
+PREFIX dc: <http://purl.org/dc/terms/>
+PREFIX opredict: <http://purl.org/plex/Instances/OpenPREDICT#>
+SELECT ?step ?varInput ?varOutput ?instructions ?description 
+                WHERE  
+	                {
+					values ?stepType { bpmn:ManualTask}
+
+					?instructions rdf:type p-plan:Plan.
+					?step dul:isDescribedBy ?instructions.					
+					?instructions dc:description ?description.
+					OPTIONAL { ?step p-plan:hasInputVar ?varInput.}
+					OPTIONAL { ?step p-plan:hasOutputVar ?varOutput.}
+					?step p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01.
+	                } 
+ORDER BY DESC(?varInput)
+
+
+ ```
+To run : [Yasgui Link](http://yasgui.org/short/c1SkuY-nD)
+
+
+
+**CQ2.1: What are the main steps of OpenPREDICT protocol?** 
+
+```shell
+PREFIX p-plan: <http://purl.org/net/p-plan#>
+PREFIX opredict: <http://purl.org/plex/Instances/OpenPREDICT#>
+PREFIX dul: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#>
+PREFIX pwo: <http://purl.org/spar/pwo#>
+SELECT ?stepA ?stepB
+WHERE  
+{
+	?stepA p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01.
+	?stepA dul:precedes ?stepB.
+	
+	OPTIONAL {
+			opredict:Plan_Main_Protocol_v01 pwo:hasFirstStep ?stepTopLevel.
+			?stepTopLevel dul:precedes ?stepB.
+		}
+}
+ORDER BY  DESC(?stepTopLevel)
+
+ ```
+To run : [Yasgui Link](http://yasgui.org/short/aNwsmiZFp)
+
+**CQ2.2: What are the steps of a plan and how each step instruction is described?** 
+
+```shell
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX p-plan: <http://purl.org/net/p-plan#>
+PREFIX dul: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#>
+PREFIX dc: <http://purl.org/dc/terms/>
+SELECT ?language ?instructions ?description ?step 
+WHERE  
+{
+	?instructions rdf:type p-plan:Plan.
+	?step dul:isDescribedBy ?instructions.					
+	?instructions dc:description ?description.
+	?instructions dc:language ?language.				
+}
+ ```
+To run : [Yasgui Link](http://yasgui.org/short/wyaWkVECj)
+
+**CQ2.3: What instructions specify the code used in OpenPREDICT steps?** 
+
+```shell
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX p-plan: <http://purl.org/net/p-plan#>
+PREFIX dul: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#>
+PREFIX bpmn: <http://dkm.fbk.eu/index.php/BPMN2_Ontology#>
+PREFIX dc: <http://purl.org/dc/terms/>
+SELECT ?specInstruction ?specification ?instructions ?description ?step ?language 
+WHERE  
+{
+	?instructions rdf:type p-plan:Plan.
+	?step dul:isDescribedBy ?instructions.
+	?step rdf:type bpmn:ScriptTask.
+	?instructions dc:description ?description.
+	?instructions dc:language ?language.
+	OPTIONAL
+	{
+		?instructions dul:isDescribedBy ?specInstruction.
+		?specInstruction dc:description ?specification.
+	}
+}
+ORDER BY ?step
+ ```
+To run : [Yasgui Link](http://yasgui.org/short/afuzobTPJ)
+
+
+**CQ3.1: What are the existing versions of a workflow and what are their provenance?** 
+
+```shell
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX dul: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#>
+PREFIX dc: <http://purl.org/dc/terms/>
+SELECT ?workflow  ?wflVersion ?creator ?createDate
+WHERE  
+{
+	?workflow rdf:type dul:Workflow.
+	?workflow dc:hasVersion ?wflVersion.
+	?workflow dc:creator ?creator.
+	?workflow dc:created ?createDate.
+}
+ ```
+To run : [Yasgui Link](http://yasgui.org/short/v21XIFl25)
+
+**CQ3.2: Which instructions were removed/changed/added from one version to another?** 
+
+```shell
+PREFIX p-plan: <http://purl.org/net/p-plan#>
+PREFIX opredict: <http://purl.org/plex/Instances/OpenPREDICT#>
+PREFIX dul: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX bpmn: <http://dkm.fbk.eu/index.php/BPMN2_Ontology#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+SELECT * 
+WHERE  
+{
+	?step p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01.
+	?step dul:isDescribedBy ?instruction.
+	?step rdf:type ?stepType.
+	values ?stepType { bpmn:ManualTask bpmn:ScriptTask }
+	
+	FILTER NOT EXISTS 
+	{
+		?step p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02.
+		
+	}
+	
+	FILTER NOT EXISTS 
+	{
+		?instructionNextVersion prov:wasRevisionOf ?instruction.
+		?stepNextVersion dul:isDescribedBy ?instructionNextVersion. 
+		?stepNextVersion p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02.
+	}
+	
+}
+
+ ```
+To run : [Yasgui Link](http://yasgui.org/short/Lm3KLHYjD)
+
+**CQ3.3: Which steps were automatized from one version to another?** 
+
+```shell
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX dc: <http://purl.org/dc/terms/>
+PREFIX dul: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX bpmn: <http://dkm.fbk.eu/index.php/BPMN2_Ontology#>
+SELECT ?stepPriorVersion ?planPriorVersion ?stepNewVersion ?planNewVersion
+WHERE  
+{					
+	?planNewVersion prov:wasRevisionOf ?planPriorVersion.
+    ?planNewVersion dc:description ?planNewVersionDesc.
+	?planPriorVersion dc:description ?planPriorVersionDesc.
+	?stepNewVersion dul:isDescribedBy ?planNewVersion.
+	?stepNewVersion rdf:type ?stepNewVersionType. 
+	?stepPriorVersion dul:isDescribedBy ?planPriorVersion.
+	?stepPriorVersion rdf:type ?stepPriorVersionType. 
+
+	values ?stepPriorVersionType { bpmn:ManualTask}.
+	values ?stepNewVersionType { bpmn:ScriptTask}
+
+} 
+
+ ```
+To run : [Yasgui Link](http://yasgui.org/short/nxkpZU9Ub)
+
+**CQ3.4: Which datasets were removed/changed/added for the different versions?** 
+
+```shell
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX dul: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#>
+PREFIX edam: <http://edamontology.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dc: <http://purl.org/dc/terms/>
+PREFIX p-plan: <http://purl.org/net/p-plan#>
+PREFIX opredict: <http://purl.org/plex/Instances/OpenPREDICT#>
+SELECT ?step ?instructions ?usage ?usageEntity ?downloadURL ?dataFormat ?dataFormatLabel
+WHERE  
+{
+	?usageEntity rdf:type dcat:Distribution. 
+	?usage prov:entity ?usageEntity.
+	?plan prov:qualifiedUsage ?usage.
+	?step dul:isDescribedBy ?plan.
+	?step rdf:type edam:operation_2409.
+
+	?usageEntity dcat:mediaType ?dataFormat
+	OPTIONAL { ?dataFormat rdfs:label ?dataFormatLabel.}
+	
+	OPTIONAL { ?usageEntity dcat:downloadURL ?downloadURL.}
+	OPTIONAL { ?plan dc:description ?instructions.}
+	OPTIONAL { ?step p-plan:hasInputVar ?varInput.}
+	OPTIONAL { ?step p-plan:hasOutputVar ?varOutput.}
+
+	OPTIONAL {?step p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v01}
+    OPTIONAL {?step p-plan:isStepOfPlan opredict:Plan_Main_Protocol_v02}
+
+} 
+ ```
+To run : [Yasgui Link](http://yasgui.org/short/XOl5g6PZe)
+
+**CQ3.5: Which workflow version was used in each execution and what was generated?** 
+
+```shell
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX p-plan: <http://purl.org/net/p-plan#>
+PREFIX dul: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#>
+PREFIX dc: <http://purl.org/dc/terms/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+SELECT ?plan ?version ?execution ?stepExecuted ?wflExecArtifact 
+WHERE  
+{
+	?execution rdf:type p-plan:Activity.
+	?execution p-plan:correspondsToStep ?stepExecuted.
+	?stepExecuted p-plan:isStepOfPlan ?plan.
+	?plan rdf:type dul:Workflow.
+	?plan dc:hasVersion ?version.
+	?execution prov:generated ?wflExecArtifact.
+}
+ORDER BY ?version
+
+ ```
+To run : [Yasgui Link](http://yasgui.org/short/0WXmO2bo1)
+
+
 
 ## How to reproduce the results?  
 * Use the OpenPREDICT GraphDB SPARQL endpoint (http://graphdb.dumontierlab.com/repositories/openpredict) to query all data
