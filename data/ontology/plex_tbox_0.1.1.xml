@@ -1,0 +1,853 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY schema "http://schema.org/" >
+    <!ENTITY edam "http://edamontology.org/" >
+    <!ENTITY mls "http://www.w3.org/ns/mls#" >
+    <!ENTITY dc "http://purl.org/dc/terms/" >
+    <!ENTITY pwo "http://purl.org/spar/pwo#" >
+    <!ENTITY dcat "http://www.w3.org/ns/dcat#" >
+    <!ENTITY prov "http://www.w3.org/ns/prov#" >
+    <!ENTITY p-plan "http://purl.org/net/p-plan#" >
+    <!ENTITY sh "http://www.w3.org/ns/shacl#" >
+    <!ENTITY fabio "http://purl.org/spar/fabio/" >
+    <!ENTITY opmw "http://www.opmw.org/ontology/" >
+    <!ENTITY reprod "https://w3id.org/reproduceme#" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY xml "http://www.w3.org/XML/1998/namespace" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY bpmn "http://dkm.fbk.eu/index.php/BPMN2_Ontology#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY dul "http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#" >
+]>
+
+
+<rdf:RDF xmlns="https://w3id.org/fair/plex#"
+     xml:base="https://w3id.org/fair/plex"
+     xmlns:pwo="http://purl.org/spar/pwo#"
+     xmlns:dc="http://purl.org/dc/terms/"
+     xmlns:opmw="http://www.opmw.org/ontology/"
+     xmlns:p-plan="http://purl.org/net/p-plan#"
+     xmlns:prov="http://www.w3.org/ns/prov#"
+     xmlns:mls="http://www.w3.org/ns/mls#"
+     xmlns:fabio="http://purl.org/spar/fabio/"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:sh="http://www.w3.org/ns/shacl#"
+     xmlns:schema="http://schema.org/"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:dcat="http://www.w3.org/ns/dcat#"
+     xmlns:dul="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:reprod="https://w3id.org/reproduceme#"
+     xmlns:bpmn="http://dkm.fbk.eu/index.php/BPMN2_Ontology#"
+     xmlns:edam="http://edamontology.org/">
+    <owl:Ontology rdf:about="https://w3id.org/fair/plex">
+        <owl:versionInfo>0.1.1</owl:versionInfo>
+        <rdfs:comment>PlEx: Plan Executions
+PlEx is an ontology profile that reuses classes and properties from several semantic models and does not include any new predicate. PlEX is grounded on DOLCE Ultra Lite (DUL), W3C PROV, P-PLAN and BPMN 2.0 semantic models. The most relevant ontology used is P-PLAN because it provides the most adequate abstract terminology to describe plans, i.e., the main building blocks. P-PLAN is extended from the PROV ontology, which is well-grounded in a high-quality top-level ontology (DOLCE) that facilitates the translations from the conceptual model. 
+DOLCE Ultra-Lite (DUL) ontology also plays a relevant role and provide one of the main elements (dul:Workflow). A dul:Workflow is a p-plan:Plan that represents the top-level of a workflow (or protocol) version, which must be referenced as a whole, e.g., the OpenPREDICT workflow v0.2. Therefore, the intention of dul:Workflow is to classify whether the plan is a whole workflow.
+</rdfs:comment>
+        <dc:license rdf:resource="http://rdflicense.appspot.com/rdflicense/cc-by-nc-nd3.0"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/dc/terms/description -->
+
+    <rdf:Description rdf:about="&dc;description">
+        <rdfs:isDefinedBy>http://purl.org/dc/terms/description</rdfs:isDefinedBy>
+    </rdf:Description>
+    
+
+
+    <!-- http://purl.org/net/p-plan#correspondsToStep -->
+
+    <owl:AnnotationProperty rdf:about="&p-plan;correspondsToStep">
+        <rdfs:seeAlso>http://purl.org/net/p-plan#correspondsToStep</rdfs:seeAlso>
+        <rdfs:domain rdf:resource="&p-plan;Activity"/>
+        <rdfs:range rdf:resource="&p-plan;Step"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/net/p-plan#hasInputVar -->
+
+    <owl:AnnotationProperty rdf:about="&p-plan;hasInputVar">
+        <rdfs:isDefinedBy>http://purl.org/net/p-plan#hasInputVar</rdfs:isDefinedBy>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/net/p-plan#hasOutputVar -->
+
+    <owl:AnnotationProperty rdf:about="&p-plan;hasOutputVar">
+        <rdfs:isDefinedBy>http://purl.org/net/p-plan#hasOutputVar</rdfs:isDefinedBy>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://purl.org/net/p-plan#isStepOfPlan -->
+
+    <owl:AnnotationProperty rdf:about="&p-plan;isStepOfPlan">
+        <rdfs:isDefinedBy rdf:resource="&p-plan;isStepOfPlan"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://schema.org/URL -->
+
+    <owl:AnnotationProperty rdf:about="&schema;URL"/>
+    
+
+
+    <!-- http://www.w3.org/ns/dcat#mediaType -->
+
+    <owl:AnnotationProperty rdf:about="&dcat;mediaType">
+        <rdfs:seeAlso>https://www.w3.org/ns/dcat#mediaType</rdfs:seeAlso>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/mls#specifiedBy -->
+
+    <owl:AnnotationProperty rdf:about="&mls;specifiedBy">
+        <rdfs:seeAlso>http://www.w3.org/ns/mls#specifiedBy</rdfs:seeAlso>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#generated -->
+
+    <owl:AnnotationProperty rdf:about="&prov;generated">
+        <rdfs:seeAlso>http://www.w3.org/ns/prov#generated</rdfs:seeAlso>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#hadPlan -->
+
+    <owl:AnnotationProperty rdf:about="&prov;hadPlan">
+        <rdfs:seeAlso>https://www.w3.org/TR/prov-o/#hadPlan</rdfs:seeAlso>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#hadRole -->
+
+    <owl:AnnotationProperty rdf:about="&prov;hadRole">
+        <rdfs:seeAlso>https://www.w3.org/TR/prov-o/#hadRole</rdfs:seeAlso>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#qualifiedGeneration -->
+
+    <owl:AnnotationProperty rdf:about="&prov;qualifiedGeneration">
+        <rdfs:comment>Generation is the completion of production of a new entity by an activity. This entity did not exist before generation and becomes available for usage after this generation.</rdfs:comment>
+        <rdfs:seeAlso>http://www.w3.org/ns/prov#qualifiedGeneration</rdfs:seeAlso>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#wasAttributedTo -->
+
+    <owl:AnnotationProperty rdf:about="&prov;wasAttributedTo"/>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#wasRevisionOf -->
+
+    <owl:AnnotationProperty rdf:about="&prov;wasRevisionOf">
+        <rdfs:seeAlso>http://www.w3.org/ns/prov#wasRevisionOf</rdfs:seeAlso>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/shacl#select -->
+
+    <owl:AnnotationProperty rdf:about="&sh;select">
+        <rdfs:domain rdf:resource="&sh;SPARQLConstraint"/>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/shacl#sparql -->
+
+    <owl:AnnotationProperty rdf:about="&sh;sparql"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/dc/terms/language -->
+
+    <owl:ObjectProperty rdf:about="&dc;language">
+        <rdfs:range rdf:resource="&dc;LinguisticSystem"/>
+        <rdfs:isDefinedBy rdf:resource="&dc;language"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://purl.org/net/p-plan#hasInputVar -->
+
+    <owl:ObjectProperty rdf:about="&p-plan;hasInputVar">
+        <rdfs:isDefinedBy>http://purl.org/net/p-plan#hasInputVar</rdfs:isDefinedBy>
+        <rdfs:domain rdf:resource="&p-plan;Step"/>
+        <rdfs:range rdf:resource="&p-plan;Variable"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://purl.org/net/p-plan#hasOutputVar -->
+
+    <owl:ObjectProperty rdf:about="&p-plan;hasOutputVar">
+        <rdfs:isDefinedBy>http://purl.org/net/p-plan#hasOutputVar</rdfs:isDefinedBy>
+        <rdfs:domain rdf:resource="&p-plan;Step"/>
+        <rdfs:range rdf:resource="&p-plan;Variable"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://purl.org/net/p-plan#isStepOfPlan -->
+
+    <owl:ObjectProperty rdf:about="&p-plan;isStepOfPlan">
+        <rdfs:range rdf:resource="&p-plan;Plan"/>
+        <rdfs:domain rdf:resource="&p-plan;Step"/>
+        <rdfs:isDefinedBy rdf:resource="&p-plan;isStepOfPlan"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://purl.org/spar/pwo#hasFirstStep -->
+
+    <rdf:Description rdf:about="&pwo;hasFirstStep">
+        <rdfs:isDefinedBy>http://purl.org/spar/pwo/hasFirstStep</rdfs:isDefinedBy>
+    </rdf:Description>
+    
+
+
+    <!-- http://www.w3.org/ns/dcat#mediaType -->
+
+    <owl:ObjectProperty rdf:about="&dcat;mediaType">
+        <rdfs:seeAlso>https://www.w3.org/ns/dcat#mediaType</rdfs:seeAlso>
+        <rdfs:range rdf:resource="&edam;format_1915"/>
+        <rdfs:domain rdf:resource="&dcat;Distribution"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/mls#specifiedBy -->
+
+    <owl:ObjectProperty rdf:about="&mls;specifiedBy">
+        <rdfs:seeAlso>http://www.w3.org/ns/mls#specifiedBy</rdfs:seeAlso>
+        <rdfs:range rdf:resource="&mls;EvaluationMeasure"/>
+        <rdfs:domain rdf:resource="&mls;ModelEvaluation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#agent -->
+
+    <owl:ObjectProperty rdf:about="&prov;agent">
+        <rdfs:seeAlso>https://www.w3.org/TR/prov-o/#p_agent</rdfs:seeAlso>
+        <rdfs:range rdf:resource="&prov;Agent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#generated -->
+
+    <owl:ObjectProperty rdf:about="&prov;generated">
+        <rdfs:seeAlso>http://www.w3.org/ns/prov#generated</rdfs:seeAlso>
+        <rdfs:domain rdf:resource="&prov;Activity"/>
+        <rdfs:range rdf:resource="&prov;Entity"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#hadPlan -->
+
+    <owl:ObjectProperty rdf:about="&prov;hadPlan">
+        <rdfs:seeAlso>https://www.w3.org/TR/prov-o/#hadPlan</rdfs:seeAlso>
+        <rdfs:domain rdf:resource="&prov;Association"/>
+        <rdfs:range rdf:resource="&prov;Plan"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#hadRole -->
+
+    <owl:ObjectProperty rdf:about="&prov;hadRole">
+        <rdfs:seeAlso>https://www.w3.org/TR/prov-o/#hadRole</rdfs:seeAlso>
+        <rdfs:domain rdf:resource="&prov;Association"/>
+        <rdfs:range rdf:resource="&prov;Role"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#qualifiedGeneration -->
+
+    <owl:ObjectProperty rdf:about="&prov;qualifiedGeneration">
+        <rdfs:comment>Generation is the completion of production of a new entity by an activity. This entity did not exist before generation and becomes available for usage after this generation.</rdfs:comment>
+        <rdfs:seeAlso>http://www.w3.org/ns/prov#qualifiedGeneration</rdfs:seeAlso>
+        <rdfs:domain rdf:resource="&prov;Entity"/>
+        <rdfs:range rdf:resource="&prov;Generation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#qualifiedUsage -->
+
+    <owl:ObjectProperty rdf:about="&prov;qualifiedUsage">
+        <rdfs:isDefinedBy>http://www.w3.org/ns/prov#qualifiedUsage</rdfs:isDefinedBy>
+        <rdfs:range rdf:resource="&prov;Usage"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#wasAttributedTo -->
+
+    <owl:ObjectProperty rdf:about="&prov;wasAttributedTo">
+        <rdfs:range rdf:resource="&prov;Agent"/>
+        <rdfs:domain rdf:resource="&prov;Entity"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#wasRevisionOf -->
+
+    <owl:ObjectProperty rdf:about="&prov;wasRevisionOf">
+        <rdfs:seeAlso>http://www.w3.org/ns/prov#wasRevisionOf</rdfs:seeAlso>
+        <rdfs:domain rdf:resource="&prov;Entity"/>
+        <rdfs:range rdf:resource="&prov;Entity"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/shacl#sparql -->
+
+    <owl:ObjectProperty rdf:about="&sh;sparql">
+        <rdfs:domain rdf:resource="&sh;NodeShape"/>
+        <rdfs:range rdf:resource="&sh;SPARQLConstraint"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/shacl#targetClass -->
+
+    <owl:ObjectProperty rdf:about="&sh;targetClass">
+        <rdfs:range rdf:resource="&owl;Thing"/>
+        <rdfs:domain rdf:resource="&sh;NodeShape"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/dc/terms/created -->
+
+    <owl:DatatypeProperty rdf:about="&dc;created">
+        <rdfs:seeAlso>http://purl.org/dc/terms/created</rdfs:seeAlso>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/modified -->
+
+    <owl:DatatypeProperty rdf:about="&dc;modified">
+        <rdfs:seeAlso>http://purl.org/dc/terms/modified</rdfs:seeAlso>
+        <rdfs:range rdf:resource="&rdfs;Literal"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://schema.org/URL -->
+
+    <owl:DatatypeProperty rdf:about="&schema;URL">
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#atTime -->
+
+    <owl:DatatypeProperty rdf:about="&prov;atTime">
+        <rdfs:seeAlso>http://www.w3.org/ns/prov#atTime</rdfs:seeAlso>
+        <rdfs:comment>The PROV data model is implicitly based on a notion of instantaneous events (or just events), that mark transitions in the world. Events include generation, usage, or invalidation of entities, as well as starting or ending of activities. This notion of event is not first-class in the data model, but it is useful for explaining its other concepts and its semantics.</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;dateTime"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://dkm.fbk.eu/index.php/BPMN2_Ontology#ManualTask -->
+
+    <owl:Class rdf:about="&bpmn;ManualTask">
+        <rdfs:subClassOf rdf:resource="&p-plan;Step"/>
+        <rdfs:isDefinedBy>http://dkm.fbk.eu/index.php/BPMN2_Ontology#manualTask</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://dkm.fbk.eu/index.php/BPMN2_Ontology#ScriptTask -->
+
+    <owl:Class rdf:about="&bpmn;ScriptTask">
+        <rdfs:subClassOf rdf:resource="&p-plan;Step"/>
+        <rdfs:isDefinedBy>http://dkm.fbk.eu/index.php/BPMN2_Ontology#scriptTask</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://edamontology.org/format_1915 -->
+
+    <owl:Class rdf:about="&edam;format_1915">
+        <rdfs:label>Data format</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy>http://edamontology.org/format_1915</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://edamontology.org/format_2330 -->
+
+    <owl:Class rdf:about="&edam;format_2330">
+        <rdfs:label>Plain text format</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&edam;format_1915"/>
+        <rdfs:isDefinedBy>http://edamontology.org/format_2330</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://edamontology.org/format_2376 -->
+
+    <owl:Class rdf:about="&edam;format_2376">
+        <rdfs:label>Resource Description Framework (RDF)</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&edam;format_1915"/>
+        <rdfs:isDefinedBy>http://edamontology.org/format_2376</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://edamontology.org/format_3256 -->
+
+    <owl:Class rdf:about="&edam;format_3256">
+        <rdfs:label>N-Triples</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&edam;format_2376"/>
+        <rdfs:isDefinedBy>http://edamontology.org/format_3256</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://edamontology.org/operation_0224 -->
+
+    <owl:Class rdf:about="&edam;operation_0224">
+        <rdfs:label>Query and retrieval (EDAM)</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&p-plan;Step"/>
+        <rdfs:isDefinedBy>http://edamontology.org/operation_0224</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://edamontology.org/operation_2409 -->
+
+    <owl:Class rdf:about="&edam;operation_2409">
+        <rdfs:label>Data handling (EDAM)</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&p-plan;Step"/>
+        <rdfs:seeAlso>http://edamontology.org/operation_2409</rdfs:seeAlso>
+    </owl:Class>
+    
+
+
+    <!-- http://purl.org/dc/terms/LinguisticSystem -->
+
+    <owl:Class rdf:about="&dc;LinguisticSystem">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy>http://purl.org/dc/terms/LinguisticSystem</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://purl.org/net/p-plan#Activity -->
+
+    <owl:Class rdf:about="&p-plan;Activity">
+        <rdfs:subClassOf rdf:resource="&prov;Activity"/>
+        <rdfs:isDefinedBy>http://purl.org/net/p-plan#Activity</rdfs:isDefinedBy>
+        <rdfs:comment>A p-plan:Activity represents the execution of the process planned in a p-plan:Step. p-plan:Activity is a subclass of prov:Activity</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://purl.org/net/p-plan#Plan -->
+
+    <owl:Class rdf:about="&p-plan;Plan">
+        <rdfs:subClassOf rdf:resource="&prov;Plan"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&pwo;hasFirstStep"/>
+                <owl:allValuesFrom rdf:resource="&p-plan;Step"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:isDefinedBy>http://purl.org/net/p-plan#Plan</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://purl.org/net/p-plan#Step -->
+
+    <owl:Class rdf:about="&p-plan;Step">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy>http://purl.org/net/p-plan#Step</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://purl.org/net/p-plan#Variable -->
+
+    <owl:Class rdf:about="&p-plan;Variable">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy>http://purl.org/net/p-plan#Variable</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://purl.org/spar/fabio/Triplestore -->
+
+    <owl:Class rdf:about="&fabio;Triplestore">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy>http://purl.org/spar/fabio/Triplestore</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://schema.org/ComputerLanguage -->
+
+    <owl:Class rdf:about="&schema;ComputerLanguage">
+        <rdfs:subClassOf rdf:resource="&dc;LinguisticSystem"/>
+        <rdfs:isDefinedBy>http://schema.org/ComputerLanguage</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Workflow -->
+
+    <owl:Class rdf:about="&dul;Workflow">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy>http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Workflow</rdfs:isDefinedBy>
+        <rdfs:comment>A Plan that defines Role(s), Task(s), and a specific structure for tasks to be executed, usually supporting the work of an Organization</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.opmw.org/ontology/WorkflowExecutionArtifact -->
+
+    <owl:Class rdf:about="&opmw;WorkflowExecutionArtifact">
+        <rdfs:subClassOf rdf:resource="&prov;Entity"/>
+        <rdfs:isDefinedBy>http://www.opmw.org/ontology/WorkflowExecutionArtifact</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/2000/01/rdf-schema#Resource -->
+
+    <owl:Class rdf:about="&rdfs;Resource"/>
+    
+
+
+    <!-- http://www.w3.org/ns/dcat#Dataset -->
+
+    <owl:Class rdf:about="&dcat;Dataset">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy>http://www.w3.org/ns/dcat#Dataset</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/ns/dcat#Distribution -->
+
+    <owl:Class rdf:about="&dcat;Distribution">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy>http://www.w3.org/ns/dcat#Distribution</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/ns/mls#EvaluationMeasure -->
+
+    <owl:Class rdf:about="&mls;EvaluationMeasure">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy>http://www.w3.org/ns/mls#EvaluationMeasure</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/ns/mls#ModelEvaluation -->
+
+    <owl:Class rdf:about="&mls;ModelEvaluation">
+        <rdfs:subClassOf rdf:resource="&opmw;WorkflowExecutionArtifact"/>
+        <rdfs:isDefinedBy>http://www.w3.org/ns/mls#ModelEvaluation</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/ns/mls#Run -->
+
+    <owl:Class rdf:about="&mls;Run">
+        <rdfs:subClassOf rdf:resource="&p-plan;Activity"/>
+        <rdfs:isDefinedBy>http://www.w3.org/ns/mls#Run</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#Activity -->
+
+    <owl:Class rdf:about="&prov;Activity">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy>https://www.w3.org/ns/prov#Activity</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#Agent -->
+
+    <owl:Class rdf:about="&prov;Agent">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy>https://www.w3.org/TR/prov-o/#Agent</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#Association -->
+
+    <owl:Class rdf:about="&prov;Association">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy>https://www.w3.org/TR/prov-o/#Association</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#Bundle -->
+
+    <owl:Class rdf:about="&prov;Bundle">
+        <rdfs:subClassOf rdf:resource="&prov;Entity"/>
+        <rdfs:isDefinedBy>http://www.w3.org/ns/prov#Bundle</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#Entity -->
+
+    <owl:Class rdf:about="&prov;Entity">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy>https://www.w3.org/TR/prov-o/#Entity</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#EntityInfluence -->
+
+    <owl:Class rdf:about="&prov;EntityInfluence">
+        <rdfs:isDefinedBy>http://www.w3.org/ns/prov#EntityInfluence</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#Generation -->
+
+    <owl:Class rdf:about="&prov;Generation">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy>http://www.w3.org/ns/prov#Generation</rdfs:isDefinedBy>
+        <rdfs:comment>Generation is the completion of production of a new entity by an activity. This entity did not exist before generation and becomes available for usage after this generation.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#InstantaneousEvent -->
+
+    <owl:Class rdf:about="&prov;InstantaneousEvent">
+        <rdfs:isDefinedBy>http://www.w3.org/ns/prov#InstantaneousEvent</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#Plan -->
+
+    <owl:Class rdf:about="&prov;Plan">
+        <rdfs:subClassOf rdf:resource="&prov;Entity"/>
+        <rdfs:isDefinedBy>https://www.w3.org/TR/prov-o/#Plan</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#Role -->
+
+    <owl:Class rdf:about="&prov;Role">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy>https://www.w3.org/TR/prov-o/#Role</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#SoftwareAgent -->
+
+    <owl:Class rdf:about="&prov;SoftwareAgent">
+        <rdfs:subClassOf rdf:resource="&prov;Agent"/>
+        <rdfs:isDefinedBy>http://www.w3.org/ns/prov#SoftwareAgent</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#Usage -->
+
+    <owl:Class rdf:about="&prov;Usage">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:subClassOf rdf:resource="&prov;EntityInfluence"/>
+        <rdfs:subClassOf rdf:resource="&prov;InstantaneousEvent"/>
+        <rdfs:isDefinedBy>http://www.w3.org/ns/prov#Usage</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/ns/shacl#NodeShape -->
+
+    <owl:Class rdf:about="&sh;NodeShape">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy>http://www.w3.org/ns/shacl#NodeShape</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/ns/shacl#SPARQLConstraint -->
+
+    <owl:Class rdf:about="&sh;SPARQLConstraint">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:isDefinedBy>http://www.w3.org/ns/shacl#SPARQLConstraint</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/reproduceme#Cell -->
+
+    <owl:Class rdf:about="&reprod;Cell">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <dc:description>A cell is a multiline text input field in an Interactive Notebook which can either be code cells where code can be excuted or markdown cells where a descriptive text can be provided or raw cells where output can directly be entered. For example, a Jupyter Notebook cell.</dc:description>
+        <rdfs:isDefinedBy>https://w3id.org/reproduceme#Cell</rdfs:isDefinedBy>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/plex#ComputerLanguage_Python_3.7 -->
+
+    <owl:NamedIndividual rdf:about="http://purl.org/plex#ComputerLanguage_Python_3.7">
+        <rdf:type rdf:resource="&schema;ComputerLanguage"/>
+        <rdfs:label>Python 3.7</rdfs:label>
+        <owl:versionInfo>3.7</owl:versionInfo>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://purl.org/plex#LinguisticSystem_xsd_language_English -->
+
+    <owl:NamedIndividual rdf:about="http://purl.org/plex#LinguisticSystem_xsd_language_English">
+        <rdf:type rdf:resource="&dc;LinguisticSystem"/>
+        <rdfs:label>en</rdfs:label>
+        <rdfs:seeAlso>http://www.datypic.com/sc/xsd/t-xsd_language.html</rdfs:seeAlso>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotations
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description rdf:about="&dul;isDescribedBy">
+        <rdfs:isDefinedBy>http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isDescribedBy</rdfs:isDefinedBy>
+    </rdf:Description>
+    <rdf:Description rdf:about="&dcat;downloadURL">
+        <rdfs:isDefinedBy>http://www.w3.org/ns/dcat#downloadURL</rdfs:isDefinedBy>
+    </rdf:Description>
+    <rdf:Description rdf:about="&dc;hasVersion">
+        <rdfs:isDefinedBy>http://purl.org/dc/terms/hasVersion</rdfs:isDefinedBy>
+    </rdf:Description>
+    <rdf:Description rdf:about="&dc;publisher">
+        <rdfs:seeAlso>http://purl.org/dc/elements/1.1/publisher</rdfs:seeAlso>
+    </rdf:Description>
+    <rdf:Description rdf:about="&dul;precedes">
+        <rdfs:isDefinedBy>http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#precedes</rdfs:isDefinedBy>
+    </rdf:Description>
+    <rdf:Description rdf:about="&dc;creator">
+        <rdfs:seeAlso>http://purl.org/dc/elements/1.1/creator</rdfs:seeAlso>
+    </rdf:Description>
+    <rdf:Description rdf:about="&prov;entity">
+        <rdfs:isDefinedBy>http://www.w3.org/ns/prov#entity</rdfs:isDefinedBy>
+    </rdf:Description>
+    <rdf:Description rdf:about="&dcat;distribution">
+        <rdfs:isDefinedBy>http://www.w3.org/ns/dcat#distribution</rdfs:isDefinedBy>
+    </rdf:Description>
+    <rdf:Description rdf:about="&prov;used">
+        <rdfs:isDefinedBy>http://www.w3.org/ns/prov#used</rdfs:isDefinedBy>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net -->
+

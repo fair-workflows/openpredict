@@ -1,0 +1,996 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE Ontology [
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY xml "http://www.w3.org/XML/1998/namespace" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="https://w3id.org/fair/plex"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     ontologyIRI="https://w3id.org/fair/plex">
+    <Prefix name="" IRI="https://w3id.org/fair/plex#"/>
+    <Prefix name="dc" IRI="http://purl.org/dc/terms/"/>
+    <Prefix name="sh" IRI="http://www.w3.org/ns/shacl#"/>
+    <Prefix name="dul" IRI="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#"/>
+    <Prefix name="mls" IRI="http://www.w3.org/ns/mls#"/>
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="pwo" IRI="http://purl.org/spar/pwo#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="bpmn" IRI="http://dkm.fbk.eu/index.php/BPMN2_Ontology#"/>
+    <Prefix name="dcat" IRI="http://www.w3.org/ns/dcat#"/>
+    <Prefix name="edam" IRI="http://edamontology.org/"/>
+    <Prefix name="opmw" IRI="http://www.opmw.org/ontology/"/>
+    <Prefix name="prov" IRI="http://www.w3.org/ns/prov#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Prefix name="fabio" IRI="http://purl.org/spar/fabio/"/>
+    <Prefix name="p-plan" IRI="http://purl.org/net/p-plan#"/>
+    <Prefix name="reprod" IRI="https://w3id.org/reproduceme#"/>
+    <Prefix name="schema" IRI="http://schema.org/"/>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="dc:license"/>
+        <IRI>http://rdflicense.appspot.com/rdflicense/cc-by-nc-nd3.0</IRI>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="owl:versionInfo"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">0.1.1</Literal>
+    </Annotation>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <Literal datatypeIRI="&rdf;PlainLiteral">PlEx: Plan Executions
+PlEx is an ontology profile that reuses classes and properties from several semantic models and does not include any new predicate. PlEX is grounded on DOLCE Ultra Lite (DUL), W3C PROV, P-PLAN and BPMN 2.0 semantic models. The most relevant ontology used is P-PLAN because it provides the most adequate abstract terminology to describe plans, i.e., the main building blocks. P-PLAN is extended from the PROV ontology, which is well-grounded in a high-quality top-level ontology (DOLCE) that facilitates the translations from the conceptual model. 
+DOLCE Ultra-Lite (DUL) ontology also plays a relevant role and provide one of the main elements (dul:Workflow). A dul:Workflow is a p-plan:Plan that represents the top-level of a workflow (or protocol) version, which must be referenced as a whole, e.g., the OpenPREDICT workflow v0.2. Therefore, the intention of dul:Workflow is to classify whether the plan is a whole workflow.
+</Literal>
+    </Annotation>
+    <Declaration>
+        <Class abbreviatedIRI="bpmn:ManualTask"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="bpmn:ScriptTask"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="edam:format_1915"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="edam:format_2330"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="edam:format_2376"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="edam:format_3256"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="edam:operation_0224"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="edam:operation_2409"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="dc:LinguisticSystem"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="p-plan:Activity"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="p-plan:Plan"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="p-plan:Step"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="p-plan:Variable"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="fabio:Triplestore"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="schema:ComputerLanguage"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="dul:Workflow"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="opmw:WorkflowExecutionArtifact"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="rdfs:Resource"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="dcat:Dataset"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="dcat:Distribution"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="mls:EvaluationMeasure"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="mls:ModelEvaluation"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="mls:Run"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="prov:Activity"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="prov:Agent"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="prov:Association"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="prov:Bundle"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="prov:Entity"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="prov:EntityInfluence"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="prov:Generation"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="prov:InstantaneousEvent"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="prov:Plan"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="prov:Role"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="prov:SoftwareAgent"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="prov:Usage"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="sh:NodeShape"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="sh:SPARQLConstraint"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="reprod:Cell"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="dc:language"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="p-plan:hasInputVar"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="p-plan:hasOutputVar"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="p-plan:isStepOfPlan"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="dcat:mediaType"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="mls:specifiedBy"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="prov:agent"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="prov:generated"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="prov:hadPlan"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="prov:hadRole"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="prov:qualifiedGeneration"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="prov:qualifiedUsage"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="prov:wasAttributedTo"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="prov:wasRevisionOf"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="sh:sparql"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="sh:targetClass"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="dc:created"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="dc:modified"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="schema:URL"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="prov:atTime"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="http://purl.org/plex#ComputerLanguage_Python_3.7"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="http://purl.org/plex#LinguisticSystem_xsd_language_English"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="p-plan:correspondsToStep"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="p-plan:hasInputVar"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="p-plan:hasOutputVar"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="p-plan:isStepOfPlan"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="schema:URL"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="dcat:mediaType"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="mls:specifiedBy"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="prov:generated"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="prov:hadPlan"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="prov:hadRole"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="prov:qualifiedGeneration"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="prov:wasAttributedTo"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="prov:wasRevisionOf"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="sh:select"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty abbreviatedIRI="sh:sparql"/>
+    </Declaration>
+    <SubClassOf>
+        <Class abbreviatedIRI="bpmn:ManualTask"/>
+        <Class abbreviatedIRI="p-plan:Step"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="bpmn:ScriptTask"/>
+        <Class abbreviatedIRI="p-plan:Step"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="edam:format_1915"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="edam:format_2330"/>
+        <Class abbreviatedIRI="edam:format_1915"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="edam:format_2376"/>
+        <Class abbreviatedIRI="edam:format_1915"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="edam:format_3256"/>
+        <Class abbreviatedIRI="edam:format_2376"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="edam:operation_0224"/>
+        <Class abbreviatedIRI="p-plan:Step"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="edam:operation_2409"/>
+        <Class abbreviatedIRI="p-plan:Step"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="dc:LinguisticSystem"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="p-plan:Activity"/>
+        <Class abbreviatedIRI="prov:Activity"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="p-plan:Plan"/>
+        <Class abbreviatedIRI="prov:Plan"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="p-plan:Plan"/>
+        <ObjectAllValuesFrom>
+            <ObjectProperty abbreviatedIRI="pwo:hasFirstStep"/>
+            <Class abbreviatedIRI="p-plan:Step"/>
+        </ObjectAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="p-plan:Step"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="p-plan:Variable"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="fabio:Triplestore"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="schema:ComputerLanguage"/>
+        <Class abbreviatedIRI="dc:LinguisticSystem"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="dul:Workflow"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="opmw:WorkflowExecutionArtifact"/>
+        <Class abbreviatedIRI="prov:Entity"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="dcat:Dataset"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="dcat:Distribution"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="mls:EvaluationMeasure"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="mls:ModelEvaluation"/>
+        <Class abbreviatedIRI="opmw:WorkflowExecutionArtifact"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="mls:Run"/>
+        <Class abbreviatedIRI="p-plan:Activity"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="prov:Activity"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="prov:Agent"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="prov:Association"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="prov:Bundle"/>
+        <Class abbreviatedIRI="prov:Entity"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="prov:Entity"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="prov:Generation"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="prov:Plan"/>
+        <Class abbreviatedIRI="prov:Entity"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="prov:Role"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="prov:SoftwareAgent"/>
+        <Class abbreviatedIRI="prov:Agent"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="prov:Usage"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="prov:Usage"/>
+        <Class abbreviatedIRI="prov:EntityInfluence"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="prov:Usage"/>
+        <Class abbreviatedIRI="prov:InstantaneousEvent"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="sh:NodeShape"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="sh:SPARQLConstraint"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="reprod:Cell"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </SubClassOf>
+    <ClassAssertion>
+        <Class abbreviatedIRI="schema:ComputerLanguage"/>
+        <NamedIndividual IRI="http://purl.org/plex#ComputerLanguage_Python_3.7"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI="dc:LinguisticSystem"/>
+        <NamedIndividual IRI="http://purl.org/plex#LinguisticSystem_xsd_language_English"/>
+    </ClassAssertion>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="p-plan:hasInputVar"/>
+        <Class abbreviatedIRI="p-plan:Step"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="p-plan:hasOutputVar"/>
+        <Class abbreviatedIRI="p-plan:Step"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="p-plan:isStepOfPlan"/>
+        <Class abbreviatedIRI="p-plan:Step"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="dcat:mediaType"/>
+        <Class abbreviatedIRI="dcat:Distribution"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="mls:specifiedBy"/>
+        <Class abbreviatedIRI="mls:ModelEvaluation"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="prov:generated"/>
+        <Class abbreviatedIRI="prov:Activity"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="prov:hadPlan"/>
+        <Class abbreviatedIRI="prov:Association"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="prov:hadRole"/>
+        <Class abbreviatedIRI="prov:Association"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="prov:qualifiedGeneration"/>
+        <Class abbreviatedIRI="prov:Entity"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="prov:wasAttributedTo"/>
+        <Class abbreviatedIRI="prov:Entity"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="prov:wasRevisionOf"/>
+        <Class abbreviatedIRI="prov:Entity"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="sh:sparql"/>
+        <Class abbreviatedIRI="sh:NodeShape"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="sh:targetClass"/>
+        <Class abbreviatedIRI="sh:NodeShape"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="dc:language"/>
+        <Class abbreviatedIRI="dc:LinguisticSystem"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="p-plan:hasInputVar"/>
+        <Class abbreviatedIRI="p-plan:Variable"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="p-plan:hasOutputVar"/>
+        <Class abbreviatedIRI="p-plan:Variable"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="p-plan:isStepOfPlan"/>
+        <Class abbreviatedIRI="p-plan:Plan"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="dcat:mediaType"/>
+        <Class abbreviatedIRI="edam:format_1915"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="mls:specifiedBy"/>
+        <Class abbreviatedIRI="mls:EvaluationMeasure"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="prov:agent"/>
+        <Class abbreviatedIRI="prov:Agent"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="prov:generated"/>
+        <Class abbreviatedIRI="prov:Entity"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="prov:hadPlan"/>
+        <Class abbreviatedIRI="prov:Plan"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="prov:hadRole"/>
+        <Class abbreviatedIRI="prov:Role"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="prov:qualifiedGeneration"/>
+        <Class abbreviatedIRI="prov:Generation"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="prov:qualifiedUsage"/>
+        <Class abbreviatedIRI="prov:Usage"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="prov:wasAttributedTo"/>
+        <Class abbreviatedIRI="prov:Agent"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="prov:wasRevisionOf"/>
+        <Class abbreviatedIRI="prov:Entity"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="sh:sparql"/>
+        <Class abbreviatedIRI="sh:SPARQLConstraint"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="sh:targetClass"/>
+        <Class abbreviatedIRI="owl:Thing"/>
+    </ObjectPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="dc:created"/>
+        <Datatype abbreviatedIRI="rdfs:Literal"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="dc:modified"/>
+        <Datatype abbreviatedIRI="rdfs:Literal"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="schema:URL"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="prov:atTime"/>
+        <Datatype abbreviatedIRI="xsd:dateTime"/>
+    </DataPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>bpmn:ManualTask</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://dkm.fbk.eu/index.php/BPMN2_Ontology#manualTask</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>bpmn:ScriptTask</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://dkm.fbk.eu/index.php/BPMN2_Ontology#scriptTask</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>edam:format_1915</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://edamontology.org/format_1915</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>edam:format_1915</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Data format</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>edam:format_2330</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://edamontology.org/format_2330</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>edam:format_2330</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Plain text format</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>edam:format_2376</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://edamontology.org/format_2376</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>edam:format_2376</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Resource Description Framework (RDF)</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>edam:format_3256</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://edamontology.org/format_3256</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>edam:format_3256</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">N-Triples</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>edam:operation_0224</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://edamontology.org/operation_0224</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>edam:operation_0224</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Query and retrieval (EDAM)</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>edam:operation_2409</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Data handling (EDAM)</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:seeAlso"/>
+        <AbbreviatedIRI>edam:operation_2409</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://edamontology.org/operation_2409</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>dc:LinguisticSystem</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://purl.org/dc/terms/LinguisticSystem</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:seeAlso"/>
+        <AbbreviatedIRI>dc:created</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://purl.org/dc/terms/created</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:seeAlso"/>
+        <AbbreviatedIRI>dc:creator</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://purl.org/dc/elements/1.1/creator</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>dc:description</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://purl.org/dc/terms/description</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>dc:hasVersion</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://purl.org/dc/terms/hasVersion</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>dc:language</AbbreviatedIRI>
+        <AbbreviatedIRI>dc:language</AbbreviatedIRI>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:seeAlso"/>
+        <AbbreviatedIRI>dc:modified</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://purl.org/dc/terms/modified</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:seeAlso"/>
+        <AbbreviatedIRI>dc:publisher</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://purl.org/dc/elements/1.1/publisher</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <AbbreviatedIRI>p-plan:Activity</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">A p-plan:Activity represents the execution of the process planned in a p-plan:Step. p-plan:Activity is a subclass of prov:Activity</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>p-plan:Activity</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://purl.org/net/p-plan#Activity</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>p-plan:Plan</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://purl.org/net/p-plan#Plan</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>p-plan:Step</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://purl.org/net/p-plan#Step</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>p-plan:Variable</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://purl.org/net/p-plan#Variable</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:seeAlso"/>
+        <AbbreviatedIRI>p-plan:correspondsToStep</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://purl.org/net/p-plan#correspondsToStep</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>p-plan:hasInputVar</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://purl.org/net/p-plan#hasInputVar</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>p-plan:hasOutputVar</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://purl.org/net/p-plan#hasOutputVar</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>p-plan:isStepOfPlan</AbbreviatedIRI>
+        <AbbreviatedIRI>p-plan:isStepOfPlan</AbbreviatedIRI>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>http://purl.org/plex#ComputerLanguage_Python_3.7</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Python 3.7</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="owl:versionInfo"/>
+        <IRI>http://purl.org/plex#ComputerLanguage_Python_3.7</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">3.7</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>http://purl.org/plex#LinguisticSystem_xsd_language_English</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">en</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:seeAlso"/>
+        <IRI>http://purl.org/plex#LinguisticSystem_xsd_language_English</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://www.datypic.com/sc/xsd/t-xsd_language.html</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>fabio:Triplestore</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://purl.org/spar/fabio/Triplestore</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>pwo:hasFirstStep</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://purl.org/spar/pwo/hasFirstStep</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>schema:ComputerLanguage</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://schema.org/ComputerLanguage</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <AbbreviatedIRI>dul:Workflow</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">A Plan that defines Role(s), Task(s), and a specific structure for tasks to be executed, usually supporting the work of an Organization</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>dul:Workflow</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Workflow</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>dul:isDescribedBy</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isDescribedBy</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>dul:precedes</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#precedes</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>opmw:WorkflowExecutionArtifact</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://www.opmw.org/ontology/WorkflowExecutionArtifact</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>dcat:Dataset</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://www.w3.org/ns/dcat#Dataset</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>dcat:Distribution</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://www.w3.org/ns/dcat#Distribution</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>dcat:distribution</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://www.w3.org/ns/dcat#distribution</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>dcat:downloadURL</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://www.w3.org/ns/dcat#downloadURL</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:seeAlso"/>
+        <AbbreviatedIRI>dcat:mediaType</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">https://www.w3.org/ns/dcat#mediaType</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>mls:EvaluationMeasure</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://www.w3.org/ns/mls#EvaluationMeasure</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>mls:ModelEvaluation</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://www.w3.org/ns/mls#ModelEvaluation</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>mls:Run</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://www.w3.org/ns/mls#Run</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:seeAlso"/>
+        <AbbreviatedIRI>mls:specifiedBy</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://www.w3.org/ns/mls#specifiedBy</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>prov:Activity</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">https://www.w3.org/ns/prov#Activity</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>prov:Agent</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">https://www.w3.org/TR/prov-o/#Agent</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>prov:Association</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">https://www.w3.org/TR/prov-o/#Association</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>prov:Bundle</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://www.w3.org/ns/prov#Bundle</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>prov:Entity</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">https://www.w3.org/TR/prov-o/#Entity</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>prov:EntityInfluence</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://www.w3.org/ns/prov#EntityInfluence</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <AbbreviatedIRI>prov:Generation</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Generation is the completion of production of a new entity by an activity. This entity did not exist before generation and becomes available for usage after this generation.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>prov:Generation</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://www.w3.org/ns/prov#Generation</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>prov:InstantaneousEvent</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://www.w3.org/ns/prov#InstantaneousEvent</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>prov:Plan</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">https://www.w3.org/TR/prov-o/#Plan</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>prov:Role</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">https://www.w3.org/TR/prov-o/#Role</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>prov:SoftwareAgent</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://www.w3.org/ns/prov#SoftwareAgent</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>prov:Usage</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://www.w3.org/ns/prov#Usage</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:seeAlso"/>
+        <AbbreviatedIRI>prov:agent</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">https://www.w3.org/TR/prov-o/#p_agent</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <AbbreviatedIRI>prov:atTime</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">The PROV data model is implicitly based on a notion of instantaneous events (or just events), that mark transitions in the world. Events include generation, usage, or invalidation of entities, as well as starting or ending of activities. This notion of event is not first-class in the data model, but it is useful for explaining its other concepts and its semantics.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:seeAlso"/>
+        <AbbreviatedIRI>prov:atTime</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://www.w3.org/ns/prov#atTime</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>prov:entity</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://www.w3.org/ns/prov#entity</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:seeAlso"/>
+        <AbbreviatedIRI>prov:generated</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://www.w3.org/ns/prov#generated</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:seeAlso"/>
+        <AbbreviatedIRI>prov:hadPlan</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">https://www.w3.org/TR/prov-o/#hadPlan</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:seeAlso"/>
+        <AbbreviatedIRI>prov:hadRole</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">https://www.w3.org/TR/prov-o/#hadRole</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <AbbreviatedIRI>prov:qualifiedGeneration</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Generation is the completion of production of a new entity by an activity. This entity did not exist before generation and becomes available for usage after this generation.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:seeAlso"/>
+        <AbbreviatedIRI>prov:qualifiedGeneration</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://www.w3.org/ns/prov#qualifiedGeneration</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>prov:qualifiedUsage</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://www.w3.org/ns/prov#qualifiedUsage</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>prov:used</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://www.w3.org/ns/prov#used</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:seeAlso"/>
+        <AbbreviatedIRI>prov:wasRevisionOf</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://www.w3.org/ns/prov#wasRevisionOf</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>sh:NodeShape</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://www.w3.org/ns/shacl#NodeShape</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>sh:SPARQLConstraint</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">http://www.w3.org/ns/shacl#SPARQLConstraint</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="dc:description"/>
+        <AbbreviatedIRI>reprod:Cell</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">A cell is a multiline text input field in an Interactive Notebook which can either be code cells where code can be excuted or markdown cells where a descriptive text can be provided or raw cells where output can directly be entered. For example, a Jupyter Notebook cell.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
+        <AbbreviatedIRI>reprod:Cell</AbbreviatedIRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">https://w3id.org/reproduceme#Cell</Literal>
+    </AnnotationAssertion>
+    <AnnotationPropertyRange>
+        <AnnotationProperty abbreviatedIRI="p-plan:correspondsToStep"/>
+        <AbbreviatedIRI>p-plan:Step</AbbreviatedIRI>
+    </AnnotationPropertyRange>
+    <AnnotationPropertyDomain>
+        <AnnotationProperty abbreviatedIRI="p-plan:correspondsToStep"/>
+        <AbbreviatedIRI>p-plan:Activity</AbbreviatedIRI>
+    </AnnotationPropertyDomain>
+    <AnnotationPropertyDomain>
+        <AnnotationProperty abbreviatedIRI="sh:select"/>
+        <AbbreviatedIRI>sh:SPARQLConstraint</AbbreviatedIRI>
+    </AnnotationPropertyDomain>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net -->
+
