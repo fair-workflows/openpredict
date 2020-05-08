@@ -3432,7 +3432,7 @@ opredict:Plan_Feature_generation_Pipeline_OpenPREDICT_ipynb_v02_Download_and_Sav
                                                                                         
                                                                                         dc:description """# Download and Save Input Data
 
-sparql_endpoint=\"http://graphdb.dumontierlab.com/repositories/openpredict\"
+sparql_endpoint=\"https://graphdb.dumontierlab.com/repositories/openpredict\"
 !curl -H \"Accept: text/csv\" --data-urlencode query@data/sparql/drugbank-drug-target.rq {sparql_endpoint} > data/input/drugbank-drug-target.csv
 
 !curl -H \"Accept: text/csv\" --data-urlencode query@data/sparql/drugbank-target-seq.rq {sparql_endpoint} > data/input/drugbank-target-seq.csv
@@ -6145,7 +6145,7 @@ opredict:Triplestore_endpoint_input_data rdf:type fabio:Triplestore ,
 1- data insertion from files
 2- SPARQL endpoint""" ;
                                          
-                                         <http://schema.org#URL> "http://graphdb.dumontierlab.com/repositories/bio2rdf_remzi" ,
+                                         <http://schema.org#URL> "https://graphdb.dumontierlab.com/repositories/bio2rdf_remzi" ,
                                                                  "http://yasgui.org/#" .
 
 

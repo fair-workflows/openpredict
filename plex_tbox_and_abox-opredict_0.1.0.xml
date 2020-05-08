@@ -3246,7 +3246,7 @@ hpo_sim_df.to_csv(&apos;data/features/diseases-hpo-sim.csv&apos;, index=False)</
         <rdf:type rdf:resource="&reprod;Cell"/>
         <dc:description># Download and Save Input Data
 
-sparql_endpoint=&quot;http://graphdb.dumontierlab.com/repositories/openpredict&quot;
+sparql_endpoint=&quot;https://graphdb.dumontierlab.com/repositories/openpredict&quot;
 !curl -H &quot;Accept: text/csv&quot; --data-urlencode query@data/sparql/drugbank-drug-target.rq {sparql_endpoint} &gt; data/input/drugbank-drug-target.csv
 
 !curl -H &quot;Accept: text/csv&quot; --data-urlencode query@data/sparql/drugbank-target-seq.rq {sparql_endpoint} &gt; data/input/drugbank-target-seq.csv
@@ -5695,7 +5695,7 @@ BIND( STRAFTER(str(?drug), &quot;http://bio2rdf.org/drugbank:&quot;) AS ?drugid)
         <dc:description>** TODO: check the best way to represent a triplestore and its endpoints for: 
 1- data insertion from files
 2- SPARQL endpoint</dc:description>
-        <schema2:URL>http://graphdb.dumontierlab.com/repositories/bio2rdf_remzi</schema2:URL>
+        <schema2:URL>https://graphdb.dumontierlab.com/repositories/bio2rdf_remzi</schema2:URL>
         <schema2:URL>http://yasgui.org/#</schema2:URL>
     </owl:NamedIndividual>
     

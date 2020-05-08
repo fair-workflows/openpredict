@@ -1,5 +1,5 @@
 ab_path: /home/jovyan/work/openpredict/
-sparql_ep: "http://graphdb.dumontierlab.com/repositories/openpredict"
+sparql_ep: "https://graphdb.dumontierlab.com/repositories/openpredict"
 se_sparql_path : drugbank-sider-sideeffects.rq
 se_download_path: drugbank-sider-se.csv
 se_output: drugs-se-sim.csv

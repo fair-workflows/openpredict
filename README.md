@@ -375,7 +375,7 @@ To run : [Yasgui Link](http://yasgui.org/short/0WXmO2bo1)
 
 
 ## How to reproduce the results?  
-* Use the OpenPREDICT GraphDB SPARQL endpoint (http://graphdb.dumontierlab.com/repositories/openpredict) to query all data
+* Use the OpenPREDICT GraphDB SPARQL endpoint (https://graphdb.dumontierlab.com/repositories/openpredict) to query all data
 * If you don't want to use the given SPARQL endpoint, collect all sources from given links and pre-process bio2rdf datasets (see section: Pre-processing Bio2RDF data ), then create your triple store and upload each RDF data into your triple store (currently tested with GraphDB or Virtuoso)
 * Clone the project
 ```shell
