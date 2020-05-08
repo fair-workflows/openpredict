@@ -62,7 +62,7 @@ SELECT ?step ?stepType ?instructions ?description
 	                } 
                  
  ```
-To run : [Yasgui Link](http://yasgui.org/short/wyaWkVECj)
+To run : [Yasgui Link](https://api.triplydb.com/s/eUMjk79cH)
 
 **CQ1.2: For the manual parts, who are the developers and who are the agents responsible to execute each step?** 
 
@@ -94,7 +94,7 @@ SELECT ?step ?role ?agent ?creator ?publisher ?instructions ?description
 
 
  ```
-To run : [Yasgui Link](http://yasgui.org/short/4TSG5Tly1)
+To run : [Yasgui Link](https://api.triplydb.com/s/V8lTkUP0r)
 
 
 
@@ -133,7 +133,7 @@ WHERE
 
 
  ```
-To run : [Yasgui Link](http://yasgui.org/short/FxN8TZZOH)
+To run : [Yasgui Link](https://api.triplydb.com/s/DtAHfdS7e)
 
 
 
@@ -162,7 +162,7 @@ ORDER BY DESC(?varInput)
 
 
  ```
-To run : [Yasgui Link](http://yasgui.org/short/c1SkuY-nD)
+To run : [Yasgui Link](https://api.triplydb.com/s/SgmxcrFQK)
 
 
 
@@ -187,7 +187,7 @@ WHERE
 ORDER BY  DESC(?stepTopLevel)
 
  ```
-To run : [Yasgui Link](http://yasgui.org/short/aNwsmiZFp)
+To run : [Yasgui Link](https://api.triplydb.com/s/7BWvts44K)
 
 **CQ2.2: What are the steps of a plan and how each step instruction is described?** 
 
@@ -205,7 +205,7 @@ WHERE
 	?instructions dc:language ?language.				
 }
  ```
-To run : [Yasgui Link](http://yasgui.org/short/wyaWkVECj)
+To run : [Yasgui Link](https://api.triplydb.com/s/8naHl4RPN)
 
 **CQ2.3: What instructions specify the code used in OpenPREDICT steps?** 
 
@@ -231,7 +231,7 @@ WHERE
 }
 ORDER BY ?step
  ```
-To run : [Yasgui Link](http://yasgui.org/short/afuzobTPJ)
+To run : [Yasgui Link](https://api.triplydb.com/s/UiuOi8zjH)
 
 
 **CQ3.1: What are the existing versions of a workflow and what are their provenance?** 
@@ -249,7 +249,7 @@ WHERE
 	?workflow dc:created ?createDate.
 }
  ```
-To run : [Yasgui Link](http://yasgui.org/short/v21XIFl25)
+To run : [Yasgui Link](https://api.triplydb.com/s/brJ26ZN8G)
 
 **CQ3.2: Which instructions were removed/changed/added from one version to another?** 
 
@@ -284,7 +284,7 @@ WHERE
 }
 
  ```
-To run : [Yasgui Link](http://yasgui.org/short/Lm3KLHYjD)
+To run : [Yasgui Link](https://api.triplydb.com/s/T7XCNuK-o)
 
 **CQ3.3: Which steps were automatized from one version to another?** 
 
@@ -311,7 +311,7 @@ WHERE
 } 
 
  ```
-To run : [Yasgui Link](http://yasgui.org/short/nxkpZU9Ub)
+To run : [Yasgui Link](https://api.triplydb.com/s/JfSjXj3MS)
 
 **CQ3.4: Which datasets were removed/changed/added for the different versions?** 
 
@@ -347,7 +347,7 @@ WHERE
 
 } 
  ```
-To run : [Yasgui Link](http://yasgui.org/short/XOl5g6PZe)
+To run : [Yasgui Link](https://api.triplydb.com/s/zFYRAP-NM)
 
 **CQ3.5: Which workflow version was used in each execution and what was generated?** 
 
@@ -370,7 +370,7 @@ WHERE
 ORDER BY ?version
 
  ```
-To run : [Yasgui Link](http://yasgui.org/short/0WXmO2bo1)
+To run : [Yasgui Link](https://api.triplydb.com/s/sS1SA-8Wu)
 
 
 
