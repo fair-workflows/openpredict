@@ -6,6 +6,7 @@ import pandas as pd
 import math
 import time
 import os
+
 #from rdflib import Graph, URIRef, Literal, RDF, ConjunctiveGraph, Namespace
 drugfeatfiles = ['drugs-fingerprint-sim.csv','drugs-se-sim.csv', 
                      'drugs-ppi-sim.csv', 'drugs-target-go-sim.csv','drugs-target-seq-sim.csv']
