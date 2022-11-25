@@ -365,52 +365,6 @@ cv_results.to_csv(resfolder+'/disjoint_lr.csv')
 
 cv_results.head()
 
-import time
-def generateURI(prefix):
-    uniqueID= int(round(time.time() * 1000))
-    uri = URIRef(prefix+str(uniqueID))
-    return uri
-
-DC = Namespace("http://purl.org/dc/terms/")
-MLS = Namespace("http://www.w3.org/ns/mls#")
-RPC = Namespace("https://w3id.org/reproduceme#")
-RDFS = Namespace("http://www.w3.org/2000/01/rdf-schema#")
-
-g =  ConjunctiveGraph(identifier = URIRef('http://bio2rdf.org/openpredict_resource:bio2rdf.dataset.openpredict.R1')) 
-
-#graphURI = URIRef('http://bio2rdf.org/openpredict_resource:bio2rdf.output.openpredict.R1')
-runURI = generateURI('http://www.w3.org/ns/mls#Run')
-evalURI = generateURI('http://www.w3.org/ns/mls#ModelEvaluation')
-evalSpecURI = generateURI('http://www.w3.org/ns/mls#EvaluationSpecification')
-
-g.add((runURI, RDF['type'], MLS['Run']))
-g.add((runURI, MLS['achieves'], RPC['Pipeline_OpenPREDICT']))
-
-g.add((runURI, MLS['hasOutput'], evalURI))
-g.add((evalURI, RDF['type'], MLS['ModelEvaluation']))
-
-g.add((evalSpecURI, MLS['defines'],  RPC['Pipeline_OpenPREDICT']))
-g.add((evalSpecURI, MLS['hasPart'],  MLS['TenFoldCrossValidation']))
-g.add((MLS['TenFoldCrossValidation'], RDF['type'],  MLS['EvaluationProcedure']))
-g.add((MLS['TenFoldCrossValidation'], RDFS['label'],  Literal('10-fold CV')))
-
-g.add((evalSpecURI, MLS['hasPart'],  MLS['DrugwiseCrossValidation']))
-g.add((MLS['DrugwiseCrossValidation'], RDF['type'],  MLS['EvaluationProcedure']))
-g.add((MLS['DrugwiseCrossValidation'], RDFS['label'],  Literal('Drugwise CrossValidation')))
-g.add((MLS['DrugwiseCrossValidation'], DC['description'],  Literal('Split drugs in 10-fold, remove drugs of each fold in the gold standard and consequently remove all the known indication sassociated with them')))
-
-for index, value in cv_results.mean().items():
-    measureURI = generateURI('http://www.w3.org/ns/mls#Measure_'+index)
-    g.add((evalSpecURI, MLS['hasPart'],  measureURI))      
-    g.add((evalURI, MLS['specifiedBy'],measureURI ))
-    g.add((measureURI, RDF['type'], MLS['EvaluationMeasure']))
-    g.add((measureURI, RDFS['label'],  Literal(index)))
-    g.add((measureURI, MLS['hasValue'],  Literal(value)))
-
-
-outfile ='results/results_disjoint_lr.nq'
-g.serialize(outfile, format='nquads')
-print('RDF is generated at '+outfile)
 
 
 
